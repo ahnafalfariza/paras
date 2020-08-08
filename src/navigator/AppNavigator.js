@@ -8,7 +8,7 @@ import ExploreScreen from '../screen/ExploreScreen';
 import NewPostScreen from '../screen/NewPostScreen';
 import WalletScreen from '../screen/WalletScreen';
 import ProfileScreen from '../screen/ProfileScreen';
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 import assetSvg from '../assets/svg/svg';
 
 const Tab = createBottomTabNavigator();

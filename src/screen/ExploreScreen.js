@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 
 import Screen from '../component/Screen';
 import MainHeader from '../component/MainHeader';
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 
 class ExploreScreen extends Component {
   render() {

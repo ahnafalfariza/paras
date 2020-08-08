@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
 import { View, Text } from 'react-native';
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 
 const HomeHeader = () => {
   return (

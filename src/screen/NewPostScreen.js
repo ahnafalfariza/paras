@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import Screen from '../component/Screen';
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 import MainHeader from '../component/MainHeader';
 
 class NewPostScreen extends Component {

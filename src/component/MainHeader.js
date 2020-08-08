@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 import assetSvg from '../assets/svg/svg';
 
 const MainHeader = ({ withBack, title }) => {

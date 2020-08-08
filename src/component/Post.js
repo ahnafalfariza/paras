@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
 
-import Colors from '../helper/color';
+import Colors from '../utils/color';
 
 const data = {
   id: '2HyZFET3Fdw',
@@ -75,7 +75,14 @@ const data = {
 
 const Post = () => {
   return (
-    <View style={{ margin: 16, borderRadius: 10, backgroundColor: Colors['dark-8'] }}>
+    <View
+      style={{
+        margin: 16,
+        borderRadius: 10,
+        backgroundColor: Colors['dark-8'],
+        overflow: 'hidden',
+      }}
+    >
       <View>
         <View style={{ backgroundColor: Colors['dark-2'], padding: 8 }}>
           <Text style={_styles.momento}>{data.mementoId}</Text>
@@ -95,7 +102,7 @@ const Post = () => {
         </View>
       </View>
 
-      <View style={{ height: Dimensions.get('window').width }}>
+      <View style={{ height: Dimensions.get('window').width - 32 }}>
         <Swiper showsButtons={true} loop={false} showsPagination={true}>
           <View style={_styles.slide1}>
             <Text style={_styles.text}>Hello Swiper</Text>

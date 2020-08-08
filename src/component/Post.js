@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import Swiper from 'react-native-swiper';
+import React, { PureComponent } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import Colors from '../utils/color';
+import PostContent from './PostContent';
 
 const data = {
   id: '2HyZFET3Fdw',
@@ -13,9 +13,14 @@ const data = {
       body: '{"url":"QmafLWchF5pSxyk5tuSsQxFE8Yvm4hNMa25Jcy37Y4fCir","type":"ipfs"}',
     },
     {
+      type: 'url',
+      body:
+        '{"img":"https://i.scdn.co/image/ab67616d0000b27330ba0e3ed0e1db48cd3b94a8","title":"Marooned","desc":"Marooned, a song by Pink Floyd on Spotify","url":"https://open.spotify.com/track/3SOAyMhaukOvGS9PMvoQ1b"}',
+    },
+    {
       type: 'text',
       body:
-        'In Greek mythology, Persephone was the daughter of Zeus and Demeter, goddess of harvest and fertility. She was very beautiful and lovely, which led to her mother protecting her very much to keep all men away from her.\n\nHades, god of the underworld was very attracted to Persephone. When he asked Demeter if he could marry Persephone, Demeter refused.',
+        'In Greek mythology, Persephone was the daughter of Zeus and Demeter, goddess of harvest and fertility. She was very beautiful and lovely, which led to her mother protecting her very much to keep all men away from her.\n\nHades, god of the underworld was very attracted to Persephone. When he asked Demeter if he could marry Persephone, Demeter refused.In Greek mythology, Persephone was the daughter of Zeus and Demeter, goddess of harvest and fertility. She was very beautiful and lovely, which led to her mother protecting her very much to keep all men away from her.\n\nHades, god of the underworld was very attracted to Persephone. When he asked Demeter if he could marry Persephone, Demeter refused.',
     },
     {
       type: 'text',
@@ -73,92 +78,82 @@ const data = {
   },
 };
 
-const Post = () => {
+class Post extends PureComponent {
+  render() {
+    const { contentList, user, memento } = this.props.post;
+
+    return (
+      <View
+        style={{
+          marginVertical: 16,
+          marginHorizontal: 8,
+          borderRadius: 10,
+          backgroundColor: Colors['dark-8'],
+          overflow: 'hidden',
+        }}
+      >
+        <PostMomento memento={memento} />
+        <PostOwner user={user} />
+        <PostContent contentList={contentList} />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
+          <Text style={_styles.memento}>Piece</Text>
+          <Text style={_styles.memento}>Comment</Text>
+          <Text style={_styles.memento}>Share</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+const PostList = ({ list, onLoadMore }) => {
   return (
-    <View
-      style={{
-        margin: 16,
-        borderRadius: 10,
-        backgroundColor: Colors['dark-8'],
-        overflow: 'hidden',
-      }}
-    >
-      <View>
-        <View style={{ backgroundColor: Colors['dark-2'], padding: 8 }}>
-          <Text style={_styles.momento}>{data.mementoId}</Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontFamily: 'Inconsolata-Bold',
-              fontSize: 18,
-              color: Colors['white-1'],
-              textAlign: 'center',
-              padding: 16,
-            }}
-          >
-            {data.user.id}
-          </Text>
-        </View>
-      </View>
-
-      <View style={{ height: Dimensions.get('window').width - 32 }}>
-        <Swiper showsButtons={true} loop={false} showsPagination={true}>
-          <View style={_styles.slide1}>
-            <Text style={_styles.text}>Hello Swiper</Text>
-          </View>
-          <View style={_styles.slide2}>
-            <Text style={_styles.text}>Beautiful</Text>
-          </View>
-          <View style={_styles.slide3}>
-            <Text style={_styles.text}>And simple</Text>
-          </View>
-        </Swiper>
-      </View>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
-        <Text style={_styles.momento}>Piece</Text>
-        <Text style={_styles.momento}>Comment</Text>
-        <Text style={_styles.momento}>Share</Text>
-      </View>
+    <View>
+      <FlatList
+        data={list}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Post post={item} />}
+        contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
+        onEndReachedThreshold={0.9}
+        onEndReached={onLoadMore}
+      />
     </View>
   );
 };
 
-export default Post;
+const PostMomento = ({ memento }) => {
+  return (
+    <View style={{ backgroundColor: Colors['dark-2'], padding: 6 }}>
+      <Text style={_styles.memento}>{memento.id}</Text>
+    </View>
+  );
+};
+
+const PostOwner = ({ user }) => {
+  return (
+    <View>
+      <Text
+        style={{
+          fontFamily: 'Inconsolata-Bold',
+          fontSize: 18,
+          color: Colors['white-1'],
+          textAlign: 'center',
+          padding: 14,
+        }}
+      >
+        {user.id}
+      </Text>
+    </View>
+  );
+};
+
+export default PostList;
 
 const _styles = StyleSheet.create({
-  momento: {
-    fontFamily: 'Inconsolata-Bold',
+  memento: {
+    fontFamily: 'Inconsolata-SemiBold',
     fontSize: 16,
     color: Colors['white-1'],
     textAlign: 'center',
-  },
-
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
-  },
-
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
-  },
-
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
   },
 });

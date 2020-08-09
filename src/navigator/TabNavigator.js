@@ -5,8 +5,9 @@ import { SvgXml } from 'react-native-svg';
 import HomeScreen from '../screen/HomeScreen';
 import ExploreScreen from '../screen/ExploreScreen';
 import NewPostScreen from '../screen/NewPostScreen';
-import WalletScreen from '../screen/WalletScreen';
 import ProfileScreen from '../screen/ProfileScreen';
+import WalletNavigator from './WalletNavigator';
+
 import Colors from '../utils/color';
 import assetSvg from '../assets/svg/svg';
 
@@ -14,7 +15,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName={'Home'}
+      initialRouteName={'Explore'}
       tabBarOptions={{
         activeTintColor: Colors['primary-5'],
         inactiveTintColor: Colors['white-1'],
@@ -38,7 +39,7 @@ const TabNavigator = () => {
           },
         })}
       />
-      <Tab.Screen name="Wallet" component={WalletScreen} />
+      <Tab.Screen name="Wallet" component={WalletNavigator} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

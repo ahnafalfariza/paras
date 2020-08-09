@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainHeader from '../../component/MainHeader';
+import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Screen';
 
 const WalletHistory = () => {

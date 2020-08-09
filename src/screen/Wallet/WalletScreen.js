@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableWithoutFeedback } from 'react-native';
 
-import MainHeader from '../../component/MainHeader';
+import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Screen';
 import Colors from '../../utils/color';
+import assetSvg from '../../assets/svg/svg';
+import { SvgXml } from 'react-native-svg';
 
 class WalletScreen extends Component {
   render() {
@@ -17,12 +19,19 @@ class WalletScreen extends Component {
             >
               Your Balance
             </Text>
-            <View style={{ marginVertical: 16 }}>
+            <View style={{ marginVertical: 8, flexDirection: 'row', alignItems: 'center' }}>
               <Text
                 style={{ fontFamily: 'Inconsolata-Bold', color: Colors['white-1'], fontSize: 48 }}
               >
                 0.000000000
               </Text>
+              <SvgXml
+                xml={assetSvg.wallet.pac}
+                width="36"
+                height="36"
+                fill={Colors['white-1']}
+                style={{ marginLeft: 12 }}
+              />
             </View>
             <Text
               style={{ fontFamily: 'Inconsolata-Regular', color: Colors['white-1'], fontSize: 16 }}
@@ -32,11 +41,12 @@ class WalletScreen extends Component {
             <View
               style={{
                 marginVertical: 16,
-                paddingVertical: 12,
-                paddingHorizontal: 24,
-                borderRadius: 8,
+                height: 38,
+                width: 96,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 6,
                 backgroundColor: Colors['primary-5'],
-                alignSelf: 'flex-start',
               }}
             >
               <Text

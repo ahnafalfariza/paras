@@ -18,9 +18,9 @@ class ExploreScreen extends Component {
 
   getExploreData = (page) => {
     Axios.get(EXPLORE_URL(page))
-      .then((res) =>
-        this.setState((prevState) => ({ data: [...prevState.data, ...res.data.data] })),
-      )
+      .then((res) => {
+        this.setState((prevState) => ({ data: [...prevState.data, ...res.data.data] }));
+      })
       .catch((err) => console.log(err));
   };
 

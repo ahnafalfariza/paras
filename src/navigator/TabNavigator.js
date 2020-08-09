@@ -2,11 +2,11 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
 
-import HomeScreen from '../screen/HomeScreen';
-import ExploreScreen from '../screen/ExploreScreen';
 import NewPostScreen from '../screen/NewPostScreen';
 import ProfileScreen from '../screen/ProfileScreen';
+import HomeNavigator from './HomeNavigator';
 import WalletNavigator from './WalletNavigator';
+import ExploreNavigator from './ExploreNavigator';
 
 import Colors from '../utils/color';
 import assetSvg from '../assets/svg/svg';
@@ -15,20 +15,12 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName={'Explore'}
-      tabBarOptions={{
-        activeTintColor: Colors['primary-5'],
-        inactiveTintColor: Colors['white-1'],
-        style: { backgroundColor: Colors['dark-12'], borderTopWidth: 0 },
-        labelStyle: { fontFamily: 'Inconsolata-Bold' },
-        showLabel: false,
-      }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => tabBarIcon(color, route),
-      })}
+      initialRouteName={'Home'}
+      tabBarOptions={tabBarOption}
+      screenOptions={({ route }) => ({ tabBarIcon: ({ color }) => tabBarIcon(color, route) })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="Explore" component={ExploreNavigator} />
       <Tab.Screen
         name="NewPost"
         component={NewPostScreen}
@@ -43,6 +35,14 @@ const TabNavigator = () => {
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
+};
+
+const tabBarOption = {
+  activeTintColor: Colors['primary-5'],
+  inactiveTintColor: Colors['white-1'],
+  style: { backgroundColor: Colors['dark-12'], borderTopWidth: 0 },
+  labelStyle: { fontFamily: 'Inconsolata-Bold' },
+  showLabel: false,
 };
 
 const tabBarIcon = (color, route) => {

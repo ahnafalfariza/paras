@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-
-import Colors from '../utils/color';
-import PostContent from './PostContent';
 import { useScrollToTop } from '@react-navigation/native';
+
+import Colors from '../../utils/color';
+import PostContent from './PostContent';
+import PostOwner from './PostOwner';
+import PostMemento from './PostMemento';
 
 class Post extends PureComponent {
   render() {
@@ -19,7 +21,7 @@ class Post extends PureComponent {
           overflow: 'hidden',
         }}
       >
-        <PostMomento memento={memento} />
+        <PostMemento memento={memento} />
         <PostOwner user={user} />
         <PostContent contentList={contentList} />
 
@@ -33,7 +35,7 @@ class Post extends PureComponent {
   }
 }
 
-const PostList = ({ list, onLoadMore }) => {
+const PostList = ({ list, onLoadMore, header }) => {
   const ref = React.useRef(null);
 
   useScrollToTop(ref);
@@ -46,35 +48,10 @@ const PostList = ({ list, onLoadMore }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Post post={item} />}
         contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
+        ListHeaderComponent={header}
         onEndReachedThreshold={0.9}
         onEndReached={onLoadMore}
       />
-    </View>
-  );
-};
-
-const PostMomento = ({ memento }) => {
-  return (
-    <View style={{ backgroundColor: Colors['dark-2'], padding: 6 }}>
-      <Text style={_styles.memento}>{memento.id}</Text>
-    </View>
-  );
-};
-
-const PostOwner = ({ user }) => {
-  return (
-    <View>
-      <Text
-        style={{
-          fontFamily: 'Inconsolata-Bold',
-          fontSize: 18,
-          color: Colors['white-1'],
-          textAlign: 'center',
-          padding: 14,
-        }}
-      >
-        {user.id}
-      </Text>
     </View>
   );
 };
@@ -86,6 +63,5 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-SemiBold',
     fontSize: 16,
     color: Colors['white-1'],
-    textAlign: 'center',
   },
 });

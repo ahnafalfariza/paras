@@ -5657,7 +5657,7 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-elements@^2.1.0:
+react-native-elements@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.2.0.tgz#18e1269d31530fbbd079e5cc285b83b2bbf27676"
   integrity sha512-OkXH96ecqDFcrjxzOWw2h3nt8TxX1ghzvJ/W4OGaxm7u7LC0LzE3SMAx/rh/Zyp/jkdXap032ZLm1mSrxrBuuQ==

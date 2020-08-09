@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 
 import Screen from '../component/Screen';
-import MainHeader from '../component/MainHeader';
+import MainHeader from '../component/Header/MainHeader';
 import Colors from '../utils/color';
 
 class ProfileScreen extends Component {

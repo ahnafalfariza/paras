@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 
 import MainHeader from '../../component/Header/MainHeader';
-import Screen from '../../component/Screen';
+import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import assetSvg from '../../assets/svg/svg';
 import MainButton from '../../component/Common/MainButton';

@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { SvgXml } from 'react-native-svg';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import Screen from '../../component/Screen';
+import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import PostList from '../../component/Post/Post';
 import MemoryGrant from '../../component/MemoryGrant';

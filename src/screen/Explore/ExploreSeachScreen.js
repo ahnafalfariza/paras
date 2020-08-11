@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Axios from 'axios';
 
 import MainHeader from '../../component/Header/MainHeader';
-import Screen from '../../component/Screen';
+import Screen from '../../component/Common/Screen';
 import { View, TextInput } from 'react-native';
 import Colors from '../../utils/color';
 import { SEARCH_URL } from '../../utils/api';

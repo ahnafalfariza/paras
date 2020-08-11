@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 
 import HomeHeader from '../../component/Header/HomeHeader';
-import Screen from '../../component/Screen';
+import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 
 class HomePicks extends Component {

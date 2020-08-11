@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, View } from 'react-native';
-import Colors from '../utils/color';
+
+import Colors from '../../utils/color';
 
 const Screen = ({ children, style }) => {
   return (

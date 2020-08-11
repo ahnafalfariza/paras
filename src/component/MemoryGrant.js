@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import { getImageUrl } from '../utils/image';
 import Colors from '../utils/color';
 
-const MemoryGrant = () => {
+const MemoryGrant = ({ img = null, mementoId = '' }) => {
   return (
     <>
       <View
@@ -22,10 +22,7 @@ const MemoryGrant = () => {
         <View style={{ flex: 1 }}>
           <FastImage
             source={{
-              uri: getImageUrl({
-                url: 'QmfWxedXqfhDMDeRZCSecD7YUr7LZkG5iNDHcvj1ytPx59',
-                type: 'ipfs',
-              }),
+              uri: getImageUrl(img),
             }}
             style={{ width: 48, height: 48, borderRadius: 8 }}
           />
@@ -40,7 +37,7 @@ const MemoryGrant = () => {
           }}
         >
           <Text>Contribute to </Text>
-          <Text style={{ fontFamily: 'Inconsolata-Bold' }}>90nostalgia.music</Text>
+          <Text style={{ fontFamily: 'Inconsolata-Bold' }}>{mementoId}</Text>
           <Text>And get a chance to win $10 for 5 users</Text>
         </Text>
       </View>

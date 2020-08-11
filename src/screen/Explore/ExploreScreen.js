@@ -7,7 +7,7 @@ import Screen from '../../component/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import PostList from '../../component/Post/Post';
 import MemoryGrant from '../../component/MemoryGrant';
-import { EXPLORE_URL } from '../../utils/api';
+import { EXPLORE_URL, MEMORY_GRANTS } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 
@@ -15,18 +15,31 @@ class ExploreScreen extends Component {
   state = {
     data: [],
     page: 1,
+    isLoaded: false,
+    memoryGrants: {},
   };
 
   componentDidMount() {
     this.getExploreData(this.state.page);
   }
 
-  getExploreData = (page) => {
-    Axios.get(EXPLORE_URL(page))
-      .then((res) => {
-        this.setState((prevState) => ({ data: [...prevState.data, ...res.data.data] }));
-      })
+  getExploreData = (page, onRefresh = false) => {
+    Axios.all([Axios.get(EXPLORE_URL(page)), Axios.get(MEMORY_GRANTS)])
+      .then(
+        Axios.spread((explore, memoryGrants) => {
+          this.setState((prevState) => ({
+            data: onRefresh ? explore.data.data : [...prevState.data, ...explore.data.data],
+            memoryGrants: memoryGrants.data.data[0],
+            isLoaded: true,
+          }));
+        }),
+      )
       .catch((err) => console.log(err));
+  };
+
+  onRefreshExplore = () => {
+    this.getExploreData(1, true);
+    this.setState({ page: 1 });
   };
 
   loadMorePost = () => {
@@ -55,7 +68,15 @@ class ExploreScreen extends Component {
           <PostList
             list={this.state.data}
             onLoadMore={this.loadMorePost}
-            header={() => <MemoryGrant />}
+            onRefresh={this.onRefreshExplore}
+            header={() =>
+              this.state.isLoaded && this.state.memoryGrants ? (
+                <MemoryGrant
+                  mementoId={this.state.memoryGrants.mementoId}
+                  img={this.state.memoryGrants.memento.img}
+                />
+              ) : null
+            }
           />
         </Screen>
       </>

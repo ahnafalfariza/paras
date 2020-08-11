@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import HomeHeader from '../../component/Header/HomeHeader';
-
-import Screen from '../../component/Screen';
-
 import { Text } from 'react-native';
+
+import HomeHeader from '../../component/Header/HomeHeader';
+import Screen from '../../component/Screen';
 import Colors from '../../utils/color';
 
 class HomePicks extends Component {

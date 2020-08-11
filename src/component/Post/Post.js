@@ -1,5 +1,5 @@
 import React, { PureComponent, useState } from 'react';
-import { View, Text, RefreshControl } from 'react-native';
+import { View, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useScrollToTop } from '@react-navigation/native';
 
@@ -9,10 +9,11 @@ import PostMemento from './PostMemento';
 import PostAction from './PostAction';
 
 import Colors from '../../utils/color';
+import PostDate from './PostDate';
 
 class Post extends PureComponent {
   render() {
-    const { contentList, user, memento } = this.props.post;
+    const { contentList, user, memento, createdAt } = this.props.post;
 
     return (
       <View
@@ -27,25 +28,7 @@ class Post extends PureComponent {
         <PostMemento memento={memento} />
         <PostOwner user={user} />
         <PostContent contentList={contentList} />
-
-        <Text
-          style={{
-            fontFamily: 'Inconsolata-Regular',
-            color: Colors['white-2'],
-            margin: 8,
-            fontSize: 13,
-          }}
-        >
-          20 Minutes ago
-        </Text>
-        <View
-          style={{
-            backgroundColor: Colors['white-1'],
-            height: 1,
-            marginHorizontal: 8,
-          }}
-        />
-
+        <PostDate date={createdAt} />
         <PostAction />
       </View>
     );
@@ -70,6 +53,8 @@ const PostList = ({ list, onLoadMore, header, onRefresh }) => {
 
   useScrollToTop(ref);
 
+  const renderItem = ({ item }) => <Post post={item} />;
+
   return (
     <View>
       <FlatList
@@ -83,7 +68,7 @@ const PostList = ({ list, onLoadMore, header, onRefresh }) => {
           />
         }
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Post post={item} />}
+        renderItem={renderItem}
         contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
         ListHeaderComponent={header}
         onEndReachedThreshold={0.9}

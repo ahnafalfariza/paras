@@ -62,6 +62,8 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-ExtraBold',
     fontSize: 28,
     color: Colors['white-1'],
+    textAlign: 'center',
+    width: '70%',
   },
 
   descView: {

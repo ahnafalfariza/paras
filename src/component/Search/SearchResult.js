@@ -7,11 +7,13 @@ import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 
 const SearchResultList = ({ result }) => {
+  const renderItem = ({ item }) => <SearchResult item={item} />;
+
   return (
     <FlatList
       data={result}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <SearchResult item={item} />}
+      renderItem={renderItem}
       contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
     />
   );

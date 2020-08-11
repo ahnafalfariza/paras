@@ -1,11 +1,13 @@
-import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { PureComponent, useState } from 'react';
+import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 
-import Colors from '../../utils/color';
 import PostContent from './PostContent';
 import PostOwner from './PostOwner';
 import PostMemento from './PostMemento';
+import PostAction from './PostAction';
+
+import Colors from '../../utils/color';
 
 class Post extends PureComponent {
   render() {
@@ -25,18 +27,45 @@ class Post extends PureComponent {
         <PostOwner user={user} />
         <PostContent contentList={contentList} />
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
-          <Text style={_styles.memento}>Piece</Text>
-          <Text style={_styles.memento}>Comment</Text>
-          <Text style={_styles.memento}>Share</Text>
-        </View>
+        <Text
+          style={{
+            fontFamily: 'Inconsolata-Regular',
+            color: Colors['white-2'],
+            margin: 8,
+            fontSize: 13,
+          }}
+        >
+          20 Minutes ago
+        </Text>
+        <View
+          style={{
+            backgroundColor: Colors['white-1'],
+            height: 1,
+            marginHorizontal: 8,
+          }}
+        />
+
+        <PostAction />
       </View>
     );
   }
 }
 
-const PostList = ({ list, onLoadMore, header }) => {
+const PostList = ({ list, onLoadMore, header, onRefresh }) => {
+  const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, timeout);
+    });
+  };
+
+  const refreshFlatlist = async () => {
+    setRefresh(true);
+    await wait(2000).then(() => onRefresh());
+    setRefresh(false);
+  };
 
   useScrollToTop(ref);
 
@@ -45,6 +74,13 @@ const PostList = ({ list, onLoadMore, header }) => {
       <FlatList
         ref={ref}
         data={list}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            tintColor={'#ffffff'}
+            onRefresh={refreshFlatlist}
+          />
+        }
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Post post={item} />}
         contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
@@ -57,11 +93,3 @@ const PostList = ({ list, onLoadMore, header }) => {
 };
 
 export default PostList;
-
-const _styles = StyleSheet.create({
-  memento: {
-    fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 16,
-    color: Colors['white-1'],
-  },
-});

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 
 import MainHeader from '../../component/Header/MainHeader';

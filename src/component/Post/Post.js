@@ -1,5 +1,6 @@
 import React, { PureComponent, useState } from 'react';
-import { View, Text, FlatList, RefreshControl } from 'react-native';
+import { View, Text, RefreshControl } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { useScrollToTop } from '@react-navigation/native';
 
 import PostContent from './PostContent';

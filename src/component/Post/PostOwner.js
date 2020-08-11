@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableNativeFeedback } from 'react-native';
+import { View, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';

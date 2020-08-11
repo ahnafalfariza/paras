@@ -1,8 +1,9 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';

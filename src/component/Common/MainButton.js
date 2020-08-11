@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Colors from '../../utils/color';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 const MainButton = ({ title, onPress, textStyle, containerStyle }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
-import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
+import { SvgXml } from 'react-native-svg';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Screen from '../../component/Screen';
 import MainHeader from '../../component/Header/MainHeader';

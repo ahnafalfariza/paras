@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TouchableNativeFeedback, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text } from 'react-native';
+import { TouchableNativeFeedback, FlatList } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 
 import { getImageUrl } from '../../utils/image';
@@ -18,32 +19,34 @@ const SearchResultList = ({ result }) => {
 
 const SearchResult = ({ item }) => {
   return (
-    <View style={{ margin: 8, borderRadius: 4, overflow: 'hidden' }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 8,
-          backgroundColor: Colors['dark-4'],
-        }}
-      >
-        <FastImage
-          source={{ uri: getImageUrl(item.img) }}
-          style={{ height: 28, width: 28, margin: 4 }}
-        />
-        <Text
+    <TouchableNativeFeedback onPress={() => console.log('go to search result')}>
+      <View style={{ margin: 8, borderRadius: 4, overflow: 'hidden' }}>
+        <View
           style={{
-            fontFamily: 'Inconsolata-Bold',
-            fontSize: 18,
-            color: Colors['white-1'],
-            marginLeft: 8,
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 8,
+            backgroundColor: Colors['dark-4'],
           }}
         >
-          {item.id}
-        </Text>
+          <FastImage
+            source={{ uri: getImageUrl(item.img) }}
+            style={{ height: 28, width: 28, margin: 4 }}
+          />
+          <Text
+            style={{
+              fontFamily: 'Inconsolata-Bold',
+              fontSize: 18,
+              color: Colors['white-1'],
+              marginLeft: 8,
+            }}
+          >
+            {item.id}
+          </Text>
+        </View>
+        <View></View>
       </View>
-      <View></View>
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 

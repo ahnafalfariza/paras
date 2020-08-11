@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import MainHeader from './MainHeader';
 import Colors from '../../utils/color';

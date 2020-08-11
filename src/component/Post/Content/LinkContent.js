@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+
 import Colors from '../../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { getImageUrl } from '../../../utils/image';
@@ -7,66 +8,18 @@ import { getImageUrl } from '../../../utils/image';
 const LinkContent = ({ body }) => {
   const link = JSON.parse(body);
   return (
-    <View
-      style={{
-        flex: 1,
-        margin: 6,
-        backgroundColor: Colors['dark-2'],
-        borderRadius: 8,
-        overflow: 'hidden',
-      }}
-    >
-      <View style={{ height: '60%' }}>
-        <FastImage
-          style={{ width: '100%', height: '100%', opacity: 0.5 }}
-          source={{ uri: getImageUrl(link.img) }}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{ fontFamily: 'Inconsolata-ExtraBold', fontSize: 28, color: Colors['white-1'] }}
-          >
-            {link.title}
-          </Text>
+    <View style={_styles.container}>
+      <View style={_styles.imageView}>
+        <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />
+        <View style={_styles.imageTextContainer}>
+          <Text style={_styles.imageText}>{link.title}</Text>
         </View>
       </View>
-      <View style={{ height: '30%', padding: 12, justifyContent: 'center' }}>
-        <Text
-          style={{
-            fontFamily: 'Inconsolata-SemiBold',
-            fontSize: 18,
-            color: Colors['white-1'],
-          }}
-        >
-          {link.desc}
-        </Text>
+      <View style={_styles.descView}>
+        <Text style={_styles.descText}>{link.desc}</Text>
       </View>
-      <View
-        style={{
-          height: '10%',
-          paddingHorizontal: 12,
-          paddingBottom: 12,
-          justifyContent: 'center',
-        }}
-      >
-        <Text
-          numberOfLines={1}
-          style={{
-            fontFamily: 'Inconsolata-SemiBold',
-            fontSize: 18,
-            color: Colors['white-1'],
-            justifyContent: 'center',
-          }}
-        >
+      <View style={_styles.linkView}>
+        <Text numberOfLines={1} style={_styles.linkText}>
           {link.url}
         </Text>
       </View>
@@ -75,3 +28,64 @@ const LinkContent = ({ body }) => {
 };
 
 export default LinkContent;
+
+const _styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 6,
+    backgroundColor: Colors['dark-2'],
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+
+  imageView: {
+    height: '60%',
+  },
+
+  imageTextContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  image: {
+    width: '100%',
+    height: '100%',
+    opacity: 0.5,
+  },
+
+  imageText: {
+    fontFamily: 'Inconsolata-ExtraBold',
+    fontSize: 28,
+    color: Colors['white-1'],
+  },
+
+  descView: {
+    height: '30%',
+    padding: 12,
+    justifyContent: 'center',
+  },
+
+  descText: {
+    fontFamily: 'Inconsolata-SemiBold',
+    fontSize: 18,
+    color: Colors['white-1'],
+  },
+
+  linkView: {
+    height: '10%',
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+    justifyContent: 'center',
+  },
+
+  linkText: {
+    fontFamily: 'Inconsolata-SemiBold',
+    fontSize: 18,
+    color: Colors['white-1'],
+  },
+});

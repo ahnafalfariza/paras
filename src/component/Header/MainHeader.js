@@ -41,8 +41,8 @@ const MainHeader = ({ withBack, title, rightComponent, centerComponent }) => {
       rightContainerStyle={{ flex: 0 }}
       centerComponent={isCenterCustom ? centerComponent : titleComponent}
       centerContainerStyle={{
-        marginLeft: withBack ? 16 : 0,
-        paddingHorizontal: isCenterCustom ? 0 : 8,
+        marginLeft: withBack ? 4 : 0,
+        paddingHorizontal: 8,
       }}
       containerStyle={{
         backgroundColor: Colors['dark-12'],

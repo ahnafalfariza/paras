@@ -1,24 +1,43 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 
 import Colors from '../../../utils/color';
 
 const TextContent = ({ body }) => {
   return (
-    <View style={{ justifyContent: 'center', flex: 1, paddingVertical: 48 }}>
+    <View style={_styles.container}>
       <ScrollView
-        style={{ paddingHorizontal: 48 }}
+        style={_styles.scrollview}
         bounces={false}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        contentContainerStyle={_styles.contentContainer}
       >
-        <Text
-          style={{ fontSize: 18, fontFamily: 'Inconsolata-SemiBold', color: Colors['white-1'] }}
-        >
-          {body}
-        </Text>
+        <Text style={_styles.text}>{body}</Text>
       </ScrollView>
     </View>
   );
 };
 
 export default TextContent;
+
+const _styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    flex: 1,
+    paddingVertical: 48,
+  },
+
+  scrollview: {
+    paddingHorizontal: 48,
+  },
+
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+
+  text: {
+    fontSize: 18,
+    fontFamily: 'Inconsolata-SemiBold',
+    color: Colors['white-1'],
+  },
+});

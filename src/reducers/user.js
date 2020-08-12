@@ -1,7 +1,15 @@
 import { Auth } from '../actions/types';
 
 const INITIAL_STATE = {
-  user: null,
+  user: {
+    id: 'zilalvs.testnet',
+    imgAvatar: {
+      url: 'QmUMKPXyPogETNyJvZCPdgd6qDSeEdLWK5nmdZtbkzGVra',
+      type: 'ipfs',
+    },
+    bio: 'written thoughts; constantly educating myself.',
+    createdAt: '1593851018660737775',
+  },
   error: false,
 };
 

@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
 
-import Screen from '../component/Screen';
+import Screen from '../component/Common/Screen';
 import MainHeader from '../component/Header/MainHeader';
-import Colors from '../utils/color';
+import Profile from '../component/Profile/Profile';
+
+const user = {
+  id: 'zilalvs.testnet',
+  imgAvatar: {
+    url: 'QmUMKPXyPogETNyJvZCPdgd6qDSeEdLWK5nmdZtbkzGVra',
+    type: 'ipfs',
+  },
+  bio: 'written thoughts; constantly educating myself.',
+  createdAt: '1593851018660737775',
+};
 
 class ProfileScreen extends Component {
   render() {
     return (
       <>
         <MainHeader title={'Profile'} />
-        <Screen>
-          <Text
-            style={{ fontFamily: 'Inconsolata-Regular', color: Colors['white-1'], fontSize: 24 }}
-          >
-            ProfileScreen
-          </Text>
+        <Screen style={{ margin: 16 }}>
+          <Profile data={user} />
         </Screen>
       </>
     );

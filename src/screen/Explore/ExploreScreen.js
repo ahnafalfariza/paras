@@ -7,7 +7,7 @@ import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import PostList from '../../component/Post/Post';
 import MemoryGrant from '../../component/MemoryGrant';
-import { EXPLORE_URL, MEMORY_GRANTS } from '../../utils/api';
+import { EXPLORE_URL, MEMORY_GRANTS_URL } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 
@@ -24,7 +24,7 @@ class ExploreScreen extends Component {
   }
 
   getExploreData = (page, onRefresh = false) => {
-    Axios.all([Axios.get(EXPLORE_URL(page)), Axios.get(MEMORY_GRANTS)])
+    Axios.all([Axios.get(EXPLORE_URL(page)), Axios.get(MEMORY_GRANTS_URL)])
       .then(
         Axios.spread((explore, memoryGrants) => {
           this.setState((prevState) => ({

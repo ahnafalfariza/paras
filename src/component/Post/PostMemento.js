@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
+import { useNavigation } from '@react-navigation/native';
 
 const PostMemento = ({ memento }) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableNativeFeedback onPress={() => console.log('go to memento')}>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('Memento', { memento })}>
       <View
         style={{
           backgroundColor: Colors['dark-2'],
@@ -24,7 +27,7 @@ const PostMemento = ({ memento }) => {
         />
         <Text style={_styles.memento}>{memento.id}</Text>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableWithoutFeedback>
   );
 };
 

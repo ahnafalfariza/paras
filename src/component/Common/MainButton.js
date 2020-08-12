@@ -1,16 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Colors from '../../utils/color';
 
 const MainButton = ({ title, onPress, textStyle, containerStyle }) => {
   return (
-    <TouchableNativeFeedback onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress}>
       <View style={[_styles.sendButton, containerStyle]}>
         <Text style={[_styles.sendText, textStyle]}>{title}</Text>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableWithoutFeedback>
   );
 };
 

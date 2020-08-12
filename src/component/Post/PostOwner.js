@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 
 import Colors from '../../utils/color';
@@ -18,7 +18,7 @@ const PostOwner = ({ user }) => {
         justifyContent: 'space-between',
       }}
     >
-      <TouchableNativeFeedback onPress={() => console.log('go to profile')}>
+      <TouchableWithoutFeedback onPress={() => console.log('go to profile')}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage
             source={{ uri: getImageUrl(user.imgAvatar) }}
@@ -34,8 +34,8 @@ const PostOwner = ({ user }) => {
             {user.id}
           </Text>
         </View>
-      </TouchableNativeFeedback>
-      <TouchableNativeFeedback onPress={() => console.log('more')}>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => console.log('more')}>
         <View style={{ padding: 16 }}>
           <SvgXml
             xml={assetSvg.common.more}
@@ -45,7 +45,7 @@ const PostOwner = ({ user }) => {
             fill={Colors['white-1']}
           />
         </View>
-      </TouchableNativeFeedback>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

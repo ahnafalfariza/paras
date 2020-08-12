@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { TouchableNativeFeedback, FlatList } from 'react-native-gesture-handler';
+import { View, Text, FlatList } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import FastImage from 'react-native-fast-image';
 
 import { getImageUrl } from '../../utils/image';
@@ -21,7 +21,7 @@ const SearchResultList = ({ result }) => {
 
 const SearchResult = ({ item }) => {
   return (
-    <TouchableNativeFeedback onPress={() => console.log('go to search result')}>
+    <TouchableWithoutFeedback onPress={() => console.log('go to search result')}>
       <View style={{ margin: 8, borderRadius: 4, overflow: 'hidden' }}>
         <View
           style={{
@@ -48,7 +48,7 @@ const SearchResult = ({ item }) => {
         </View>
         <View></View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableWithoutFeedback>
   );
 };
 

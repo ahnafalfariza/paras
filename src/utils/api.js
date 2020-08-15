@@ -1,14 +1,22 @@
+import { postLimit } from './constant';
+
 export const BASE_URL = 'https://api-dev.paras.id/';
 
-export const EXPLORE_URL = (page, limit = 10) =>
-  `${BASE_URL}posts?__skip=${(page - 1) * limit}&__limit=${limit}&__sort=-createdAt`;
+export const EXPLORE_URL = (page) =>
+  `${BASE_URL}posts?__skip=${(page - 1) * postLimit}&__limit=${postLimit}&__sort=-createdAt`;
 
 export const MEMORY_GRANTS_URL = `${BASE_URL}grants?isActive=true`;
 
 export const SEARCH_URL = (query) => `${BASE_URL}search?id__re=${query}`;
 
-export const PROFILE_URL = (id) => `${BASE_URL}/users?id=${id}`;
-export const PROFILE_POST = (id) => `${BASE_URL}/posts?owner=${id}`;
+export const PROFILE_URL = (id) => `${BASE_URL}users?id=${id}`;
+export const PROFILE_POST_URL = (id, page) =>
+  `${BASE_URL}posts?owner=${id}&__skip=${
+    (page - 1) * postLimit
+  }&__limit=${postLimit}&__sort=-createdAt`;
 
-export const MEMENTO_URL = () => ``;
-export const MEMENTO_POST_URL = () => ``;
+export const MEMENTO_URL = () => '';
+export const MEMENTO_POST_URL = (id, page) =>
+  `${BASE_URL}posts?mementoId=${id}&__skip=${
+    (page - 1) * postLimit
+  }&__limit=${postLimit}&__sort=-createdAt`;

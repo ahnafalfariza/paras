@@ -1,5 +1,5 @@
 import React, { PureComponent, useState } from 'react';
-import { View, RefreshControl, FlatList } from 'react-native';
+import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 
 import PostContent from './PostContent';
@@ -13,7 +13,6 @@ import PostDate from './PostDate';
 class Post extends PureComponent {
   render() {
     const { contentList, user, memento, createdAt } = this.props.post;
-
     return (
       <View
         style={{
@@ -34,7 +33,7 @@ class Post extends PureComponent {
   }
 }
 
-const PostList = ({ list, onLoadMore, header, onRefresh }) => {
+const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, hasMore }) => {
   const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
 
@@ -50,9 +49,9 @@ const PostList = ({ list, onLoadMore, header, onRefresh }) => {
     setRefresh(false);
   };
 
-  useScrollToTop(ref);
-
   const renderItem = ({ item }) => <Post post={item} />;
+
+  useScrollToTop(ref);
 
   return (
     <View>
@@ -70,8 +69,13 @@ const PostList = ({ list, onLoadMore, header, onRefresh }) => {
         renderItem={renderItem}
         contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
         ListHeaderComponent={header}
+        ListFooterComponent={() => {
+          return hasMore ? (
+            <ActivityIndicator color="#ffffff" style={{ marginBottom: 16 }} />
+          ) : null;
+        }}
         onEndReachedThreshold={0.9}
-        onEndReached={onLoadMore}
+        onEndReached={hasMore ? onLoadMore : null}
       />
     </View>
   );

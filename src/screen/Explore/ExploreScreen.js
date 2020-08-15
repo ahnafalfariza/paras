@@ -10,6 +10,7 @@ import MemoryGrant from '../../component/MemoryGrant';
 import { EXPLORE_URL, MEMORY_GRANTS_URL } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import { postLimit } from '../../utils/constant';
 
 class ExploreScreen extends Component {
   state = {
@@ -17,6 +18,7 @@ class ExploreScreen extends Component {
     page: 1,
     isLoaded: false,
     memoryGrants: {},
+    hasMore: false,
   };
 
   componentDidMount() {
@@ -30,6 +32,7 @@ class ExploreScreen extends Component {
           this.setState((prevState) => ({
             data: onRefresh ? explore.data.data : [...prevState.data, ...explore.data.data],
             memoryGrants: memoryGrants.data.data[0],
+            hasMore: explore.data.data.length < postLimit ? false : true,
             isLoaded: true,
           }));
         }),
@@ -77,6 +80,7 @@ class ExploreScreen extends Component {
                 />
               ) : null
             }
+            hasMore={this.state.hasMore}
           />
         </Screen>
       </>

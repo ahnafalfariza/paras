@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { SvgXml } from 'react-native-svg';
 
 import Colors from '../../utils/color';
@@ -9,6 +10,14 @@ import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 
 const PostOwner = ({ user }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  let isSameRoute = false;
+  if (route.name === 'UserProfile') {
+    isSameRoute = user.id === route.params.user.id;
+  }
+
   return (
     <View
       style={{
@@ -18,21 +27,12 @@ const PostOwner = ({ user }) => {
         justifyContent: 'space-between',
       }}
     >
-      <TouchableWithoutFeedback onPress={() => console.log('go to profile')}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <FastImage
-            source={{ uri: getImageUrl(user.imgAvatar) }}
-            style={{ height: 36, width: 36, margin: 10 }}
-          />
-          <Text
-            style={{
-              fontFamily: 'Inconsolata-Bold',
-              fontSize: 18,
-              color: Colors['white-1'],
-            }}
-          >
-            {user.id}
-          </Text>
+      <TouchableWithoutFeedback
+        onPress={() => (isSameRoute ? null : navigation.push('UserProfile', { user }))}
+      >
+        <View style={_styles.userView}>
+          <FastImage source={{ uri: getImageUrl(user.imgAvatar) }} style={_styles.userImage} />
+          <Text style={_styles.userText}>{user.id}</Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => console.log('more')}>
@@ -51,3 +51,22 @@ const PostOwner = ({ user }) => {
 };
 
 export default PostOwner;
+
+const _styles = StyleSheet.create({
+  userText: {
+    fontFamily: 'Inconsolata-Bold',
+    fontSize: 18,
+    color: Colors['white-1'],
+  },
+
+  userImage: {
+    height: 36,
+    width: 36,
+    margin: 10,
+  },
+
+  userView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

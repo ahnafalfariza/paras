@@ -19,7 +19,7 @@ class ProfileScreen extends Component {
     return (
       <>
         <MainHeader title={'Profile'} />
-        <Screen style={{ margin: 16 }}>
+        <Screen>
           <Profile data={user} />
         </Screen>
       </>

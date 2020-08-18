@@ -21,7 +21,10 @@ class WalletScreen extends Component {
             <SvgXml xml={assetSvg.wallet.pac} width="36" height="36" fill={Colors['white-1']} />
           </View>
           <Text style={_styles.textRegular}>Learn more about PAC</Text>
-          <MainButton title={'SEND'} />
+          <MainButton
+            title={'SEND'}
+            onPress={() => this.props.navigation.navigate('Wallet Transaction')}
+          />
           <Text style={_styles.textSemiBold}>Recent Transaction</Text>
           <TouchableWithoutFeedback
             onPress={() => this.props.navigation.navigate('Wallet History')}

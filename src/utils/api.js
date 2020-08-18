@@ -20,3 +20,5 @@ export const MEMENTO_POST_URL = (id, page) =>
   `${BASE_URL}posts?mementoId=${id}&__skip=${
     (page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
+
+export const SEARCH_USER_SEND = (query) => `${BASE_URL}users?id__re=${query}`;

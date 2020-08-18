@@ -6,7 +6,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import PostList from '../../component/Post/Post';
-import MemoryGrant from '../../component/MemoryGrant';
+import MemoryGrant from '../../component/Common/MemoryGrant';
 import { EXPLORE_URL, MEMORY_GRANTS_URL } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';

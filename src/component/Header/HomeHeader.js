@@ -5,6 +5,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import MainHeader from './MainHeader';
 import Colors from '../../utils/color';
 import { useNavigation } from '@react-navigation/native';
+import RoutesName from '../../utils/RoutesName';
 
 const HomeHeader = ({ active = 'picks' }) => {
   return <MainHeader centerComponent={<CenterHeaderComponent active={active} />} />;
@@ -16,7 +17,7 @@ const CenterHeaderComponent = ({ active }) => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <TouchableWithoutFeedback
-        onPress={() => (active === 'picks' ? null : navigation.navigate('HomePicks'))}
+        onPress={() => (active === 'picks' ? null : navigation.navigate(RoutesName.HomePicks))}
       >
         <Text
           style={{
@@ -30,7 +31,9 @@ const CenterHeaderComponent = ({ active }) => {
         </Text>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
-        onPress={() => (active === 'following' ? null : navigation.navigate('HomeFollowing'))}
+        onPress={() =>
+          active === 'following' ? null : navigation.navigate(RoutesName.HomeFollowing)
+        }
       >
         <Text
           style={{

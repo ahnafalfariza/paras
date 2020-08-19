@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
+import RoutesName from '../../utils/RoutesName';
 
 const Profile = ({ data, type = 'user' }) => {
   const img = type === 'user' ? data.imgAvatar : data.img;
@@ -22,7 +23,7 @@ const Profile = ({ data, type = 'user' }) => {
       <Text style={_styles.idText}>{data.id}</Text>
       {type === 'memento' && (
         <TouchableWithoutFeedback
-          onPress={() => navigation.push('UserProfile', { user: { id: data.owner } })}
+          onPress={() => navigation.push(RoutesName.UserProfile, { user: { id: data.owner } })}
         >
           <Text style={_styles.ownerText}>
             by <Text style={{ fontFamily: 'Inconsolata-Bold' }}>{data.owner}</Text>
@@ -30,7 +31,7 @@ const Profile = ({ data, type = 'user' }) => {
         </TouchableWithoutFeedback>
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
-      <MainButton title={'FOLLOW'} containerStyle={{ alignSelf: 'center', width: 150 }} />
+      <MainButton title={'FOLLOW'} buttonStyle={{ alignSelf: 'center', width: 150 }} />
     </View>
   );
 };

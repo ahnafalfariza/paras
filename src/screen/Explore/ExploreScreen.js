@@ -11,6 +11,7 @@ import { EXPLORE_URL, MEMORY_GRANTS_URL } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 import { postLimit } from '../../utils/constant';
+import RoutesName from '../../utils/RoutesName';
 
 class ExploreScreen extends Component {
   state = {
@@ -57,7 +58,9 @@ class ExploreScreen extends Component {
         <MainHeader
           title={'Explore'}
           rightComponent={() => (
-            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Search')}>
+            <TouchableWithoutFeedback
+              onPress={() => this.props.navigation.navigate(RoutesName.ExploreSerach)}
+            >
               <SvgXml
                 xml={assetSvg.header.search}
                 width="24"

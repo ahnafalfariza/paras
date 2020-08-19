@@ -8,6 +8,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import assetSvg from '../../assets/svg/svg';
 import MainButton from '../../component/Common/MainButton';
+import RoutesName from '../../utils/RoutesName';
 
 class WalletScreen extends Component {
   render() {
@@ -23,11 +24,11 @@ class WalletScreen extends Component {
           <Text style={_styles.textRegular}>Learn more about PAC</Text>
           <MainButton
             title={'SEND'}
-            onPress={() => this.props.navigation.navigate('Wallet Transaction')}
+            onPress={() => this.props.navigation.navigate(RoutesName.WalletTransaction)}
           />
           <Text style={_styles.textSemiBold}>Recent Transaction</Text>
           <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate('Wallet History')}
+            onPress={() => this.props.navigation.navigate(RoutesName.WalletHistory)}
           >
             <Text style={[_styles.textRegular, { marginTop: 24, textAlign: 'right' }]}>
               All Transaction

@@ -4,11 +4,11 @@ import { SvgXml } from 'react-native-svg';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
-import Screen from '../component/Common/Screen';
-import MainHeader from '../component/Header/MainHeader';
-import Profile from '../component/Profile/Profile';
-import assetSvg from '../assets/svg/svg';
-import Colors from '../utils/color';
+import Screen from '../../component/Common/Screen';
+import MainHeader from '../../component/Header/MainHeader';
+import Profile from '../../component/Profile/Profile';
+import assetSvg from '../../assets/svg/svg';
+import Colors from '../../utils/color';
 
 class ProfileScreen extends Component {
   render() {

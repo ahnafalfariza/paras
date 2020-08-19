@@ -5,8 +5,8 @@ import FastImage from 'react-native-fast-image';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
 
-import NewPostScreen from '../screen/NewPostScreen';
-import ProfileScreen from '../screen/ProfileScreen';
+import NewPostScreen from '../screen/NewPost/NewPostScreen';
+import ProfileScreen from '../screen/Profile/ProfileScreen';
 import HomeNavigator from './HomeNavigator';
 import WalletNavigator from './WalletNavigator';
 import ExploreNavigator from './ExploreNavigator';

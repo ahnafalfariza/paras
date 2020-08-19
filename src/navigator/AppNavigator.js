@@ -5,14 +5,16 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import NewPostScreen from '../screen/NewPostScreen';
 import TabNavigator from './TabNavigator';
 import LandingNavigator from './LandingNavigator';
+import AuthNavigator from './AuthNavigator';
 
 const Stack = createStackNavigator();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="LandingContainer" component={LandingNavigator} /> */}
-        <Stack.Screen name="HomeTab" component={TabNavigator} />
+        <Stack.Screen name="LandingNavigator" component={LandingNavigator} />
+        <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
         <Stack.Screen
           name="New Post"
           component={NewPostScreen}

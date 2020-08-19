@@ -1,56 +1,57 @@
 import React from 'react';
 import Screen from '../../component/Common/Screen';
-import { Text, View } from 'react-native';
-import Colors from '../../utils/color';
+import { Text, View, ImageBackground } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { SCREEN_WIDTH } from '../../utils/constant';
+import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 
 const LandingScreen = ({ navigation }) => {
   return (
-    <Screen style={{ flex: 1 }}>
-      <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-        <View style={{ margin: 16, borderRadius: 8, backgroundColor: Colors['dark-1'] }}>
+    <Screen style={{ flex: 1, justifyContent: 'center', backgroundColor: '#000000' }}>
+      <ImageBackground
+        source={require('../../assets/png/Background.png')}
+        style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center', padding: 48 }}
+        imageStyle={{ opacity: 0.1 }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <FastImage
-            source={require('../../assets/png/gimmick2.png')}
-            style={{ width: SCREEN_WIDTH - 96, aspectRatio: 1, margin: 16 }}
+            source={require('../../assets/png/ParasLogo.png')}
+            style={{ width: 75, aspectRatio: 1, borderRadius: 15 }}
           />
+          <Text
+            style={{
+              fontFamily: 'Inconsolata-Bold',
+              fontSize: 32,
+              color: Colors['white-1'],
+              marginLeft: 16,
+            }}
+          >
+            Paras
+          </Text>
         </View>
-        <Text style={{ color: Colors['white-1'], fontFamily: 'Inconsolata-Bold', fontSize: 32 }}>
-          No Gimmick
-        </Text>
         <Text
           style={{
-            color: Colors['white-2'],
             fontFamily: 'Inconsolata-Regular',
-            fontSize: 14,
-            margin: 16,
-            marginHorizontal: 32,
-            textAlign: 'center',
+            fontSize: 16,
+            color: Colors['white-1'],
+            marginTop: 16,
+            marginHorizontal: 8,
+            lineHeight: 20,
           }}
         >
-          Instead of posting what content your audience might like, focus on sharing the content
-          that you like. No need to think about how aesthetic your feed is or the best time to post
-          on social media. Social media should be the place to be yourself, be authentic.
+          PARAS (pɑ. rɑs, \ˈpär-äs\) is both a noun and an adjective derived from Bahasa.
+          {/* {'\n\n'} */}
+          {/* Paras defined as a face or an appearance. It suits our platform since ours is dedicated to
+          everyone to let themselves shines.{'\n\n'}
+          As an adjective, Paras means equal or balanced-the effort is commensurate with the result. */}
         </Text>
-        <View style={{ justifyContent: 'center', paddingTop: 4, flexDirection: 'row' }}>
-          <View style={{ width: 10, height: 3, backgroundColor: Colors['white-2'], margin: 3 }} />
-          <View style={{ width: 10, height: 3, backgroundColor: Colors['white-2'], margin: 3 }} />
-          <View style={{ width: 12, height: 4, backgroundColor: Colors['white-1'], margin: 3 }} />
-          <View style={{ width: 10, height: 3, backgroundColor: Colors['white-2'], margin: 3 }} />
-        </View>
-      </View>
-      <View style={{ justifyContent: 'flex-end', marginBottom: 16 }}>
         <MainButton
-          buttonStyle={{
-            width: SCREEN_WIDTH - 64,
-            alignSelf: 'center',
-          }}
-          title={'NEXT'}
-          onPress={() => navigation.navigate(RoutesName.Login)}
+          title={'Get Started'}
+          buttonStyle={{ width: 'auto', margin: 8, marginTop: 24 }}
+          onPress={() => navigation.navigate(RoutesName.LandingDetail)}
         />
-      </View>
+      </ImageBackground>
     </Screen>
   );
 };

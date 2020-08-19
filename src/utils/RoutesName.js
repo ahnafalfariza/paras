@@ -13,7 +13,11 @@ export default {
   WalletHistory: 'WalletHistory',
   WalletTransaction: 'WalletTransaction',
 
+  LandingNavigator: 'LandingNavigator',
   Landing: 'Landing',
+  LandingDetail: 'LandingDetail',
+
+  AuthNavigator: 'AuthNavigator',
   Login: 'Login',
   Registration: 'Registration',
   Verification: 'Verification',

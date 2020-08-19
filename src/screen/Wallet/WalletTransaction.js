@@ -121,14 +121,12 @@ const _styles = StyleSheet.create({
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },
-
   textTo: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
     fontSize: 18,
     marginBottom: 8,
   },
-
   textAmount: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
@@ -136,7 +134,6 @@ const _styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-
   listUserView: {
     position: 'absolute',
     backgroundColor: Colors['dark-8'],

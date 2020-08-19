@@ -41,13 +41,11 @@ const _styles = StyleSheet.create({
     fontSize: 16,
     color: Colors['white-1'],
   },
-
   mementoImage: {
     height: 18,
     width: 18,
     margin: 6,
   },
-
   mementoView: {
     backgroundColor: Colors['dark-2'],
     padding: 6,

@@ -49,19 +49,16 @@ const _styles = StyleSheet.create({
     fontSize: 48,
     marginRight: 12,
   },
-
   balanceView: {
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   textSemiBold: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
     fontSize: 18,
   },
-
   textRegular: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],

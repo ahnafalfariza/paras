@@ -29,7 +29,6 @@ const _styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: Colors['primary-5'],
   },
-
   sendText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],

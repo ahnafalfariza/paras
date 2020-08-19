@@ -68,14 +68,12 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     lineHeight: 18,
   },
-
   seedPasswordView: {
     marginHorizontal: 16,
     marginVertical: 32,
     paddingVertical: 16,
     backgroundColor: Colors['dark-8'],
   },
-
   seedPasswordText: {
     fontFamily: 'Inconsolata-SemiBold',
     fontSize: 20,

@@ -44,12 +44,10 @@ const _styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-
   image: {
     height: 180,
     width: 180,
   },
-
   idText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
@@ -58,14 +56,12 @@ const _styles = StyleSheet.create({
     marginBottom: 0,
     textAlign: 'center',
   },
-
   ownerText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     fontSize: 16,
     textAlign: 'center',
   },
-
   descText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],

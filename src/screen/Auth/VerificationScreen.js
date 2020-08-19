@@ -59,17 +59,14 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
   },
-
   subTitle: {
     fontSize: 16,
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Regular',
   },
-
   codeFieldRoot: {
     marginTop: 20,
   },
-
   cellRoot: {
     width: 50,
     height: 50,
@@ -78,14 +75,12 @@ const _styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 2,
   },
-
   cellText: {
     lineHeight: 48,
     fontSize: 24,
     textAlign: 'center',
     color: Colors['white-1'],
   },
-
   focusCell: {
     borderColor: Colors['white-1'],
   },

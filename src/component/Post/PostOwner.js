@@ -59,13 +59,11 @@ const _styles = StyleSheet.create({
     fontSize: 18,
     color: Colors['white-1'],
   },
-
   userImage: {
     height: 36,
     width: 36,
     margin: 10,
   },
-
   userView: {
     flexDirection: 'row',
     alignItems: 'center',

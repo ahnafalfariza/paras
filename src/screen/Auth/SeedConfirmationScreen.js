@@ -43,7 +43,6 @@ const _styles = StyleSheet.create({
     fontSize: 20,
     color: Colors['white-1'],
   },
-
   textInput: {
     marginTop: 8,
     fontFamily: 'Inconsolata-Regular',

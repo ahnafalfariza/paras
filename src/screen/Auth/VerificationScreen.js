@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -33,13 +33,13 @@ const VerificationScreen = ({ navigation }) => {
         keyboardType="number-pad"
         textContentType="oneTimeCode"
         renderCell={({ index, symbol, isFocused }) => (
-          <Text
-            key={index}
-            style={[_styles.cell, isFocused && _styles.focusCell]}
+          <View
             onLayout={getCellOnLayoutHandler(index)}
+            key={index}
+            style={[_styles.cellRoot, isFocused && _styles.focusCell]}
           >
-            {symbol || (isFocused ? <Cursor /> : null)}
-          </Text>
+            <Text style={_styles.cellText}>{symbol || (isFocused ? <Cursor /> : null)}</Text>
+          </View>
         )}
       />
       <MainButton
@@ -70,13 +70,18 @@ const _styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  cell: {
+  cellRoot: {
     width: 50,
     height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 2,
+  },
+
+  cellText: {
     lineHeight: 48,
     fontSize: 24,
-    borderBottomWidth: 2,
-    borderColor: Colors['white-2'],
     textAlign: 'center',
     color: Colors['white-1'],
   },

@@ -16,7 +16,9 @@ const LinkContent = ({ body }) => {
         </View>
       </View>
       <View style={_styles.descView}>
-        <Text style={_styles.descText}>{link.desc}</Text>
+        <Text style={_styles.descText} numberOfLines={4}>
+          {link.desc}
+        </Text>
       </View>
       <View style={_styles.linkView}>
         <Text numberOfLines={1} style={_styles.linkText}>

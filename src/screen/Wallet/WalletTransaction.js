@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Text, TextInput, StyleSheet, View, FlatList } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Axios from 'axios';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import { SEARCH_USER_SEND } from '../../utils/api';
-import DismissKeyboard from '../Common/DismissKeyboard';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import DismissKeyboard from '../../component/Common/DismissKeyboard';
 
 class WalletTransaction extends Component {
   state = {
-    pacAmount: null,
+    sendPacAmount: null,
+    sendPacUser: null,
     userData: [],
-    choosenUser: null,
     isSearchResultVisible: false,
   };
 
@@ -29,6 +29,11 @@ class WalletTransaction extends Component {
     }
   };
 
+  onChangeSearchUser = (text) => {
+    this.setState({ sendPacUser: text });
+    this.searchUser(text);
+  };
+
   listSearchedUser = () => {
     if (this.state.isSearchResultVisible) {
       return (
@@ -37,16 +42,30 @@ class WalletTransaction extends Component {
           renderItem={({ item }) => (
             <TouchableWithoutFeedback
               onPress={() => {
-                this.setState({ isSearchResultVisible: false });
+                this.setState({ isSearchResultVisible: false, sendPacUser: item.id });
               }}
             >
               <Text>{item.id}</Text>
             </TouchableWithoutFeedback>
           )}
-          style={{ zIndex: 1, maxHeight: 150 }}
+          style={{ maxHeight: 180 }}
         />
       );
     }
+  };
+
+  onBlurTextInput = () => {
+    const { userData, sendPacUser } = this.state;
+    const found = userData.some((usr) => usr.id === sendPacUser);
+
+    if (!found) {
+      this.setState({ sendPacUser: null });
+    }
+    this.setState({ isSearchResultVisible: false });
+  };
+
+  onFocusTextInput = () => {
+    this.setState({ isSearchResultVisible: true });
   };
 
   render() {
@@ -54,43 +73,35 @@ class WalletTransaction extends Component {
       <>
         <MainHeader title={'Send PAC'} withBack />
         <Screen style={{ margin: 16 }}>
-          <DismissKeyboard onPress={() => this.setState({ isSearchResultVisible: false })}>
-            <View style={{ flex: 1 }}>
-              <Text style={_styles.textTo}>To</Text>
+          <DismissKeyboard>
+            <Text style={_styles.textTo}>To</Text>
+            <TextInput
+              style={_styles.textInput}
+              autoCorrect={false}
+              value={this.state.sendPacUser}
+              autoCapitalize={'none'}
+              selectionColor={Colors['white-1']}
+              placeholder={'Search User'}
+              placeholderTextColor={Colors['white-3']}
+              onChangeText={this.onChangeSearchUser}
+              onBlur={this.onBlurTextInput}
+              onFocus={this.onFocusTextInput}
+            />
+            <View>
+              <Text style={_styles.textAmount}>Amount</Text>
               <TextInput
                 style={_styles.textInput}
-                autoCorrect={false}
-                autoCapitalize={'none'}
+                value={this.state.sendPacAmount}
+                onChangeText={(text) => {
+                  const number = text.replace(/[^0-9]/g, '');
+                  this.setState({ sendPacAmount: number });
+                }}
+                keyboardType={'number-pad'}
                 selectionColor={Colors['white-1']}
-                placeholder={'Search User'}
+                placeholder={'Amount to send'}
                 placeholderTextColor={Colors['white-3']}
-                onChangeText={this.searchUser}
-                onFocus={() => this.setState({ isSearchResultVisible: true })}
               />
-              <View>
-                <Text style={_styles.textAmount}>Amount</Text>
-                <TextInput
-                  style={_styles.textInput}
-                  value={this.state.pacAmount}
-                  onChangeText={(text) => {
-                    const number = text.replace(/[^0-9]/g, '');
-                    this.setState({ pacAmount: number });
-                  }}
-                  keyboardType={'number-pad'}
-                  selectionColor={Colors['white-1']}
-                  placeholder={'Amount to send'}
-                  placeholderTextColor={Colors['white-3']}
-                />
-                <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: Colors['white-1'],
-                    width: '100%',
-                  }}
-                >
-                  {this.listSearchedUser()}
-                </View>
-              </View>
+              <View style={_styles.listUserView}>{this.listSearchedUser()}</View>
             </View>
           </DismissKeyboard>
         </Screen>
@@ -124,5 +135,13 @@ const _styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 16,
     marginBottom: 8,
+  },
+
+  listUserView: {
+    position: 'absolute',
+    backgroundColor: Colors['dark-8'],
+    width: '100%',
+    marginTop: 8,
+    borderRadius: 4,
   },
 });

@@ -21,6 +21,7 @@ const PostContent = ({ contentList }) => {
         prevButton={
           <SvgXml xml={assetSvg.postContent.prev} width="28" height="28" fill={Colors['white-1']} />
         }
+        autoplay={false}
         loop={false}
         showsPagination={true}
         dotStyle={{

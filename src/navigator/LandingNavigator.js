@@ -9,12 +9,12 @@ const Stack = createStackNavigator();
 
 const LandingNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} mode={'modal'}>
       <Stack.Screen name={RoutesName.Landing} component={LandingScreen} />
       <Stack.Screen
         name={RoutesName.LandingDetail}
         component={LandingDetailScreen}
-        options={{ cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS }}
+        options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
       />
     </Stack.Navigator>
   );

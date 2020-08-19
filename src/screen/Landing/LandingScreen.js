@@ -8,52 +8,63 @@ import RoutesName from '../../utils/RoutesName';
 
 const LandingScreen = ({ navigation }) => {
   return (
-    <Screen style={{ flex: 1, justifyContent: 'center', backgroundColor: '#000000' }}>
-      <ImageBackground
-        source={require('../../assets/png/Background.png')}
-        style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center', padding: 48 }}
-        imageStyle={{ opacity: 0.1 }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <FastImage
-            source={require('../../assets/png/ParasLogo.png')}
-            style={{ width: 75, aspectRatio: 1, borderRadius: 15 }}
-          />
-          <Text
-            style={{
-              fontFamily: 'Inconsolata-Bold',
-              fontSize: 32,
-              color: Colors['white-1'],
-              marginLeft: 16,
-            }}
-          >
-            Paras
-          </Text>
+    <ImageBackground
+      source={require('../../assets/png/Background.png')}
+      style={_styles.imageBacgroundView}
+      imageStyle={_styles.imageBackground}
+    >
+      <Screen style={{ flex: 1, justifyContent: 'center' }} transparent>
+        <View style={_styles.imageContainerView}>
+          <FastImage source={require('../../assets/png/ParasLogo.png')} style={_styles.imageLogo} />
+          <Text style={_styles.textTitle}>Paras</Text>
         </View>
-        <Text
-          style={{
-            fontFamily: 'Inconsolata-Regular',
-            fontSize: 16,
-            color: Colors['white-1'],
-            marginTop: 16,
-            marginHorizontal: 8,
-            lineHeight: 20,
-          }}
-        >
+        <Text style={_styles.textDesc}>
           PARAS (pɑ. rɑs, \ˈpär-äs\) is both a noun and an adjective derived from Bahasa.
-          {/* {'\n\n'} */}
-          {/* Paras defined as a face or an appearance. It suits our platform since ours is dedicated to
-          everyone to let themselves shines.{'\n\n'}
-          As an adjective, Paras means equal or balanced-the effort is commensurate with the result. */}
         </Text>
         <MainButton
           title={'Get Started'}
           buttonStyle={{ width: 'auto', margin: 8, marginTop: 24 }}
           onPress={() => navigation.navigate(RoutesName.LandingDetail)}
         />
-      </ImageBackground>
-    </Screen>
+      </Screen>
+    </ImageBackground>
   );
 };
 
 export default LandingScreen;
+
+const _styles = {
+  imageContainerView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageLogo: {
+    width: 75,
+    aspectRatio: 1,
+    borderRadius: 15,
+  },
+  imageBackground: {
+    opacity: 0.09,
+  },
+  imageBacgroundView: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    padding: 48,
+    backgroundColor: '#000000',
+  },
+  textTitle: {
+    fontFamily: 'Inconsolata-Bold',
+    fontSize: 32,
+    color: Colors['white-1'],
+    marginLeft: 16,
+  },
+  textDesc: {
+    fontFamily: 'Inconsolata-Regular',
+    fontSize: 16,
+    color: Colors['white-1'],
+    marginTop: 16,
+    marginHorizontal: 8,
+    lineHeight: 20,
+  },
+};

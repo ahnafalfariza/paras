@@ -1,16 +1,19 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import Colors from '../../utils/color';
 
-const MainButton = ({ title, onPress, textStyle, containerStyle }) => {
+const MainButton = ({ title, onPress, textStyle, buttonStyle, loading = false }) => {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View style={[_styles.sendButton, containerStyle]}>
-        <Text style={[_styles.sendText, textStyle]}>{title}</Text>
-      </View>
-    </TouchableWithoutFeedback>
+    <Button
+      title={title}
+      buttonStyle={[_styles.sendButton, buttonStyle]}
+      titleStyle={[_styles.sendText, textStyle]}
+      onPress={onPress}
+      loading={loading}
+      // TouchableComponent={TouchableWithoutFeedback}
+    />
   );
 };
 

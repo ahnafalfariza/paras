@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
@@ -16,14 +16,14 @@ import assetSvg from '../assets/svg/svg';
 import { getImageUrl } from '../utils/image';
 
 const Tab = createBottomTabNavigator();
-const TabNavigator = () => {
-  const user = useSelector((state) => state.user.user);
+const TabNavigator = ({ profileData, isLoggedIn }) => {
   return (
     <Tab.Navigator
       initialRouteName={'HomeTab'}
       tabBarOptions={tabBarOption}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => tabBarIcon(color, route, user),
+        tabBarIcon: ({ color }) =>
+          isLoggedIn && profileData ? tabBarIcon(color, route, profileData) : null,
       })}
     >
       <Tab.Screen name="HomeTab" component={HomeNavigator} />
@@ -50,7 +50,7 @@ const tabBarOption = {
   showLabel: false,
 };
 
-const tabBarIcon = (color, route, user) => {
+const tabBarIcon = (color, route, profileData) => {
   const { name } = route;
   const xml = assetSvg.bottomTab[name];
 
@@ -58,7 +58,7 @@ const tabBarIcon = (color, route, user) => {
     return (
       <View style={{ borderWidth: 3, borderRadius: 20, borderColor: color }}>
         <FastImage
-          source={{ uri: getImageUrl(user.imgAvatar) }}
+          source={{ uri: getImageUrl(profileData.imgAvatar) }}
           style={{ width: 32, height: 32 }}
         />
       </View>
@@ -68,4 +68,9 @@ const tabBarIcon = (color, route, user) => {
   return <SvgXml xml={xml} width="30" height="30" fill={color} />;
 };
 
-export default TabNavigator;
+const mapStateToProps = (state) => ({
+  profileData: state.user.profile,
+  isLoggedIn: state.user.isLoggedIn,
+});
+
+export default connect(mapStateToProps)(TabNavigator);

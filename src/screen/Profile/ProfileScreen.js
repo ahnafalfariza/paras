@@ -9,9 +9,15 @@ import MainHeader from '../../component/Header/MainHeader';
 import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import MainButton from '../../component/Common/MainButton';
+import { logoutUser } from '../../actions/user';
 
 class ProfileScreen extends Component {
   render() {
+    if (this.props.profileData === null && !this.props.isLoggedIn) {
+      return null;
+    }
+
     return (
       <>
         <MainHeader
@@ -31,7 +37,8 @@ class ProfileScreen extends Component {
           )}
         />
         <Screen>
-          <Profile data={this.props.userData} />
+          <Profile data={this.props.profileData} />
+          <MainButton title={'Logout'} onPress={this.props.logoutUser} />
         </Screen>
       </>
     );
@@ -39,7 +46,12 @@ class ProfileScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userData: state.user.user,
+  profileData: state.user.profile,
+  isLoggedIn: state.user.isLoggedIn,
 });
 
-export default connect(mapStateToProps)(ProfileScreen);
+const mapDispatchToProps = {
+  logoutUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

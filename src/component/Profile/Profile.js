@@ -31,7 +31,7 @@ const Profile = ({ data, type = 'user' }) => {
         </TouchableWithoutFeedback>
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
-      <MainButton title={'FOLLOW'} buttonStyle={{ alignSelf: 'center', width: 150 }} />
+      <MainButton title={'FOLLOW'} containerStyle={{ alignSelf: 'center', width: 150 }} />
     </View>
   );
 };

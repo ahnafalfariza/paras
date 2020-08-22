@@ -4,14 +4,26 @@ import { Button } from 'react-native-elements';
 
 import Colors from '../../utils/color';
 
-const MainButton = ({ title, onPress, textStyle, buttonStyle, loading = false }) => {
+const MainButton = ({
+  title,
+  onPress,
+  textStyle,
+  buttonStyle,
+  containerStyle,
+  loading = false,
+  disabled = false,
+}) => {
   return (
     <Button
       title={title}
-      buttonStyle={[_styles.sendButton, buttonStyle]}
-      titleStyle={[_styles.sendText, textStyle]}
+      buttonStyle={StyleSheet.flatten([_styles.buttonStyle, buttonStyle])}
+      titleStyle={StyleSheet.flatten([_styles.textStyle, textStyle])}
       onPress={onPress}
+      disabled={disabled}
+      disabledStyle={{ opacity: 0.75, backgroundColor: Colors['primary-5'] }}
+      disabledTitleStyle={{ opacity: 0.75, color: Colors['white-1'] }}
       loading={loading}
+      containerStyle={StyleSheet.flatten([_styles.containerStyle, containerStyle])}
       // TouchableComponent={TouchableWithoutFeedback}
     />
   );
@@ -20,16 +32,17 @@ const MainButton = ({ title, onPress, textStyle, buttonStyle, loading = false })
 export default MainButton;
 
 const _styles = StyleSheet.create({
-  sendButton: {
+  containerStyle: {
     marginVertical: 16,
     height: 38,
     width: 96,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 6,
+    justifyContent: 'center',
+  },
+  buttonStyle: {
     backgroundColor: Colors['primary-5'],
   },
-  sendText: {
+  textStyle: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
     fontSize: 18,

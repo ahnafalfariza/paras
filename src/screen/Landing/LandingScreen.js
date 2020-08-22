@@ -23,7 +23,7 @@ const LandingScreen = ({ navigation }) => {
         </Text>
         <MainButton
           title={'Get Started'}
-          buttonStyle={{ width: 'auto', margin: 8, marginTop: 24 }}
+          containerStyle={{ width: 'auto', margin: 8, marginTop: 24 }}
           onPress={() => navigation.navigate(RoutesName.LandingDetail)}
         />
       </Screen>

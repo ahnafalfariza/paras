@@ -72,7 +72,7 @@ const LandingDetailScreen = ({ navigation }) => {
         ))}
       </Swiper>
       <View style={{ justifyContent: 'flex-end' }}>
-        <MainButton buttonStyle={_styles.button} title={'NEXT'} onPress={onPressNext} />
+        <MainButton containerStyle={_styles.button} title={'NEXT'} onPress={onPressNext} />
       </View>
     </Screen>
   );

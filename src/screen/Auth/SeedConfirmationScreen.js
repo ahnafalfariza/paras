@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
+import { Text, StyleSheet, Alert } from 'react-native';
+import { connect } from 'react-redux';
+
 import Screen from '../../component/Common/Screen';
-import { Text, StyleSheet } from 'react-native';
 import Colors from '../../utils/color';
 import { TextInput } from 'react-native-gesture-handler';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
+import { initUser } from '../../actions/user';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
-const SeedConfirmationScreen = ({ route }) => {
-  const seedPassword = route.params.seedPassword.split(' ');
+const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
+  const { data } = route.params;
+  const seedPassword = data.seedPassword.split(' ');
 
   const [confirmText, setConfirmText] = useState(null);
   const onChangeText = (text) => setConfirmText(text);
 
   const onPress = () => {
-    seedPassword[numb - 1] === confirmText ? console.log('true') : console.log('false');
+    const isCorrect = seedPassword[numb - 1] === confirmText;
+    if (isCorrect) {
+      dispatchInitUser(data);
+    } else {
+      Alert.alert(
+        'Error',
+        'Please enter the correct word',
+        [{ text: 'OK', onPress: () => navigation.goBack() }],
+        { cancelable: false },
+      );
+    }
   };
 
   return (
@@ -35,7 +49,11 @@ const SeedConfirmationScreen = ({ route }) => {
   );
 };
 
-export default SeedConfirmationScreen;
+const mapDispatchToProps = {
+  dispatchInitUser: initUser,
+};
+
+export default connect(null, mapDispatchToProps)(SeedConfirmationScreen);
 
 const _styles = StyleSheet.create({
   textDesc: {

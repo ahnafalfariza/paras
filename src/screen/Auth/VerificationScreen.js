@@ -1,23 +1,48 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, Alert } from 'react-native';
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { VERIFY_USER } from '../../utils/api';
 
 const CELL_COUNT = 6;
 
-const VerificationScreen = ({ navigation }) => {
+const VerificationScreen = ({ navigation, route }) => {
   const [value, setValue] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue });
+
+  const { email } = route.params;
+
+  const onPressVerify = () => {
+    setLoading(true);
+    Axios.post(VERIFY_USER, { pin: value, email })
+      .then((res) => {
+        console.log(res.data);
+        Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        navigation.navigate(RoutesName.SeedPassword, { data: res.data.data });
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(
+          'Error',
+          err.response.data.message,
+          [{ text: 'OK', onPress: () => setLoading(false) }],
+          { cancelable: false },
+        );
+      });
+  };
 
   return (
     <Screen style={{ margin: 24, flex: 1, justifyContent: 'center' }}>
@@ -44,9 +69,11 @@ const VerificationScreen = ({ navigation }) => {
       />
       <MainButton
         title={'Verify'}
-        buttonStyle={{ marginTop: 32 }}
-        onPress={() => navigation.navigate(RoutesName.SeedPassword)}
+        loading={isLoading}
+        containerStyle={{ marginTop: 32 }}
+        onPress={onPressVerify}
       />
+      <Text style={[_styles.subTitle, { marginTop: 32 }]}>{"Didn't receive email? resend"}</Text>
     </Screen>
   );
 };

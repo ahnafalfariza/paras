@@ -8,11 +8,10 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 
-const SeedPasswordScreen = ({ navigation }) => {
-  const seedPassword = 'town artist wonder smoke trash people blast tribe saddle add daring hobby';
-
+const SeedPasswordScreen = ({ navigation, route }) => {
+  const { data } = route.params;
   const copyToClipboard = () => {
-    Clipboard.setString(seedPassword);
+    Clipboard.setString(data.seedPassword);
   };
 
   return (
@@ -47,13 +46,15 @@ const SeedPasswordScreen = ({ navigation }) => {
       </View>
       <View style={_styles.seedPasswordView}>
         <Text selectable style={_styles.seedPasswordText}>
-          {seedPassword}
+          {data.seedPassword}
         </Text>
       </View>
       <MainButton
         title={"I'VE BACKUP THE SEED PASSWORD"}
-        buttonStyle={{ marginTop: 0, width: 'auto' }}
-        onPress={() => navigation.navigate(RoutesName.SeedConfirmation, { seedPassword })}
+        containerStyle={{ marginTop: 0, width: 'auto' }}
+        onPress={() => {
+          navigation.navigate(RoutesName.SeedConfirmation, { data: data });
+        }}
       />
     </Screen>
   );
@@ -71,12 +72,12 @@ const _styles = StyleSheet.create({
   seedPasswordView: {
     marginHorizontal: 16,
     marginVertical: 32,
-    paddingVertical: 16,
     backgroundColor: Colors['dark-8'],
   },
   seedPasswordText: {
     fontFamily: 'Inconsolata-SemiBold',
     fontSize: 20,
+    padding: 16,
     color: Colors['white-1'],
     textAlign: 'center',
     alignSelf: 'center',

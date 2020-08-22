@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text, StyleSheet, TextInput, TouchableWithoutFeedback, Alert } from 'react-native';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
@@ -11,12 +12,68 @@ import { CREATE_USER } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
 
 class RegistrationScreen extends Component {
-  registerUser = () => {
-    console.log('masuk register');
-    Axios.post(CREATE_USER, { username: 'test-11', email: 'riqi.asdf@gmail.com' })
-      .then((res) => console.log('res', res))
-      .catch((err) => console.log('err', err.response.data));
-    this.props.navigation.navigate(RoutesName.Verification);
+  state = {
+    isLoading: false,
+  };
+
+  registerUser = ({ username, email }) => {
+    this.setState({ isLoading: true });
+    Axios.post(CREATE_USER, { username, email })
+      .then(() => {
+        setTimeout(() => {
+          this.props.navigation.navigate(RoutesName.Verification, { username, email });
+          this.setState({ isLoading: false });
+        }, 1000);
+      })
+      .catch((err) => {
+        Alert.alert(
+          'Error',
+          err.response.data.message,
+          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
+          { cancelable: false },
+        );
+      });
+  };
+
+  registForm = ({ errors, touched, isValid, handleChange, handleSubmit, setFieldTouched }) => {
+    const { isLoading } = this.state;
+    return (
+      <>
+        <TextInput
+          style={_styles.textInput}
+          autoCorrect={false}
+          autoCapitalize={'none'}
+          selectionColor={Colors['white-1']}
+          onBlur={() => setFieldTouched('username')}
+          onChangeText={handleChange('username')}
+          placeholder={'Username'}
+          placeholderTextColor={Colors['white-3']}
+        />
+        <Text style={{ fontSize: 10, color: 'red' }}>
+          {touched.username && errors.username ? errors.username : ' '}
+        </Text>
+        <TextInput
+          style={_styles.textInput}
+          autoCorrect={false}
+          autoCapitalize={'none'}
+          selectionColor={Colors['white-1']}
+          onChangeText={handleChange('email')}
+          onBlur={() => setFieldTouched('email')}
+          placeholder={'Email'}
+          placeholderTextColor={Colors['white-3']}
+          keyboardType={'email-address'}
+        />
+        <Text style={{ fontSize: 10, color: 'red' }}>
+          {touched.email && errors.email ? errors.email : ' '}
+        </Text>
+        <MainButton
+          title={'Register'}
+          onPress={handleSubmit}
+          loading={isLoading}
+          disabled={!isValid}
+        />
+      </>
+    );
   };
 
   render() {
@@ -24,24 +81,19 @@ class RegistrationScreen extends Component {
       <Screen style={{ margin: 16 }}>
         <DismissKeyboard>
           <Text style={{ color: '#ffffff', fontSize: 55 }}>Registration</Text>
-          <TextInput
-            style={_styles.textInput}
-            autoCorrect={false}
-            autoCapitalize={'none'}
-            selectionColor={Colors['white-1']}
-            placeholder={'Username'}
-            placeholderTextColor={Colors['white-3']}
-          />
-          <TextInput
-            style={_styles.textInput}
-            autoCorrect={false}
-            autoCapitalize={'none'}
-            selectionColor={Colors['white-1']}
-            placeholder={'Email'}
-            placeholderTextColor={Colors['white-3']}
-            keyboardType={'email-address'}
-          />
-          <MainButton title={'Register'} onPress={this.registerUser} />
+          <Formik
+            initialValues={{ username: '', email: '' }}
+            validationSchema={yup.object().shape({
+              username: yup
+                .string()
+                .min(6, 'Minimum 6 characters')
+                .required('Username is required'),
+              email: yup.string().email('Not a valid e-mail').required('E-mail is required'),
+            })}
+            onSubmit={this.registerUser}
+          >
+            {this.registForm}
+          </Formik>
           <TouchableWithoutFeedback
             onPress={() => this.props.navigation.navigate(RoutesName.Login)}
           >

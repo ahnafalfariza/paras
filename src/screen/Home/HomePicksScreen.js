@@ -4,8 +4,16 @@ import { Text } from 'react-native';
 import HomeHeader from '../../component/Header/HomeHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
+import Axios from 'axios';
+import { HOME_FEED } from '../../utils/api';
 
 class HomePicks extends Component {
+  componentDidMount() {
+    Axios.get(HOME_FEED)
+      .then((res) => console.log('berhasil', res.data))
+      .catch((err) => console.log(err.response.data));
+  }
+
   render() {
     return (
       <>

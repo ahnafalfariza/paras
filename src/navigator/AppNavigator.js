@@ -16,7 +16,7 @@ const AppNavigator = ({ isLoggedIn }) => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isLoggedIn ? (
           <>
-            {/* <Stack.Screen name="LandingNavigator" component={LandingNavigator} /> */}
+            <Stack.Screen name="LandingNavigator" component={LandingNavigator} />
             <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
           </>
         ) : (

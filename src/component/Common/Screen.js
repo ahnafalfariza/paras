@@ -3,14 +3,19 @@ import { SafeAreaView, StatusBar, View } from 'react-native';
 
 import Colors from '../../utils/color';
 
-const Screen = ({ children, style, transparent = false }) => {
+const Screen = ({ children, style, transparent = false, containerStyle }) => {
   return (
-    <SafeAreaView
-      style={[{ flex: 1, backgroundColor: transparent ? 'transparent' : Colors['dark-0'] }]}
+    <View
+      style={[
+        { flex: 1, backgroundColor: transparent ? 'transparent' : Colors['dark-0'] },
+        containerStyle,
+      ]}
     >
-      <StatusBar barStyle={'light-content'} backgroundColor={Colors['dark-2']} />
-      <View style={[{ flex: 1 }, style]}>{children}</View>
-    </SafeAreaView>
+      <SafeAreaView style={[{ flex: 1 }]}>
+        <StatusBar barStyle={'light-content'} backgroundColor={Colors['dark-2']} />
+        <View style={[{ flex: 1 }, style]}>{children}</View>
+      </SafeAreaView>
+    </View>
   );
 };
 

@@ -65,7 +65,7 @@ class LoginScreen extends Component {
           />
           <Text style={_styles.textHelper}>.paras.testnet</Text>
         </View>
-        <Text style={{ fontSize: 10, color: 'red' }}>
+        <Text style={_styles.errorText}>
           {touched.username && errors.username ? errors.username : ' '}
         </Text>
         <View style={_styles.formContainer}>
@@ -83,13 +83,14 @@ class LoginScreen extends Component {
           />
           <Text style={_styles.textHelper}>paste</Text>
         </View>
-        <Text style={{ fontSize: 10, color: 'red' }}>
+        <Text style={_styles.errorText}>
           {touched.seedpassword && errors.seedpassword ? errors.seedpassword : ' '}
         </Text>
         <MainButton
           title={'Login'}
           onPress={handleSubmit}
           loading={isLoading}
+          containerStyle={{ width: 120, marginBottom: 0 }}
           disabled={!isValid}
         />
       </>
@@ -98,9 +99,13 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <Screen style={{ margin: 16 }}>
-        <DismissKeyboard>
-          <Text style={{ color: '#ffffff', fontSize: 55 }}>Login</Text>
+      <Screen
+        style={{ flex: 1, padding: 32 }}
+        transparent
+        containerStyle={{ backgroundColor: '#000000' }}
+      >
+        <DismissKeyboard style={{ justifyContent: 'center' }}>
+          <Text style={_styles.title}>{'Welcome\nBack'}</Text>
           <Formik
             initialValues={{ username: '', seedpassword: '' }}
             validationSchema={yup.object().shape({
@@ -116,7 +121,13 @@ class LoginScreen extends Component {
           <TouchableWithoutFeedback
             onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
           >
-            <Text style={{ fontFamily: 'Inconsolata-Regular', color: Colors['white-1'] }}>
+            <Text
+              style={{
+                fontFamily: 'Inconsolata-Regular',
+                color: Colors['white-1'],
+                marginTop: 32,
+              }}
+            >
               Dont have an account? Sign up
             </Text>
           </TouchableWithoutFeedback>
@@ -133,6 +144,12 @@ const mapDispatchToProps = {
 export default connect(null, mapDispatchToProps)(LoginScreen);
 
 const _styles = StyleSheet.create({
+  title: {
+    fontSize: 48,
+    color: Colors['white-1'],
+    fontFamily: 'Inconsolata-Bold',
+    marginBottom: 16,
+  },
   formContainer: {
     borderRadius: 4,
     backgroundColor: Colors['dark-8'],
@@ -149,9 +166,16 @@ const _styles = StyleSheet.create({
     flex: 1,
   },
   textHelper: {
-    fontFamily: 'Inconsolata-Bold',
-    fontSize: 18,
+    fontFamily: 'Inconsolata-Regular',
+    fontSize: 16,
     color: Colors['white-1'],
     marginRight: 16,
+  },
+  errorText: {
+    fontFamily: 'Inconsolata-Regular',
+    fontSize: 10,
+    color: 'red',
+    marginBottom: 2,
+    marginLeft: 4,
   },
 });

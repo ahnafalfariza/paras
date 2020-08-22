@@ -53,7 +53,7 @@ const LandingDetailScreen = ({ navigation }) => {
   };
 
   return (
-    <Screen style={{ flex: 1 }}>
+    <Screen style={{ flex: 1 }} transparent containerStyle={{ backgroundColor: '#000000' }}>
       <Swiper
         ref={swiperRef}
         loop={false}

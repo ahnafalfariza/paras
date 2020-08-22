@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TextInput, TouchableWithoutFeedback, Alert } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+} from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -49,7 +58,7 @@ class RegistrationScreen extends Component {
           placeholder={'Username'}
           placeholderTextColor={Colors['white-3']}
         />
-        <Text style={{ fontSize: 10, color: 'red' }}>
+        <Text style={_styles.errorText}>
           {touched.username && errors.username ? errors.username : ' '}
         </Text>
         <TextInput
@@ -63,13 +72,12 @@ class RegistrationScreen extends Component {
           placeholderTextColor={Colors['white-3']}
           keyboardType={'email-address'}
         />
-        <Text style={{ fontSize: 10, color: 'red' }}>
-          {touched.email && errors.email ? errors.email : ' '}
-        </Text>
+        <Text style={_styles.errorText}>{touched.email && errors.email ? errors.email : ' '}</Text>
         <MainButton
           title={'Register'}
           onPress={handleSubmit}
           loading={isLoading}
+          containerStyle={{ width: 120, marginBottom: 0 }}
           disabled={!isValid}
         />
       </>
@@ -78,30 +86,45 @@ class RegistrationScreen extends Component {
 
   render() {
     return (
-      <Screen style={{ margin: 16 }}>
-        <DismissKeyboard>
-          <Text style={{ color: '#ffffff', fontSize: 55 }}>Registration</Text>
-          <Formik
-            initialValues={{ username: '', email: '' }}
-            validationSchema={yup.object().shape({
-              username: yup
-                .string()
-                .min(6, 'Minimum 6 characters')
-                .required('Username is required'),
-              email: yup.string().email('Not a valid e-mail').required('E-mail is required'),
-            })}
-            onSubmit={this.registerUser}
-          >
-            {this.registForm}
-          </Formik>
-          <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate(RoutesName.Login)}
-          >
-            <Text style={{ fontFamily: 'Inconsolata-Regular', color: Colors['white-1'] }}>
-              Already have an account? Login
-            </Text>
-          </TouchableWithoutFeedback>
-        </DismissKeyboard>
+      <Screen
+        style={{ padding: 32, flex: 1 }}
+        // transparent
+        // containerStyle={{ backgroundColor: '#000000' }}
+      >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1, justifyContent: 'center' }}
+        >
+          <DismissKeyboard style={{ justifyContent: 'center' }}>
+            <Text style={_styles.title}>{'Create\nAccount'}</Text>
+            <Formik
+              initialValues={{ username: '', email: '' }}
+              validationSchema={yup.object().shape({
+                username: yup
+                  .string()
+                  .min(6, 'Minimum 6 characters')
+                  .required('Username is required'),
+                email: yup.string().email('Not a valid e-mail').required('E-mail is required'),
+              })}
+              onSubmit={this.registerUser}
+            >
+              {this.registForm}
+            </Formik>
+            <TouchableWithoutFeedback
+              onPress={() => this.props.navigation.navigate(RoutesName.Login)}
+            >
+              <Text
+                style={{
+                  fontFamily: 'Inconsolata-Regular',
+                  color: Colors['white-1'],
+                  marginTop: 32,
+                }}
+              >
+                Already have an account? Login
+              </Text>
+            </TouchableWithoutFeedback>
+          </DismissKeyboard>
+        </KeyboardAvoidingView>
       </Screen>
     );
   }
@@ -110,6 +133,12 @@ class RegistrationScreen extends Component {
 export default RegistrationScreen;
 
 const _styles = StyleSheet.create({
+  title: {
+    fontSize: 48,
+    color: Colors['white-1'],
+    fontFamily: 'Inconsolata-Bold',
+    marginBottom: 16,
+  },
   textInput: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
@@ -117,5 +146,12 @@ const _styles = StyleSheet.create({
     fontSize: 20,
     padding: 12,
     backgroundColor: Colors['dark-8'],
+  },
+  errorText: {
+    fontFamily: 'Inconsolata-Regular',
+    fontSize: 10,
+    color: 'red',
+    marginBottom: 2,
+    marginLeft: 4,
   },
 });

@@ -1,22 +1,28 @@
 import { Auth } from '../actions/types';
 
 const INITIAL_STATE = {
-  user: {
-    id: 'zilalvs.testnet',
-    imgAvatar: {
-      url: 'QmUMKPXyPogETNyJvZCPdgd6qDSeEdLWK5nmdZtbkzGVra',
-      type: 'ipfs',
-    },
-    bio: 'written thoughts; constantly educating myself.',
-    createdAt: '1593851018660737775',
-  },
+  profile: null,
+  isLoggedIn: false,
+  token: null,
   error: false,
 };
 
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case Auth.INIT_USER:
-      return { user: action.payload, error: false };
+      return {
+        ...state,
+        profile: action.payload.profile,
+        token: action.payload.token,
+        isLoggedIn: true,
+      };
+    case Auth.LOGOUT_USER:
+      return {
+        ...state,
+        profile: null,
+        token: null,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

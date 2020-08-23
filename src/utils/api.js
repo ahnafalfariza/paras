@@ -14,7 +14,7 @@ export const PROFILE_POST_URL = (id, page) =>
     (page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
 
-export const MEMENTO_URL = () => '';
+export const MEMENTO_URL = (id) => `${BASE_URL}/mementos?id=${id}`;
 export const MEMENTO_POST_URL = (id, page) =>
   `${BASE_URL}/posts?mementoId=${id}&__skip=${
     (page - 1) * postLimit
@@ -25,5 +25,10 @@ export const SEARCH_USER_SEND = (query) => `${BASE_URL}/users?id__re=${query}`;
 export const CREATE_USER = `${BASE_URL}/register`;
 export const LOGIN = `${BASE_URL}/login`;
 export const VERIFY_USER = `${BASE_URL}/register/confirm`;
+export const VERIFY_TOKEN = `${BASE_URL}/verify`;
 
 export const HOME_FEED = `${BASE_URL}/feeds`;
+export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
+
+export const WALLET_BALANCE = (user) => `${BASE_URL}/balances/${user}`;
+export const WALLET_HISTORY = `${BASE_URL}/transactions`;

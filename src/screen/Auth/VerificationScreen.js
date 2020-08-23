@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, Alert } from 'react-native';
+import { Text, StyleSheet, View, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -13,6 +13,7 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 import { VERIFY_USER } from '../../utils/api';
+import DismissKeyboard from '../../component/Common/DismissKeyboard';
 
 const CELL_COUNT = 6;
 
@@ -46,34 +47,45 @@ const VerificationScreen = ({ navigation, route }) => {
 
   return (
     <Screen style={{ margin: 24, flex: 1, justifyContent: 'center' }}>
-      <Text style={_styles.title}>{'Verification'}</Text>
-      <Text style={_styles.subTitle}>{"We've just sent you email verification"}</Text>
-      <CodeField
-        ref={ref}
-        {...props}
-        value={value}
-        onChangeText={setValue}
-        cellCount={CELL_COUNT}
-        rootStyle={_styles.codeFieldRoot}
-        keyboardType="number-pad"
-        textContentType="oneTimeCode"
-        renderCell={({ index, symbol, isFocused }) => (
-          <View
-            onLayout={getCellOnLayoutHandler(index)}
-            key={index}
-            style={[_styles.cellRoot, isFocused && _styles.focusCell]}
-          >
-            <Text style={_styles.cellText}>{symbol || (isFocused ? <Cursor /> : null)}</Text>
-          </View>
-        )}
-      />
-      <MainButton
-        title={'Verify'}
-        loading={isLoading}
-        containerStyle={{ marginTop: 32 }}
-        onPress={onPressVerify}
-      />
-      <Text style={[_styles.subTitle, { marginTop: 32 }]}>{"Didn't receive email? resend"}</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1, justifyContent: 'center' }}
+      >
+        <DismissKeyboard style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={_styles.title}>{'Verification'}</Text>
+          <Text style={_styles.subTitle}>{"We've just sent you an email to"}</Text>
+          <Text style={[_styles.subTitle, { fontFamily: 'Inconsolata-Bold' }]}>{email}</Text>
+          <CodeField
+            ref={ref}
+            {...props}
+            autoFocus
+            value={value}
+            onChangeText={setValue}
+            cellCount={CELL_COUNT}
+            rootStyle={_styles.codeFieldRoot}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            renderCell={({ index, symbol, isFocused }) => (
+              <View
+                onLayout={getCellOnLayoutHandler(index)}
+                key={index}
+                style={[_styles.cellRoot, isFocused && _styles.focusCell]}
+              >
+                <Text style={_styles.cellText}>{symbol || (isFocused ? <Cursor /> : null)}</Text>
+              </View>
+            )}
+          />
+          <MainButton
+            title={'VERIFY'}
+            loading={isLoading}
+            containerStyle={{ marginTop: 32 }}
+            onPress={onPressVerify}
+          />
+          <Text style={[_styles.subTitle, { marginTop: 32 }]}>
+            {"Didn't receive email? resend"}
+          </Text>
+        </DismissKeyboard>
+      </KeyboardAvoidingView>
     </Screen>
   );
 };
@@ -82,9 +94,10 @@ export default VerificationScreen;
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 30,
+    fontSize: 32,
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
+    marginBottom: 12,
   },
   subTitle: {
     fontSize: 16,
@@ -92,7 +105,7 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
   },
   codeFieldRoot: {
-    marginTop: 20,
+    marginTop: 24,
   },
   cellRoot: {
     width: 50,

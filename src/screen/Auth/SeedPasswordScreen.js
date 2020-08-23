@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Text, StyleSheet, View, TouchableNativeFeedback } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 
 import Screen from '../../component/Common/Screen';
@@ -33,7 +32,7 @@ const SeedPasswordScreen = ({ navigation, route }) => {
         }}
       >
         <Text style={_styles.textDesc}>Seed Password</Text>
-        <TouchableWithoutFeedback onPress={copyToClipboard}>
+        <TouchableNativeFeedback onPress={copyToClipboard}>
           <Text
             style={[
               _styles.textDesc,
@@ -42,7 +41,7 @@ const SeedPasswordScreen = ({ navigation, route }) => {
           >
             Copy
           </Text>
-        </TouchableWithoutFeedback>
+        </TouchableNativeFeedback>
       </View>
       <View style={_styles.seedPasswordView}>
         <Text selectable style={_styles.seedPasswordText}>

@@ -18,8 +18,16 @@ const AuthNavigator = () => {
     >
       <Stack.Screen name={RoutesName.Login} component={LoginScreen} />
       <Stack.Screen name={RoutesName.Registration} component={RegistrationScreen} />
-      <Stack.Screen name={RoutesName.Verification} component={VerificationScreen} />
-      <Stack.Screen name={RoutesName.SeedPassword} component={SeedPasswordScreen} />
+      <Stack.Screen
+        name={RoutesName.Verification}
+        component={VerificationScreen}
+        options={{ gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name={RoutesName.SeedPassword}
+        component={SeedPasswordScreen}
+        options={{ gestureEnabled: false }}
+      />
       <Stack.Screen name={RoutesName.SeedConfirmation} component={SeedConfirmationScreen} />
     </Stack.Navigator>
   );

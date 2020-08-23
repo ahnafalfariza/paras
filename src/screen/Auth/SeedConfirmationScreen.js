@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert } from 'react-native';
+import { Text, StyleSheet, Alert, View, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+import { SvgXml } from 'react-native-svg';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
@@ -8,6 +9,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { initUser } from '../../actions/user';
+import assetSvg from '../../assets/svg/svg';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
@@ -35,6 +37,11 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
   return (
     <Screen style={{ margin: 32, flex: 1 }}>
       <DismissKeyboard style={{ justifyContent: 'center' }}>
+        <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
+          <View style={{ position: 'absolute', top: 0 }}>
+            <SvgXml xml={assetSvg.header.back} width="24" height="24" fill={Colors['white-1']} />
+          </View>
+        </TouchableWithoutFeedback>
         <Text style={_styles.textDesc}>{`Whats the ${numb} word?`}</Text>
         <TextInput
           style={_styles.textInput}
@@ -43,7 +50,7 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
           selectionColor={Colors['white-1']}
           onChangeText={onChangeText}
         />
-        <MainButton title={'Confirm'} onPress={onPress} />
+        <MainButton title={'CONFIRM'} onPress={onPress} />
       </DismissKeyboard>
     </Screen>
   );

@@ -7,7 +7,6 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  View,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -86,11 +85,7 @@ class RegistrationScreen extends Component {
 
   render() {
     return (
-      <Screen
-        style={{ padding: 32, flex: 1 }}
-        // transparent
-        // containerStyle={{ backgroundColor: '#000000' }}
-      >
+      <Screen style={{ padding: 32, flex: 1 }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={{ flex: 1, justifyContent: 'center' }}

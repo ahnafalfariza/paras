@@ -24,8 +24,8 @@ class LoginScreen extends Component {
 
     Axios.post(LOGIN, { userId: userId, seed: seedpassword })
       .then((res) => {
-        Axios.defaults.headers.common['Authorization'] = res.data.data;
-        this.getUserData(userId, res);
+        Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data;
+        this.getUserData(userId, res.data.data);
         this.setState({ isLoading: false });
       })
       .catch((err) => {
@@ -40,7 +40,6 @@ class LoginScreen extends Component {
 
   getUserData = (userId, token) => {
     Axios.get(PROFILE_URL(userId)).then((profileres) => {
-      // console.log('responnya', profileres.data.data);
       this.props.dispatchInitUser({
         profile: profileres.data.data[0],
         token: token,
@@ -99,11 +98,7 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <Screen
-        style={{ flex: 1, padding: 32 }}
-        transparent
-        containerStyle={{ backgroundColor: '#000000' }}
-      >
+      <Screen style={{ flex: 1, padding: 32 }}>
         <DismissKeyboard style={{ justifyContent: 'center' }}>
           <Text style={_styles.title}>{'Welcome\nBack'}</Text>
           <Formik

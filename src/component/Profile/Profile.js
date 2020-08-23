@@ -65,6 +65,7 @@ const _styles = StyleSheet.create({
   descText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
+    paddingHorizontal: 12,
     fontSize: 18,
     margin: 8,
     textAlign: 'center',

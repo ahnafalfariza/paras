@@ -5,6 +5,8 @@ import FastImage from 'react-native-fast-image';
 
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
+import { useNavigation } from '@react-navigation/native';
+import RoutesName from '../../utils/RoutesName';
 
 const SearchResultList = ({ result }) => {
   const renderItem = ({ item }) => <SearchResult item={item} />;
@@ -20,8 +22,16 @@ const SearchResultList = ({ result }) => {
 };
 
 const SearchResult = ({ item }) => {
+  const navigation = useNavigation();
+
+  const isTypeUser = item.type === 'user';
+  const navigationRoutes = isTypeUser ? RoutesName.UserProfile : RoutesName.Memento;
+  const navigationParams = isTypeUser ? { user: item } : { memento: item };
+
   return (
-    <TouchableWithoutFeedback onPress={() => console.log('go to search result')}>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate(navigationRoutes, navigationParams)}
+    >
       <View style={{ margin: 8, borderRadius: 4, overflow: 'hidden' }}>
         <View
           style={{

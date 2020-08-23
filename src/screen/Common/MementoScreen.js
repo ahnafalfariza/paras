@@ -4,7 +4,7 @@ import Axios from 'axios';
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import Profile from '../../component/Profile/Profile';
-import { MEMENTO_POST_URL } from '../../utils/api';
+import { MEMENTO_POST_URL, MEMENTO_URL } from '../../utils/api';
 import PostList from '../../component/Post/Post';
 import { postLimit } from '../../utils/constant';
 
@@ -12,11 +12,13 @@ class MementoScreen extends Component {
   state = {
     page: 1,
     postList: [],
+    memento: this.props.route.params.memento,
     hasMore: true,
   };
 
   componentDidMount() {
     this.getPostData(this.state.page);
+    this.getMementoData();
   }
 
   getPostData = (page, onRefresh = false) => {
@@ -27,6 +29,15 @@ class MementoScreen extends Component {
           postList: onRefresh ? res.data.data : [...prevState.postList, ...res.data.data],
           hasMore: res.data.data.length < postLimit ? false : true,
         }));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  getMementoData = () => {
+    const { id } = this.props.route.params.memento;
+    Axios.get(MEMENTO_URL(id))
+      .then((res) => {
+        this.setState({ memento: res.data.data[0] });
       })
       .catch((err) => console.log(err));
   };
@@ -43,8 +54,7 @@ class MementoScreen extends Component {
   };
 
   render() {
-    const { memento } = this.props.route.params;
-    const { postList, hasMore } = this.state;
+    const { postList, hasMore, memento } = this.state;
 
     return (
       <>

@@ -24,15 +24,18 @@ const VerificationScreen = ({ navigation, route }) => {
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue });
 
-  const { email } = route.params;
+  const { email, username } = route.params;
 
   const onPressVerify = () => {
     setLoading(true);
     Axios.post(VERIFY_USER, { pin: value, email })
       .then((res) => {
-        console.log(res.data);
-        Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
-        navigation.navigate(RoutesName.SeedPassword, { data: res.data.data });
+        navigation.navigate(RoutesName.SeedPassword, {
+          data: {
+            seedPassword: res.data.data.seedPassword,
+            username: username,
+          },
+        });
         setLoading(false);
       })
       .catch((err) => {

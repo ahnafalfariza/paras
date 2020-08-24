@@ -24,8 +24,8 @@ class LoginScreen extends Component {
 
     Axios.post(LOGIN, { userId: userId, seed: seedpassword })
       .then((res) => {
-        Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data;
-        this.getUserData(userId, res.data.data);
+        Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        this.props.dispatchInitUser(res.data.data);
         this.setState({ isLoading: false });
       })
       .catch((err) => {

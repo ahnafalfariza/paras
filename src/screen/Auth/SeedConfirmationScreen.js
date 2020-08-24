@@ -10,6 +10,8 @@ import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { initUser } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
+import Axios from 'axios';
+import { LOGIN } from '../../utils/api';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
@@ -17,18 +19,27 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
   const { data } = route.params;
   const seedPassword = data.seedPassword.split(' ');
 
+  const [isLoading, setIsLoading] = useState(false);
   const [confirmText, setConfirmText] = useState(null);
+
   const onChangeText = (text) => setConfirmText(text);
 
   const onPress = () => {
     const isCorrect = seedPassword[numb - 1] === confirmText;
     if (isCorrect) {
-      dispatchInitUser(data);
+      setIsLoading(true);
+      Axios.post(LOGIN, { userId: data.username + '.paras.testnet', seed: data.seedPassword })
+        .then((res) => {
+          Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+          dispatchInitUser(res.data.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err.response.data));
     } else {
       Alert.alert(
         'Error',
         'Please enter the correct word',
-        [{ text: 'OK', onPress: () => navigation.goBack() }],
+        [{ text: 'OK', onPress: () => setIsLoading(false) }],
         { cancelable: false },
       );
     }
@@ -50,7 +61,7 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
           selectionColor={Colors['white-1']}
           onChangeText={onChangeText}
         />
-        <MainButton title={'CONFIRM'} onPress={onPress} />
+        <MainButton title={'CONFIRM'} onPress={onPress} loading={isLoading} />
       </DismissKeyboard>
     </Screen>
   );

@@ -8,6 +8,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import assetSvg from '../../assets/svg/svg';
 import MainButton from '../../component/Common/MainButton';
+import RoutesName from '../../utils/RoutesName';
 
 class WalletScreen extends Component {
   render() {
@@ -21,10 +22,13 @@ class WalletScreen extends Component {
             <SvgXml xml={assetSvg.wallet.pac} width="36" height="36" fill={Colors['white-1']} />
           </View>
           <Text style={_styles.textRegular}>Learn more about PAC</Text>
-          <MainButton title={'SEND'} />
+          <MainButton
+            title={'SEND'}
+            onPress={() => this.props.navigation.navigate(RoutesName.WalletTransaction)}
+          />
           <Text style={_styles.textSemiBold}>Recent Transaction</Text>
           <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate('Wallet History')}
+            onPress={() => this.props.navigation.navigate(RoutesName.WalletHistory)}
           >
             <Text style={[_styles.textRegular, { marginTop: 24, textAlign: 'right' }]}>
               All Transaction
@@ -45,19 +49,16 @@ const _styles = StyleSheet.create({
     fontSize: 48,
     marginRight: 12,
   },
-
   balanceView: {
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
-
   textSemiBold: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
     fontSize: 18,
   },
-
   textRegular: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],

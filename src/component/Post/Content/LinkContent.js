@@ -16,7 +16,9 @@ const LinkContent = ({ body }) => {
         </View>
       </View>
       <View style={_styles.descView}>
-        <Text style={_styles.descText}>{link.desc}</Text>
+        <Text style={_styles.descText} numberOfLines={4}>
+          {link.desc}
+        </Text>
       </View>
       <View style={_styles.linkView}>
         <Text numberOfLines={1} style={_styles.linkText}>
@@ -37,11 +39,9 @@ const _styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-
   imageView: {
     height: '60%',
   },
-
   imageTextContainer: {
     position: 'absolute',
     top: 0,
@@ -51,13 +51,11 @@ const _styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   image: {
     width: '100%',
     height: '100%',
     opacity: 0.5,
   },
-
   imageText: {
     fontFamily: 'Inconsolata-ExtraBold',
     fontSize: 28,
@@ -65,26 +63,22 @@ const _styles = StyleSheet.create({
     textAlign: 'center',
     width: '70%',
   },
-
   descView: {
     height: '30%',
     padding: 12,
     justifyContent: 'center',
   },
-
   descText: {
     fontFamily: 'Inconsolata-SemiBold',
     fontSize: 18,
     color: Colors['white-1'],
   },
-
   linkView: {
     height: '10%',
     paddingHorizontal: 12,
     paddingBottom: 12,
     justifyContent: 'center',
   },
-
   linkText: {
     fontFamily: 'Inconsolata-SemiBold',
     fontSize: 18,

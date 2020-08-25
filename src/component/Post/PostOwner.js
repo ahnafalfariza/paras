@@ -8,6 +8,7 @@ import { SvgXml } from 'react-native-svg';
 import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
+import RoutesName from '../../utils/RoutesName';
 
 const PostOwner = ({ user }) => {
   const navigation = useNavigation();
@@ -28,7 +29,7 @@ const PostOwner = ({ user }) => {
       }}
     >
       <TouchableWithoutFeedback
-        onPress={() => (isSameRoute ? null : navigation.push('UserProfile', { user }))}
+        onPress={() => (isSameRoute ? null : navigation.push(RoutesName.UserProfile, { user }))}
       >
         <View style={_styles.userView}>
           <FastImage source={{ uri: getImageUrl(user.imgAvatar) }} style={_styles.userImage} />
@@ -58,13 +59,11 @@ const _styles = StyleSheet.create({
     fontSize: 18,
     color: Colors['white-1'],
   },
-
   userImage: {
     height: 36,
     width: 36,
     margin: 10,
   },
-
   userView: {
     flexDirection: 'row',
     alignItems: 'center',

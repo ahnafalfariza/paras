@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
+import RoutesName from '../../utils/RoutesName';
 
 const Profile = ({ data, type = 'user' }) => {
   const img = type === 'user' ? data.imgAvatar : data.img;
@@ -22,7 +23,7 @@ const Profile = ({ data, type = 'user' }) => {
       <Text style={_styles.idText}>{data.id}</Text>
       {type === 'memento' && (
         <TouchableWithoutFeedback
-          onPress={() => navigation.push('UserProfile', { user: { id: data.owner } })}
+          onPress={() => navigation.push(RoutesName.UserProfile, { user: { id: data.owner } })}
         >
           <Text style={_styles.ownerText}>
             by <Text style={{ fontFamily: 'Inconsolata-Bold' }}>{data.owner}</Text>
@@ -43,12 +44,10 @@ const _styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-
   image: {
     height: 180,
     width: 180,
   },
-
   idText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
@@ -57,17 +56,16 @@ const _styles = StyleSheet.create({
     marginBottom: 0,
     textAlign: 'center',
   },
-
   ownerText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     fontSize: 16,
     textAlign: 'center',
   },
-
   descText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
+    paddingHorizontal: 12,
     fontSize: 18,
     margin: 8,
     textAlign: 'center',

@@ -3,6 +3,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 
 import HomePicks from '../screen/Home/HomePicksScreen';
 import HomeFollowing from '../screen/Home/HomeFollowingScreen';
+import RoutesName from '../utils/RoutesName';
 
 const Stack = createStackNavigator();
 
@@ -10,12 +11,12 @@ const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name="HomePicks"
+        name={RoutesName.HomePicks}
         component={HomePicks}
         options={{ cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }}
       />
       <Stack.Screen
-        name="HomeFollowing"
+        name={RoutesName.HomeFollowing}
         component={HomeFollowing}
         options={{ cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }}
       />

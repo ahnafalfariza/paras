@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { getImageUrl } from '../utils/image';
-import Colors from '../utils/color';
+import Colors from '../../utils/color';
+import { getImageUrl } from '../../utils/image';
 
 const MemoryGrant = ({ img = null, mementoId = '' }) => {
   return (
@@ -21,9 +21,7 @@ const MemoryGrant = ({ img = null, mementoId = '' }) => {
       >
         <View style={{ flex: 1 }}>
           <FastImage
-            source={{
-              uri: getImageUrl(img),
-            }}
+            source={{ uri: getImageUrl(img) }}
             style={{ width: 48, height: 48, borderRadius: 8 }}
           />
         </View>

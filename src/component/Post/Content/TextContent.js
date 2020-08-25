@@ -26,16 +26,13 @@ const _styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 48,
   },
-
   scrollview: {
     paddingHorizontal: 48,
   },
-
   contentContainer: {
     flexGrow: 1,
     justifyContent: 'center',
   },
-
   text: {
     fontSize: 18,
     fontFamily: 'Inconsolata-SemiBold',

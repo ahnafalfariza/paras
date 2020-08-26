@@ -58,7 +58,7 @@ class MementoScreen extends Component {
 
     return (
       <>
-        <MainHeader title={memento.id} withBack />
+        <MainHeader title={memento.id} leftComponent={'back'} />
         <Screen>
           <PostList
             list={postList}

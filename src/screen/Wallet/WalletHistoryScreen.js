@@ -6,7 +6,7 @@ import Screen from '../../component/Common/Screen';
 const WalletHistory = () => {
   return (
     <>
-      <MainHeader title={'Transaction History'} withBack />
+      <MainHeader title={'Transaction History'} leftComponent={'back'} />
       <Screen />
     </>
   );

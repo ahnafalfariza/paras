@@ -58,7 +58,7 @@ class UserScreen extends Component {
 
     return (
       <>
-        <MainHeader title={user.id} withBack />
+        <MainHeader title={user.id} leftComponent={'back'} />
         <Screen>
           <PostList
             list={postList}

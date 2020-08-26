@@ -71,7 +71,7 @@ class WalletTransaction extends Component {
   render() {
     return (
       <>
-        <MainHeader title={'Send PAC'} withBack />
+        <MainHeader title={'Send PAC'} leftComponent={'back'} />
         <Screen style={{ margin: 16 }}>
           <DismissKeyboard>
             <Text style={_styles.textTo}>To</Text>

@@ -25,7 +25,10 @@ const ExploreSearchScreen = () => {
 
   return (
     <>
-      <MainHeader centerComponent={() => <Search onChange={getSearchData} />} withBack />
+      <MainHeader
+        centerComponent={() => <Search onChange={getSearchData} />}
+        leftComponent={'back'}
+      />
       <Screen>
         <SearchResultList result={data} />
       </Screen>

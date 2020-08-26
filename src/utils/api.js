@@ -27,8 +27,12 @@ export const LOGIN = `${BASE_URL}/login`;
 export const VERIFY_USER = `${BASE_URL}/register/confirm`;
 export const VERIFY_TOKEN = `${BASE_URL}/verify`;
 
+export const FOLLOWING_LIST = `${BASE_URL}/follow`;
+
 export const HOME_FEED = `${BASE_URL}/feeds`;
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
 
 export const WALLET_BALANCE = (user) => `${BASE_URL}/balances/${user}`;
 export const WALLET_HISTORY = `${BASE_URL}/transactions`;
+
+export const USER_MEMENTO = (user) => `${BASE_URL}/mementos?owner=${user}`;

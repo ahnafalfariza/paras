@@ -9,6 +9,13 @@ export const initUser = (data) => ({
   },
 });
 
+export const initFollowing = (data) => ({
+  type: Auth.INIT_FOLLOWING,
+  payload: {
+    followingList: data.followingList,
+  },
+});
+
 export const logoutUser = () => ({
   type: Auth.LOGOUT_USER,
 });

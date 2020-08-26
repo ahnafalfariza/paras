@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';

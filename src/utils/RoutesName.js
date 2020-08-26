@@ -23,4 +23,8 @@ export default {
   Verification: 'Verification',
   SeedPassword: 'SeedPassword',
   SeedConfirmation: 'SeedConfirmation',
+
+  NewPost: 'NewPost',
+  NewMemento: 'NewMemento',
+  ChooseMemento: 'ChooseMemento',
 };

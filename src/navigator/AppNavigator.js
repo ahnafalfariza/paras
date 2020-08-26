@@ -4,7 +4,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import { connect, useSelector } from 'react-redux';
 import Axios from 'axios';
 
-import NewPostScreen from '../screen/NewPost/NewPostScreen';
+import NewPostNavigator from './NewPostNavigator';
 import TabNavigator from './TabNavigator';
 import LandingNavigator from './LandingNavigator';
 import AuthNavigator from './AuthNavigator';
@@ -36,7 +36,7 @@ const AppNavigator = ({ isLoggedIn }) => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isLoggedIn ? (
           <>
-            {/* <Stack.Screen name="LandingNavigator" component={LandingNavigator} /> */}
+            <Stack.Screen name="LandingNavigator" component={LandingNavigator} />
             <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
           </>
         ) : (
@@ -44,7 +44,7 @@ const AppNavigator = ({ isLoggedIn }) => {
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen
               name="New Post"
-              component={NewPostScreen}
+              component={NewPostNavigator}
               options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
             />
           </>

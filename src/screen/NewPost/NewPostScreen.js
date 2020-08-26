@@ -5,23 +5,29 @@ import Colors from '../../utils/color';
 import { SCREEN_WIDTH } from '../../utils/constant';
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import RoutesName from '../../utils/RoutesName';
 
 class NewPostScreen extends Component {
   renderSelectMemento = () => {
     return (
-      <View>
-        <Text style={_styles.text}>Choose a memento</Text>
-        <View
-          style={{
-            backgroundColor: Colors['dark-12'],
-            padding: 14,
-            marginVertical: 16,
-            borderRadius: 8,
-          }}
-        >
-          <Text style={_styles.text}>Memento...</Text>
+      <TouchableWithoutFeedback
+        onPress={() => this.props.navigation.navigate(RoutesName.ChooseMemento)}
+      >
+        <View>
+          <Text style={_styles.text}>Choose a memento</Text>
+          <View
+            style={{
+              backgroundColor: Colors['dark-12'],
+              padding: 14,
+              marginVertical: 16,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={_styles.text}>Memento...</Text>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -47,7 +53,7 @@ class NewPostScreen extends Component {
   render() {
     return (
       <>
-        <MainHeader title={'New Post'} withBack />
+        <MainHeader title={'New Post'} leftComponent={'back'} />
         <Screen style={{ padding: 16 }}>
           {this.renderSelectMemento()}
           {this.renderChooseContent()}

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, TextInput, Alert, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  TextInput,
+  Alert,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { Formik } from 'formik';
@@ -10,8 +18,9 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import RoutesName from '../../utils/RoutesName';
-import { LOGIN, PROFILE_URL } from '../../utils/api';
-import { initUser } from '../../actions/user';
+import { LOGIN, FOLLOWING_LIST } from '../../utils/api';
+import { initUser, initFollowing } from '../../actions/user';
+import { isIOS } from '../../utils/constant';
 
 class LoginScreen extends Component {
   state = {
@@ -25,6 +34,7 @@ class LoginScreen extends Component {
     Axios.post(LOGIN, { userId: userId, seed: seedpassword })
       .then((res) => {
         Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        this.getUserFollowing();
         this.props.dispatchInitUser(res.data.data);
         this.setState({ isLoading: false });
       })
@@ -38,11 +48,10 @@ class LoginScreen extends Component {
       });
   };
 
-  getUserData = (userId, token) => {
-    Axios.get(PROFILE_URL(userId)).then((profileres) => {
-      this.props.dispatchInitUser({
-        profile: profileres.data.data[0],
-        token: token,
+  getUserFollowing = () => {
+    Axios.get(FOLLOWING_LIST).then((res) => {
+      this.props.dispatchInitFollowing({
+        followingList: res.data.data,
       });
     });
   };
@@ -99,34 +108,39 @@ class LoginScreen extends Component {
   render() {
     return (
       <Screen style={{ flex: 1, padding: 32 }}>
-        <DismissKeyboard style={{ justifyContent: 'center' }}>
-          <Text style={_styles.title}>{'Welcome\nBack'}</Text>
-          <Formik
-            initialValues={{ username: '', seedpassword: '' }}
-            validationSchema={yup.object().shape({
-              username: yup.string().required('Username is required'),
-              seedpassword: yup
-                .string()
-                .required('Seed password is required. It contains 12 words as signature'),
-            })}
-            onSubmit={this.onPressLogin}
-          >
-            {this.loginForm}
-          </Formik>
-          <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
-          >
-            <Text
-              style={{
-                fontFamily: 'Inconsolata-Regular',
-                color: Colors['white-1'],
-                marginTop: 32,
-              }}
+        <KeyboardAvoidingView
+          behavior={isIOS ? 'padding' : 'height'}
+          style={{ flex: 1, justifyContent: 'center' }}
+        >
+          <DismissKeyboard style={{ justifyContent: 'center' }}>
+            <Text style={_styles.title}>{'Welcome\nBack'}</Text>
+            <Formik
+              initialValues={{ username: '', seedpassword: '' }}
+              validationSchema={yup.object().shape({
+                username: yup.string().required('Username is required'),
+                seedpassword: yup
+                  .string()
+                  .required('Seed password is required. It contains 12 words as signature'),
+              })}
+              onSubmit={this.onPressLogin}
             >
-              Dont have an account? Sign up
-            </Text>
-          </TouchableWithoutFeedback>
-        </DismissKeyboard>
+              {this.loginForm}
+            </Formik>
+            <TouchableWithoutFeedback
+              onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
+            >
+              <Text
+                style={{
+                  fontFamily: 'Inconsolata-Regular',
+                  color: Colors['white-1'],
+                  marginTop: 32,
+                }}
+              >
+                Dont have an account? Sign up
+              </Text>
+            </TouchableWithoutFeedback>
+          </DismissKeyboard>
+        </KeyboardAvoidingView>
       </Screen>
     );
   }
@@ -134,6 +148,7 @@ class LoginScreen extends Component {
 
 const mapDispatchToProps = {
   dispatchInitUser: initUser,
+  dispatchInitFollowing: initFollowing,
 };
 
 export default connect(null, mapDispatchToProps)(LoginScreen);

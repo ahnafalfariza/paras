@@ -5,11 +5,11 @@ import HomeHeader from '../../component/Header/HomeHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import Axios from 'axios';
-import { HOME_FEED } from '../../utils/api';
+import { HOME_PICKS } from '../../utils/api';
 
 class HomePicks extends Component {
   componentDidMount() {
-    Axios.get(HOME_FEED)
+    Axios.get(HOME_PICKS)
       .then((res) => console.log('berhasil', res.data))
       .catch((err) => console.log(err.response.data));
   }

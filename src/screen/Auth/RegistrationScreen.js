@@ -6,7 +6,6 @@ import {
   TouchableWithoutFeedback,
   Alert,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -18,6 +17,7 @@ import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import Axios from 'axios';
 import { CREATE_USER } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
+import { isIOS } from '../../utils/constant';
 
 class RegistrationScreen extends Component {
   state = {
@@ -87,7 +87,7 @@ class RegistrationScreen extends Component {
     return (
       <Screen style={{ padding: 32, flex: 1 }}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={isIOS ? 'padding' : 'height'}
           style={{ flex: 1, justifyContent: 'center' }}
         >
           <DismissKeyboard style={{ justifyContent: 'center' }}>

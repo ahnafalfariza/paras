@@ -9,7 +9,7 @@ import Colors from '../../utils/color';
 import { SEARCH_USER_SEND } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 
-class WalletTransaction extends Component {
+class WalletTransactionScreen extends Component {
   state = {
     sendPacAmount: null,
     sendPacUser: null,
@@ -110,7 +110,7 @@ class WalletTransaction extends Component {
   }
 }
 
-export default WalletTransaction;
+export default WalletTransactionScreen;
 
 const _styles = StyleSheet.create({
   textInput: {

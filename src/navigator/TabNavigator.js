@@ -19,7 +19,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = ({ profileData, isLoggedIn }) => {
   return (
     <Tab.Navigator
-      initialRouteName={'HomeTab'}
+      initialRouteName={'ExploreTab'}
       tabBarOptions={tabBarOption}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) =>

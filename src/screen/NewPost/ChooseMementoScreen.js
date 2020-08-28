@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, StyleSheet, Text, View } from 'react-native';
+import { TextInput, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 import { connect } from 'react-redux';
@@ -10,17 +10,24 @@ import MainHeader from '../../component/Header/MainHeader';
 import RoutesName from '../../utils/RoutesName';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
-import { USER_MEMENTO } from '../../utils/api';
+import { USER_MEMENTO, SEARCH_MEMENTO } from '../../utils/api';
 import MementoList from '../../component/NewPost/MementoList';
 
 class ChooseMementoScreen extends Component {
   state = {
     userMemento: [],
+    searchMemento: [],
   };
 
   componentDidMount() {
     this.getUserMemento();
   }
+
+  getSearchMemento = (query) => {
+    Axios.get(SEARCH_MEMENTO(query))
+      .then((res) => console.log(res.data.data))
+      .catch((err) => console.log(err));
+  };
 
   getUserMemento = () => {
     Axios.get(USER_MEMENTO(this.props.profileData.id))
@@ -49,6 +56,7 @@ class ChooseMementoScreen extends Component {
             autoCapitalize={'none'}
             selectionColor={Colors['white-1']}
             placeholder={'Search'}
+            onChangeText={(text) => this.getSearchMemento(text)}
             placeholderTextColor={Colors['white-3']}
           />
           <Text style={_styles.title}>My Memento</Text>

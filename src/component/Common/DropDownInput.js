@@ -69,7 +69,6 @@ const _styles = StyleSheet.create({
     marginTop: 4,
     borderRadius: 4,
   },
-
   optionsText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],

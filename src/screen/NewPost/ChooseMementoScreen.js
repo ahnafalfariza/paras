@@ -33,7 +33,11 @@ class ChooseMementoScreen extends Component {
 
   getSearchMemento = (query) => {
     Axios.get(SEARCH_MEMENTO(query))
-      .then((res) => this.setState({ searchMemento: res.data.data }))
+      .then((res) =>
+        this.setState({
+          searchMemento: res.data.data.filter((memento) => memento.type === 'public'),
+        }),
+      )
       .catch((err) => console.log(err));
   };
 

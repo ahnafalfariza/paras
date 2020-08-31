@@ -16,16 +16,24 @@ import MementoList from '../../component/NewPost/MementoList';
 class ChooseMementoScreen extends Component {
   state = {
     userMemento: [],
+    searchQuery: '',
     searchMemento: [],
   };
 
   componentDidMount() {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.getUserMemento();
+    });
     this.getUserMemento();
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   getSearchMemento = (query) => {
     Axios.get(SEARCH_MEMENTO(query))
-      .then((res) => console.log(res.data.data))
+      .then((res) => this.setState({ searchMemento: res.data.data }))
       .catch((err) => console.log(err));
   };
 
@@ -36,6 +44,8 @@ class ChooseMementoScreen extends Component {
   };
 
   render() {
+    const { userMemento, searchMemento, searchQuery } = this.state;
+
     return (
       <>
         <MainHeader
@@ -56,11 +66,14 @@ class ChooseMementoScreen extends Component {
             autoCapitalize={'none'}
             selectionColor={Colors['white-1']}
             placeholder={'Search'}
-            onChangeText={(text) => this.getSearchMemento(text)}
+            onChangeText={(text) => {
+              this.getSearchMemento(text);
+              this.setState({ searchQuery: text });
+            }}
             placeholderTextColor={Colors['white-3']}
           />
-          <Text style={_styles.title}>My Memento</Text>
-          <MementoList />
+          <Text style={_styles.title}>{searchQuery === '' ? 'My Memento' : 'Search Memento'}</Text>
+          <MementoList list={searchQuery === '' ? userMemento : searchMemento} />
         </Screen>
       </>
     );

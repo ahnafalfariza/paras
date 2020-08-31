@@ -21,3 +21,5 @@ export const MEMENTO_DOMAIN = [
   { value: 'sport', label: 'Sport' },
   { value: 'tech', label: 'Technology' },
 ];
+
+export const MEMENTO_TYPE = ['Public', 'Personal'];

@@ -5,29 +5,10 @@ import Colors from '../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { getImageUrl } from '../../utils/image';
 
-const data = {
-  category: 'info',
-  createdAt: '1598275027406388744',
-  desc: 'My Timeline',
-  id: 'timeline.userparas',
-  img: { type: 'ipfs', url: 'QmYqaLrzfy5q36kphw3CCzLgkcpfPfGkZCQ326oKYde9to' },
-  isArchive: false,
-  name: 'timeline',
-  owner: 'userparas.paras.testnet',
-  type: 'personal',
-  user: {
-    _id: '5f43bdbf1c16141953324357',
-    bio: '',
-    createdAt: '1598275005976265013',
-    id: 'userparas.paras.testnet',
-    imgAvatar: [Object],
-  },
-};
-
-const Memento = () => {
+const Memento = ({ data }) => {
   return (
     <View style={{ marginVertical: 4 }}>
-      <TouchableNativeFeedback onPress={() => console.log('object')}>
+      <TouchableNativeFeedback onPress={() => console.log('pressed', data.id)}>
         <View
           style={{
             flexDirection: 'row',
@@ -60,11 +41,12 @@ const Memento = () => {
   );
 };
 
-const MementoList = () => {
+const MementoList = ({ list }) => {
   return (
     <FlatList
-      data={[1, 2, 3, 4]}
-      renderItem={Memento}
+      data={list}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <Memento data={item} />}
       contentContainerStyle={{ marginVertical: 4 }}
     />
   );

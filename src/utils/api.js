@@ -37,3 +37,4 @@ export const SEARCH_USER_SEND = (query) => `${BASE_URL}/users?id__re=${query}`;
 //newPost
 export const USER_MEMENTO = (user) => `${BASE_URL}/mementos?owner=${user}`;
 export const SEARCH_MEMENTO = (query) => `${BASE_URL}/mementos?id__re=${query}`;
+export const CREATE_MEMENTO = `${BASE_URL}/mementos`;

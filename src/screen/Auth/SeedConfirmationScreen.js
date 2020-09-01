@@ -50,7 +50,7 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
       <DismissKeyboard style={{ justifyContent: 'center' }}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={{ position: 'absolute', top: 0 }}>
-            <SvgXml xml={assetSvg.header.back} width="24" height="24" fill={Colors['white-1']} />
+            <SvgXml xml={assetSvg.header.back} width="24" height="24" />
           </View>
         </TouchableWithoutFeedback>
         <Text style={_styles.textDesc}>{`Whats the ${numb} word?`}</Text>

@@ -15,7 +15,7 @@ const MainHeader = ({ leftComponent, title, rightComponent, centerComponent }) =
     return (
       <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
         <View>
-          <SvgXml xml={leftIcon()} width="24" height="24" fill={Colors['white-1']} />
+          <SvgXml xml={leftIcon()} width="24" height="24" />
         </View>
       </TouchableWithoutFeedback>
     );

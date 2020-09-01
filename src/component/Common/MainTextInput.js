@@ -3,7 +3,16 @@ import { StyleSheet } from 'react-native';
 import Colors from '../../utils/color';
 import { TextInput } from 'react-native-gesture-handler';
 
-const MainTextInput = ({ style, value, onChangeText, onBlur, onFocus, placeholder }) => {
+const MainTextInput = ({
+  style,
+  value,
+  onChangeText,
+  onBlur,
+  onFocus,
+  placeholder,
+  maxLength = null,
+  multiline = false,
+}) => {
   return (
     <TextInput
       style={[_styles.textInput, style]}
@@ -12,6 +21,8 @@ const MainTextInput = ({ style, value, onChangeText, onBlur, onFocus, placeholde
       autoCapitalize={'none'}
       selectionColor={Colors['white-1']}
       placeholder={placeholder}
+      maxLength={maxLength}
+      multiline={multiline}
       placeholderTextColor={Colors['white-3']}
       onChangeText={onChangeText}
       onBlur={onBlur}

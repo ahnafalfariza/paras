@@ -15,7 +15,6 @@ const PostAction = () => {
             width="22"
             height="22"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Piece</Text>
         </View>
@@ -27,7 +26,6 @@ const PostAction = () => {
             width="22"
             height="22"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Comment</Text>
         </View>
@@ -39,7 +37,6 @@ const PostAction = () => {
             width="22"
             height="22"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Share</Text>
         </View>

@@ -117,7 +117,6 @@ class NewMementoScreen extends Component {
                   xml={assetSvg.header.check}
                   width="24"
                   height="24"
-                  fill={Colors['white-1']}
                   style={{ opacity: this.validateSubmit() ? 0.7 : 1 }}
                 />
               )}

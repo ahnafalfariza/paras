@@ -30,7 +30,6 @@ class ProfileScreen extends Component {
                   width="28"
                   height="28"
                   style={{ justifyContent: 'flex-end' }}
-                  fill={Colors['white-1']}
                 />
               </View>
             </TouchableWithoutFeedback>

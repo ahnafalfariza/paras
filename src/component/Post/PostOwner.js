@@ -43,7 +43,6 @@ const PostOwner = ({ user }) => {
             width="24"
             height="24"
             style={{ justifyContent: 'flex-end' }}
-            fill={Colors['white-1']}
           />
         </View>
       </TouchableWithoutFeedback>

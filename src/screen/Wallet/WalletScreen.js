@@ -19,7 +19,7 @@ class WalletScreen extends Component {
           <Text style={_styles.textSemiBold}>Your Balance</Text>
           <View style={_styles.balanceView}>
             <Text style={_styles.balanceText}>0.000000000</Text>
-            <SvgXml xml={assetSvg.wallet.pac} width="36" height="36" fill={Colors['white-1']} />
+            <SvgXml xml={assetSvg.wallet.pac} width="36" height="36" />
           </View>
           <Text style={_styles.textRegular}>Learn more about PAC</Text>
           <MainButton

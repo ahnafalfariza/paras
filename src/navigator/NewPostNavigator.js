@@ -11,7 +11,11 @@ const Stack = createStackNavigator();
 const NewPostNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={RoutesName.NewPost} component={NewPostScreen} />
+      <Stack.Screen
+        name={RoutesName.NewPost}
+        component={NewPostScreen}
+        initialParams={{ mementoData: null }}
+      />
       <Stack.Screen name={RoutesName.ChooseMemento} component={ChooseMementoScreen} />
       <Stack.Screen name={RoutesName.NewMemento} component={NewMementoScreen} />
     </Stack.Navigator>

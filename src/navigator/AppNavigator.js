@@ -45,7 +45,10 @@ const AppNavigator = ({ isLoggedIn }) => {
             <Stack.Screen
               name="New Post"
               component={NewPostNavigator}
-              options={{ cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS }}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureEnabled: false,
+              }}
             />
           </>
         )}

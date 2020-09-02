@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 
 import Colors from '../../../utils/color';
 import FastImage from 'react-native-fast-image';
@@ -8,24 +8,26 @@ import { getImageUrl } from '../../../utils/image';
 const LinkContent = ({ body }) => {
   const link = JSON.parse(body);
   return (
-    <View style={_styles.container}>
-      <View style={_styles.imageView}>
-        <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />
-        <View style={_styles.imageTextContainer}>
-          <Text style={_styles.imageText}>{link.title}</Text>
+    <TouchableNativeFeedback onPress={() => console.log('go to', link.url)}>
+      <View style={_styles.container}>
+        <View style={_styles.imageView}>
+          <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />
+          <View style={_styles.imageTextContainer}>
+            <Text style={_styles.imageText}>{link.title}</Text>
+          </View>
+        </View>
+        <View style={_styles.descView}>
+          <Text style={_styles.descText} numberOfLines={4}>
+            {link.desc}
+          </Text>
+        </View>
+        <View style={_styles.linkView}>
+          <Text numberOfLines={1} style={_styles.linkText}>
+            {link.url}
+          </Text>
         </View>
       </View>
-      <View style={_styles.descView}>
-        <Text style={_styles.descText} numberOfLines={4}>
-          {link.desc}
-        </Text>
-      </View>
-      <View style={_styles.linkView}>
-        <Text numberOfLines={1} style={_styles.linkText}>
-          {link.url}
-        </Text>
-      </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 

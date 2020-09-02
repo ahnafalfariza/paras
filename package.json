@@ -41,7 +41,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.5",
     "@babel/runtime": "^7.11.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.2.2",

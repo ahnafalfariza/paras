@@ -19,7 +19,9 @@ const ChooseContent = ({ onPress, onPressDelete, canDelete }) => {
         <TouchableNativeFeedback onPress={() => onPress('text')}>
           <SvgXml xml={assetSvg.newPost.text} width="36" height="36" style={{ margin: 8 }} />
         </TouchableNativeFeedback>
-        <SvgXml xml={assetSvg.newPost.link} width="36" height="36" style={{ margin: 8 }} />
+        <TouchableNativeFeedback onPress={() => onPress('url')}>
+          <SvgXml xml={assetSvg.newPost.link} width="36" height="36" style={{ margin: 8 }} />
+        </TouchableNativeFeedback>
       </View>
       {canDelete && (
         <TouchableNativeFeedback onPress={onPressDelete}>

@@ -39,3 +39,4 @@ export const USER_MEMENTO = (user) => `${BASE_URL}/mementos?owner=${user}`;
 export const SEARCH_MEMENTO = (query) => `${BASE_URL}/mementos?id__re=${query}`;
 export const CREATE_MEMENTO = `${BASE_URL}/mementos`;
 export const CREATE_POST = `${BASE_URL}/posts`;
+export const META_URL = (link) => `${BASE_URL}/metaget?link=${link}`;

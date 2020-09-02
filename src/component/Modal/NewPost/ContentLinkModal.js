@@ -1,43 +1,107 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableNativeFeedback,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { SvgXml } from 'react-native-svg';
 
 import Colors from '../../../utils/color';
 import MainTextInput from '../../Common/MainTextInput';
 import assetSvg from '../../../assets/svg/svg';
-import { SCREEN_WIDTH } from '../../../utils/constant';
+import { SCREEN_WIDTH, isIOS } from '../../../utils/constant';
 import Confirmation from '../../Common/Confimation';
+import DismissKeyboard from '../../Common/DismissKeyboard';
+import Axios from 'axios';
+import { META_URL } from '../../../utils/api';
 
-const ContentLinkModal = () => {
+const ContentLinkModal = ({ onDismiss, onComplete }) => {
   const [showDiscard, setShowDiscard] = useState(false);
+  const [value, setValue] = useState('');
+  const [isLoading, setLoading] = useState(false);
+
+  const onPressClose = () => {
+    value === '' ? onDismiss() : setShowDiscard(true);
+  };
+
+  const validateLink = () => {
+    // eslint-disable-next-line no-useless-escape
+    const regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+    return value.match(regex) || isLoading;
+  };
+
+  const onPressComplete = () => {
+    setLoading(true);
+    Axios.get(META_URL(value))
+      .then((res) => {
+        const meta = res.data.data;
+        const body = {
+          img: meta.image,
+          title: meta.title,
+          desc: meta.description,
+          url: meta.url,
+        };
+        onComplete({
+          type: 'url',
+          body: JSON.stringify(body),
+        });
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <View>
-      <Modal isVisible={true} backdropOpacity={showDiscard ? 0.9 : 0.7}>
-        <View style={_styles.containerModalView}>
-          {showDiscard ? (
-            <Confirmation
-              titleText={'Discard current text?'}
-              onPressLeft={() => setShowDiscard(false)}
-            />
-          ) : (
-            <View style={_styles.modalView}>
-              <View style={_styles.headerView}>
-                <TouchableNativeFeedback onPress={() => setShowDiscard(true)}>
-                  <SvgXml xml={assetSvg.header.close} width="28" height="28" />
-                </TouchableNativeFeedback>
-                <Text style={_styles.headerText}>Add Link</Text>
-                <TouchableNativeFeedback onPress={() => console.log('done')}>
-                  <SvgXml xml={assetSvg.header.check} width="28" height="28" />
-                </TouchableNativeFeedback>
-              </View>
-              <View style={_styles.contentView}>
-                <MainTextInput style={_styles.contentTextInput} placeholder={'https://'} />
-              </View>
-            </View>
-          )}
-        </View>
+      <Modal isVisible={true} backdropOpacity={showDiscard ? 1 : 0.7} useNativeDriver>
+        <DismissKeyboard>
+          <View style={_styles.containerModalView}>
+            {showDiscard ? (
+              <Confirmation
+                titleText={'Discard current link?'}
+                onPressLeft={() => setShowDiscard(false)}
+                onPressRight={onDismiss}
+              />
+            ) : (
+              <KeyboardAvoidingView
+                behavior={isIOS ? 'padding' : 'height'}
+                style={{ flex: 1, justifyContent: 'center' }}
+              >
+                <View style={_styles.modalView}>
+                  <View style={_styles.headerView}>
+                    <TouchableNativeFeedback onPress={onPressClose}>
+                      <SvgXml xml={assetSvg.header.close} width="28" height="28" />
+                    </TouchableNativeFeedback>
+                    <Text style={_styles.headerText}>Add Link</Text>
+                    <TouchableNativeFeedback onPress={onPressComplete} disabled={!validateLink()}>
+                      {isLoading ? (
+                        <ActivityIndicator size="small" />
+                      ) : (
+                        <SvgXml
+                          xml={assetSvg.header.check}
+                          width="28"
+                          height="28"
+                          style={{ opacity: validateLink() ? 1 : 0.7 }}
+                        />
+                      )}
+                    </TouchableNativeFeedback>
+                  </View>
+                  <View style={_styles.contentView}>
+                    <MainTextInput
+                      value={value}
+                      onChangeText={setValue}
+                      style={_styles.contentTextInput}
+                      placeholder={'https://'}
+                    />
+                  </View>
+                </View>
+              </KeyboardAvoidingView>
+            )}
+          </View>
+        </DismissKeyboard>
       </Modal>
     </View>
   );

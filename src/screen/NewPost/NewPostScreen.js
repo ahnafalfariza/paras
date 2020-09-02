@@ -6,6 +6,8 @@ import {
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  ScrollView,
+  Alert,
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
@@ -19,7 +21,6 @@ import NewPostModal from '../../component/Modal/NewPost';
 import TextContent from '../../component/Post/Content/TextContent';
 import ChooseContent from '../../component/NewPost/ChooseContent';
 import MainButton from '../../component/Common/MainButton';
-import { ScrollView } from 'react-native-gesture-handler';
 import LinkContent from '../../component/Post/Content/LinkContent';
 import ImageContent from '../../component/Post/Content/ImageContent';
 import ChooseMemento from '../../component/NewPost/ChooseMemento';
@@ -74,7 +75,14 @@ class NewPostScreen extends Component {
         console.log('berhasil', res.data.data);
         this.setState({ isLoading: false });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        Alert.alert(
+          'Error',
+          err.response.data.message,
+          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
+          { cancelable: false },
+        );
+      });
   };
 
   dismissModal = () => {
@@ -115,19 +123,15 @@ class NewPostScreen extends Component {
   };
 
   onCompleteContent = (data) => {
-    const { contentList, currentPage, showModal } = this.state;
+    const { contentList, currentPage } = this.state;
 
-    contentList[currentPage] = { type: showModal, body: data };
+    contentList[currentPage] = data;
     this.setState({ contentList });
     this.dismissModal();
   };
 
   scrollTo = (index) => {
-    this.scroll.scrollTo({
-      x: ContentDimension * index,
-      y: 0,
-      animated: true,
-    });
+    this.scroll.scrollTo({ x: ContentDimension * index, y: 0, animated: true });
   };
 
   nextPrevButton = () => {
@@ -149,6 +153,25 @@ class NewPostScreen extends Component {
           </View>
         )}
       </>
+    );
+  };
+
+  editDeleteButton = () => {
+    const { contentList, currentPage } = this.state;
+    return (
+      <View style={{ position: 'absolute', right: 0, margin: 12, flexDirection: 'row' }}>
+        <TouchableNativeFeedback onPress={() => console.log('edit')}>
+          <SvgXml xml={assetSvg.newPost.edit} width="36" height="36" />
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+          onPress={() => {
+            contentList[currentPage] = { type: null, body: null };
+            this.setState({ contentList });
+          }}
+        >
+          <SvgXml xml={assetSvg.newPost.delete} width="36" height="36" style={{ marginLeft: 12 }} />
+        </TouchableNativeFeedback>
+      </View>
     );
   };
 
@@ -178,7 +201,7 @@ class NewPostScreen extends Component {
               return (
                 <View key={index} style={{ flex: 1, width: ContentDimension, aspectRatio: 1 }}>
                   {content.type === 'text' && <TextContent body={content.body} />}
-                  {content.type === 'url' && <LinkContent body={content.body} />}
+                  {content.type === 'url' && <LinkContent body={content.body} disabled />}
                   {content.type === 'img' && <ImageContent body={content.body} />}
                   {content.type === null ? (
                     <ChooseContent
@@ -187,26 +210,7 @@ class NewPostScreen extends Component {
                       onPressDelete={this.onDeleteContent}
                     />
                   ) : (
-                    <View
-                      style={{ position: 'absolute', right: 0, margin: 12, flexDirection: 'row' }}
-                    >
-                      <TouchableNativeFeedback onPress={() => console.log('edit')}>
-                        <SvgXml xml={assetSvg.newPost.edit} width="36" height="36" />
-                      </TouchableNativeFeedback>
-                      <TouchableNativeFeedback
-                        onPress={() => {
-                          contentList[currentPage] = { type: null, body: null };
-                          this.setState({ contentList });
-                        }}
-                      >
-                        <SvgXml
-                          xml={assetSvg.newPost.delete}
-                          width="36"
-                          height="36"
-                          style={{ marginLeft: 12 }}
-                        />
-                      </TouchableNativeFeedback>
-                    </View>
+                    this.editDeleteButton()
                   )}
                 </View>
               );

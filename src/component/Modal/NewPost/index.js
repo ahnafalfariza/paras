@@ -3,12 +3,12 @@ import React from 'react';
 import ContentTextModal from './ContentTextModal';
 import ContentLinkModal from './ContentLinkModal';
 
-const NewPostModal = ({ type, onDismiss, onComplete }) => {
-  switch (type) {
+const NewPostModal = (props) => {
+  switch (props.type) {
     case 'text':
-      return <ContentTextModal onDismiss={onDismiss} onComplete={onComplete} />;
+      return <ContentTextModal {...props} />;
     case 'url':
-      return <ContentLinkModal />;
+      return <ContentLinkModal {...props} />;
     default:
       return null;
   }

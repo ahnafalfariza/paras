@@ -24,7 +24,6 @@ class ChooseMementoScreen extends Component {
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
       this.getUserMemento();
     });
-    this.getUserMemento();
   }
 
   componentWillUnmount() {

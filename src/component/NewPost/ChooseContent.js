@@ -4,7 +4,7 @@ import { SvgXml } from 'react-native-svg';
 
 import assetSvg from '../../assets/svg/svg';
 
-const ChooseContent = ({ onPress, canDelete }) => {
+const ChooseContent = ({ onPress, onPressDelete, canDelete }) => {
   return (
     <>
       <View
@@ -22,12 +22,14 @@ const ChooseContent = ({ onPress, canDelete }) => {
         <SvgXml xml={assetSvg.newPost.link} width="36" height="36" style={{ margin: 8 }} />
       </View>
       {canDelete && (
-        <SvgXml
-          xml={assetSvg.newPost.delete}
-          width="36"
-          height="36"
-          style={{ alignSelf: 'center', position: 'absolute', bottom: 32 }}
-        />
+        <TouchableNativeFeedback onPress={onPressDelete}>
+          <SvgXml
+            xml={assetSvg.newPost.delete}
+            width="36"
+            height="36"
+            style={{ alignSelf: 'center', position: 'absolute', bottom: 32 }}
+          />
+        </TouchableNativeFeedback>
       )}
     </>
   );

@@ -61,7 +61,12 @@ class ExploreScreen extends Component {
             <TouchableWithoutFeedback
               onPress={() => this.props.navigation.navigate(RoutesName.ExploreSerach)}
             >
-              <SvgXml xml={assetSvg.header.search} width="24" height="24" />
+              <SvgXml
+                xml={assetSvg.header.search}
+                width="24"
+                height="24"
+                fill={Colors['white-1']}
+              />
             </TouchableWithoutFeedback>
           )}
         />

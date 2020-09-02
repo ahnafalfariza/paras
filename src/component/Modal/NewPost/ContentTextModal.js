@@ -22,7 +22,7 @@ const ContentTextModal = ({ onDismiss, onComplete }) => {
   const [showDiscard, setShowDiscard] = useState(false);
   const [value, setValue] = useState('');
 
-  const lineWidht = (value.length / MaximumCharacter) * 100;
+  const lineWidth = (value.length / MaximumCharacter) * 100;
 
   const onPressClose = () => {
     value === '' ? onDismiss() : setShowDiscard(true);
@@ -52,10 +52,7 @@ const ContentTextModal = ({ onDismiss, onComplete }) => {
                     <Text style={_styles.headerText}>Add Text</Text>
                     <TouchableNativeFeedback
                       disabled={value === ''}
-                      onPress={() => {
-                        console.log('done');
-                        onComplete(value);
-                      }}
+                      onPress={() => onComplete({ type: 'text', body: value })}
                     >
                       <SvgXml
                         xml={assetSvg.header.check}
@@ -67,7 +64,7 @@ const ContentTextModal = ({ onDismiss, onComplete }) => {
                   </View>
                   <View
                     style={{
-                      width: `${lineWidht}%`,
+                      width: `${lineWidth}%`,
                       height: 3,
                       backgroundColor: Colors['primary-5'],
                     }}

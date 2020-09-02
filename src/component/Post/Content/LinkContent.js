@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import Colors from '../../../utils/color';
-import FastImage from 'react-native-fast-image';
 import { getImageUrl } from '../../../utils/image';
 
-const LinkContent = ({ body }) => {
+const LinkContent = ({ body, disabled = false }) => {
   const link = JSON.parse(body);
   return (
-    <TouchableNativeFeedback onPress={() => console.log('go to', link.url)}>
+    <TouchableNativeFeedback onPress={() => console.log('go to', link.url)} disabled={disabled}>
       <View style={_styles.container}>
         <View style={_styles.imageView}>
           <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />

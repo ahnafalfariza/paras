@@ -12,6 +12,8 @@ import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 import { USER_MEMENTO, SEARCH_MEMENTO } from '../../utils/api';
 import MementoList from '../../component/NewPost/MementoList';
+import MementoListSquare from '../../component/NewPost/MementoListSquare';
+import DismissKeyboard from '../../component/Common/DismissKeyboard';
 
 class ChooseMementoScreen extends Component {
   state = {
@@ -63,20 +65,25 @@ class ChooseMementoScreen extends Component {
           }
         />
         <Screen style={{ margin: 16 }}>
-          <TextInput
-            style={_styles.textInput}
-            autoCorrect={false}
-            autoCapitalize={'none'}
-            selectionColor={Colors['white-1']}
-            placeholder={'Search'}
-            onChangeText={(text) => {
-              this.getSearchMemento(text);
-              this.setState({ searchQuery: text });
-            }}
-            placeholderTextColor={Colors['white-3']}
-          />
-          <Text style={_styles.title}>{searchQuery === '' ? 'My Memento' : 'Search Memento'}</Text>
-          <MementoList list={searchQuery === '' ? userMemento : searchMemento} />
+          <DismissKeyboard>
+            <TextInput
+              style={_styles.textInput}
+              autoCorrect={false}
+              autoCapitalize={'none'}
+              selectionColor={Colors['white-1']}
+              placeholder={'Search'}
+              returnKeyType={'search'}
+              onChangeText={(text) => {
+                this.getSearchMemento(text);
+                this.setState({ searchQuery: text });
+              }}
+              placeholderTextColor={Colors['white-3']}
+            />
+            <Text style={_styles.title}>
+              {searchQuery === '' ? 'My Memento' : 'Search Memento'}
+            </Text>
+            <MementoListSquare list={searchQuery === '' ? userMemento : searchMemento} />
+          </DismissKeyboard>
         </Screen>
       </>
     );

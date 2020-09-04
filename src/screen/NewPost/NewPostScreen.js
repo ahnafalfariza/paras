@@ -20,9 +20,9 @@ import assetSvg from '../../assets/svg/svg';
 import NewPostModal from '../../component/Modal/NewPost';
 import TextContent from '../../component/Post/Content/TextContent';
 import ChooseContent from '../../component/NewPost/ChooseContent';
-import MainButton from '../../component/Common/MainButton';
-import LinkContent from '../../component/Post/Content/LinkContent';
 import ImageContent from '../../component/Post/Content/ImageContent';
+import LinkContent from '../../component/Post/Content/LinkContent';
+import MainButton from '../../component/Common/MainButton';
 import ChooseMemento from '../../component/NewPost/ChooseMemento';
 import { CREATE_POST } from '../../utils/api';
 
@@ -89,7 +89,7 @@ class NewPostScreen extends Component {
     this.setState({ showModal: null });
   };
 
-  onDeleteContent = () => {
+  onDeleteEmptyContent = () => {
     const { contentList, currentPage } = this.state;
     let updatedContent = Object.create(contentList);
     this.scrollTo(currentPage === 0 ? currentPage + 1 : currentPage - 1);
@@ -180,14 +180,7 @@ class NewPostScreen extends Component {
     return (
       <>
         <Text style={_styles.defaultText}>Content</Text>
-        <View
-          style={{
-            borderRadius: 8,
-            backgroundColor: Colors['dark-8'],
-            overflow: 'hidden',
-            marginVertical: 16,
-          }}
-        >
+        <View style={_styles.chooseContentView}>
           <ScrollView
             ref={(ref) => (this.scroll = ref)}
             horizontal
@@ -207,7 +200,7 @@ class NewPostScreen extends Component {
                     <ChooseContent
                       canDelete={contentList.length > 1}
                       onPress={this.onPressChooseContent}
-                      onPressDelete={this.onDeleteContent}
+                      onPressDelete={this.onDeleteEmptyContent}
                     />
                   ) : (
                     this.editDeleteButton()
@@ -226,7 +219,7 @@ class NewPostScreen extends Component {
   };
 
   render() {
-    const { mementoData, contentList, isLoading } = this.state;
+    const { mementoData, contentList, isLoading, showModal, currentPage } = this.state;
     return (
       <>
         <MainHeader
@@ -257,7 +250,8 @@ class NewPostScreen extends Component {
             onPress={this.onPressAddPage}
           />
           <NewPostModal
-            type={this.state.showModal}
+            type={showModal}
+            body={contentList[currentPage].body}
             onDismiss={this.dismissModal}
             onComplete={this.onCompleteContent}
           />
@@ -275,36 +269,17 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: 18,
   },
-  defaultMementoView: {
-    backgroundColor: Colors['dark-8'],
-    padding: 14,
-    marginVertical: 16,
-    borderRadius: 8,
-  },
-  containerView: {
-    flexDirection: 'row',
-    padding: 10,
-    backgroundColor: Colors['dark-8'],
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 8,
-    marginVertical: 16,
-  },
-  mementoImage: {
-    height: 28,
-    width: 28,
-    marginRight: 8,
-  },
-  mementoText: {
-    fontFamily: 'Inconsolata-Bold',
-    color: Colors['white-1'],
-    fontSize: 18,
-  },
   paginationButton: {
     position: 'absolute',
     justifyContent: 'center',
     top: 0,
     bottom: 0,
     marginHorizontal: 10,
+  },
+  chooseContentView: {
+    borderRadius: 8,
+    backgroundColor: Colors['dark-8'],
+    overflow: 'hidden',
+    marginVertical: 16,
   },
 });

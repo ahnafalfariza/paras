@@ -26,13 +26,14 @@ const Memento = ({ data }) => {
   );
 };
 
-const MementoListSquare = ({ list }) => {
+const MementoListSquare = ({ list, header }) => {
   return (
     <FlatList
       data={list}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <Memento data={item} />}
       numColumns={2}
+      ListHeaderComponent={header}
       columnWrapperStyle={{ justifyContent: 'space-between' }}
       keyboardShouldPersistTaps={'always'}
       contentContainerStyle={{ marginVertical: 4 }}

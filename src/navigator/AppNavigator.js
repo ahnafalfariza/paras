@@ -9,6 +9,7 @@ import TabNavigator from './TabNavigator';
 import LandingNavigator from './LandingNavigator';
 import AuthNavigator from './AuthNavigator';
 import { VERIFY_TOKEN } from '../utils/api';
+import CommentScreen from '../screen/Interaction/CommentScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const AppNavigator = ({ isLoggedIn }) => {
   useEffect(() => {
     if (token) {
       Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      console.log(token);
       Axios.post(VERIFY_TOKEN)
         .then(() => setTokenLoaded(true))
         .catch((err) => console.log(err));
@@ -48,6 +50,14 @@ const AppNavigator = ({ isLoggedIn }) => {
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
                 gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="Comment"
+              component={CommentScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureDirection: 'vertical',
               }}
             />
           </>

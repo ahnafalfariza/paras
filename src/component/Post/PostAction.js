@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { SvgXml } from 'react-native-svg';
+import { useNavigation } from '@react-navigation/native';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 
-const PostAction = () => {
+const PostAction = ({ id }) => {
+  const navigation = useNavigation();
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
       <TouchableWithoutFeedback onPress={() => console.log('pieces')}>
@@ -19,7 +21,7 @@ const PostAction = () => {
           <Text style={_styles.memento}>Piece</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => console.log('comment')}>
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('Comment', { id: id })}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.comment}

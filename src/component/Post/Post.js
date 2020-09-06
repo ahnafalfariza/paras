@@ -12,7 +12,7 @@ import PostDate from './PostDate';
 
 class Post extends PureComponent {
   render() {
-    const { contentList, user, memento, createdAt } = this.props.post;
+    const { contentList, user, memento, createdAt, id } = this.props.post;
     return (
       <View
         style={{
@@ -27,7 +27,7 @@ class Post extends PureComponent {
         <PostOwner user={user} />
         <PostContent contentList={contentList} />
         <PostDate date={createdAt} />
-        <PostAction />
+        <PostAction id={id} />
       </View>
     );
   }

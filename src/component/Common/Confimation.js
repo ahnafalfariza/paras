@@ -1,70 +1,77 @@
 import React from 'react';
-import { View, Text, TouchableNativeFeedback } from 'react-native';
+import { View, Text, TouchableNativeFeedback, StyleSheet, ActivityIndicator } from 'react-native';
 
 import Colors from '../../utils/color';
 import { SCREEN_WIDTH } from '../../utils/constant';
 
-const Confirmation = ({ onPressLeft, onPressRight, titleText }) => {
+const Confirmation = ({
+  onPressLeft,
+  onPressRight,
+  titleText,
+  leftText = 'Cancel',
+  rightText = 'Discard',
+  loading = false,
+}) => {
   return (
-    <View
-      style={{
-        backgroundColor: Colors['dark-2'],
-        width: SCREEN_WIDTH - 96,
-        borderRadius: 6,
-      }}
-    >
-      <Text
-        style={{
-          marginVertical: 24,
-          textAlign: 'center',
-          color: Colors['white-1'],
-          marginLeft: 12,
-          fontFamily: 'Inconsolata-SemiBold',
-          fontSize: 18,
-        }}
-      >
-        {titleText}
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          borderTopWidth: 1,
-          borderColor: Colors['black-2'],
-        }}
-      >
-        <TouchableNativeFeedback onPress={onPressLeft}>
-          <View style={{ flex: 1, borderRightWidth: 0.5, borderColor: Colors['black-2'] }}>
-            <Text
-              style={{
-                fontFamily: 'Inconsolata-Bold',
-                fontSize: 16,
-                color: Colors['white-1'],
-                textAlign: 'center',
-                padding: 12,
-              }}
-            >
-              Cancel
-            </Text>
+    <View style={_styles.containerView}>
+      <Text style={_styles.titleText}>{titleText}</Text>
+      <View style={_styles.subTitleContainer}>
+        {loading ? (
+          <View style={_styles.subTitleView}>
+            <ActivityIndicator size={'small'} />
           </View>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={onPressRight}>
-          <View style={{ flex: 1, borderLeftWidth: 0.5, borderColor: Colors['black-2'] }}>
-            <Text
-              style={{
-                fontFamily: 'Inconsolata-Bold',
-                fontSize: 16,
-                color: Colors['white-1'],
-                textAlign: 'center',
-                padding: 12,
-              }}
-            >
-              Discard
-            </Text>
-          </View>
-        </TouchableNativeFeedback>
+        ) : (
+          <>
+            <TouchableNativeFeedback onPress={onPressLeft}>
+              <View style={_styles.subTitleView}>
+                <Text style={_styles.subTitleText}>{leftText}</Text>
+              </View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={onPressRight}>
+              <View style={_styles.subTitleView}>
+                <Text style={_styles.subTitleText}>{rightText}</Text>
+              </View>
+            </TouchableNativeFeedback>
+          </>
+        )}
       </View>
     </View>
   );
 };
 
 export default Confirmation;
+
+const _styles = StyleSheet.create({
+  containerView: {
+    backgroundColor: Colors['dark-2'],
+    width: SCREEN_WIDTH - 96,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  titleText: {
+    marginVertical: 24,
+    textAlign: 'center',
+    color: Colors['white-1'],
+    marginLeft: 12,
+    fontFamily: 'Inconsolata-SemiBold',
+    fontSize: 18,
+  },
+  subTitleContainer: {
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderColor: Colors['black-2'],
+  },
+  subTitleView: {
+    flex: 1,
+    borderRightWidth: 0.5,
+    borderColor: Colors['black-2'],
+    padding: 12,
+  },
+  subTitleText: {
+    fontFamily: 'Inconsolata-Bold',
+    fontSize: 16,
+    color: Colors['white-1'],
+    textAlign: 'center',
+  },
+});

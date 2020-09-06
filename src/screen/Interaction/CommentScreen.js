@@ -27,7 +27,6 @@ const CommentScreen = ({ route }) => {
     Axios.get(COMMENT(id))
       .then((res) => {
         setCommentList(res.data.data);
-        console.log('datakomen', res.data.data);
         setLoading(false);
       })
       .catch((err) => console.log(err.response.message));

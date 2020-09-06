@@ -79,7 +79,6 @@ const CommentList = ({ data, onRefresh, emptyComponent }) => {
   const onPressMore = (item) => {
     setModalVisible(true);
     setCommentData(item);
-    console.log(item);
   };
 
   const onCloseModal = () => {
@@ -107,7 +106,7 @@ const CommentList = ({ data, onRefresh, emptyComponent }) => {
           isVisible={isModalVisible}
           onClose={onCloseModal}
           commentData={commentData}
-          refreshComment={refreshComment}
+          refreshComment={onRefresh}
         />
       )}
     </>

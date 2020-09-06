@@ -1,11 +1,16 @@
 export default {
-  Tab: 'HomeTab',
+  HomeTab: 'HomeTab',
+  ExploreTab: 'ExploreTab',
+  NewPostTab: 'NewPostTab',
+  WalletTab: 'WalletTab',
+  ProfileTab: 'ProfileTab',
 
   HomePicks: 'HomePicks',
   HomeFollowing: 'HomeFollowing',
 
   Explore: 'Explore',
   ExploreSerach: 'ExploreSearch',
+
   Memento: 'Memento',
   UserProfile: 'UserProfile',
 
@@ -27,4 +32,6 @@ export default {
   NewPost: 'NewPost',
   NewMemento: 'NewMemento',
   ChooseMemento: 'ChooseMemento',
+
+  Profile: 'Profile',
 };

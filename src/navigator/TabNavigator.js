@@ -5,11 +5,12 @@ import FastImage from 'react-native-fast-image';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
 
-import NewPostScreen from '../screen/NewPost/NewPostScreen';
-import ProfileScreen from '../screen/Profile/ProfileScreen';
 import HomeNavigator from './HomeNavigator';
 import WalletNavigator from './WalletNavigator';
 import ExploreNavigator from './ExploreNavigator';
+import NewPostNavigator from './NewPostNavigator';
+import ProfileNavigator from './ProfileNavigator';
+import RoutesName from '../utils/RoutesName';
 
 import Colors from '../utils/color';
 import assetSvg from '../assets/svg/svg';
@@ -26,11 +27,15 @@ const TabNavigator = ({ profileData, isLoggedIn }) => {
           isLoggedIn && profileData ? tabBarIcon(color, route, profileData) : null,
       })}
     >
-      <Tab.Screen name="HomeTab" component={HomeNavigator} />
-      <Tab.Screen name="ExploreTab" component={ExploreNavigator} />
-      <Tab.Screen name="NewPostTab" component={NewPostScreen} listeners={newPostListener} />
-      <Tab.Screen name="WalletTab" component={WalletNavigator} />
-      <Tab.Screen name="ProfileTab" component={ProfileScreen} />
+      <Tab.Screen name={RoutesName.HomeTab} component={HomeNavigator} />
+      <Tab.Screen name={RoutesName.ExploreTab} component={ExploreNavigator} />
+      <Tab.Screen
+        name={RoutesName.NewPostTab}
+        component={NewPostNavigator}
+        listeners={newPostListener}
+      />
+      <Tab.Screen name={RoutesName.WalletTab} component={WalletNavigator} />
+      <Tab.Screen name={RoutesName.ProfileTab} component={ProfileNavigator} />
     </Tab.Navigator>
   );
 };

@@ -40,3 +40,8 @@ export const SEARCH_MEMENTO = (query) => `${BASE_URL}/mementos?id__re=${query}`;
 export const CREATE_MEMENTO = `${BASE_URL}/mementos`;
 export const CREATE_POST = `${BASE_URL}/posts`;
 export const META_URL = (link) => `${BASE_URL}/metaget?link=${link}`;
+
+//comment
+export const COMMENT = (postId) => `${BASE_URL}/comments?postId=${postId}`;
+export const POST_COMMENT = `${BASE_URL}/comments`;
+export const DELETE_COMMENT = (commentId) => `${BASE_URL}/comments/${commentId}`;

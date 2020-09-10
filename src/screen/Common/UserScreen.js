@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
@@ -7,6 +8,9 @@ import Axios from 'axios';
 import { PROFILE_POST_URL, PROFILE_URL } from '../../utils/api';
 import PostList from '../../component/Post/Post';
 import { postLimit } from '../../utils/constant';
+import { TouchableWithoutFeedback, View } from 'react-native';
+import { SvgXml } from 'react-native-svg';
+import assetSvg from '../../assets/svg/svg';
 
 class UserScreen extends Component {
   state = {
@@ -55,14 +59,28 @@ class UserScreen extends Component {
 
   render() {
     const { postList, hasMore, user } = this.state;
+    const { id } = this.props.profileData;
 
     return (
       <>
-        <MainHeader title={user.id} leftComponent={'back'} />
+        <MainHeader
+          title={user.id}
+          leftComponent={'back'}
+          rightComponent={() => (
+            <TouchableWithoutFeedback>
+              <SvgXml
+                xml={assetSvg.common.more}
+                width="28"
+                height="28"
+                style={{ justifyContent: 'flex-end' }}
+              />
+            </TouchableWithoutFeedback>
+          )}
+        />
         <Screen>
           <PostList
             list={postList}
-            header={<Profile data={user} type={'user'} />}
+            header={<Profile data={user} type={'user'} currentUser={user.id === id} />}
             onLoadMore={this.loadMorePost}
             onRefresh={this.onRefresh}
             hasMore={hasMore}
@@ -73,4 +91,8 @@ class UserScreen extends Component {
   }
 }
 
-export default UserScreen;
+const mapStateToProps = (state) => ({
+  profileData: state.user.profile,
+});
+
+export default connect(mapStateToProps)(UserScreen);

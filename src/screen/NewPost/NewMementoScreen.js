@@ -6,10 +6,12 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
+import SoftInputMode from 'react-native-set-soft-input-mode';
 
 import Colors from '../../utils/color';
 import MainHeader from '../../component/Header/MainHeader';
@@ -29,6 +31,10 @@ class NewMementoScreen extends Component {
     type: null,
     isLoading: false,
   };
+
+  componentDidMount() {
+    SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
+  }
 
   createMemento = () => {
     const { name, category, type } = this.state;
@@ -111,7 +117,7 @@ class NewMementoScreen extends Component {
               disabled={this.validateSubmit()}
             >
               {isLoading ? (
-                <ActivityIndicator size="small" />
+                <ActivityIndicator size="small" color={Colors['white-1']} />
               ) : (
                 <SvgXml
                   xml={assetSvg.header.check}
@@ -123,38 +129,45 @@ class NewMementoScreen extends Component {
             </TouchableWithoutFeedback>
           )}
         />
-        <Screen style={{ padding: 16 }}>
-          <DismissKeyboard>
-            <View>
-              <Text style={_styles.textTitle}>Create Memento</Text>
-              <Text style={_styles.textMemento}>{this.mementoDomain()}</Text>
-              <Text style={_styles.textPlaceholder}>Name</Text>
-              <MainTextInput
-                value={name}
-                onChangeText={this.onChangeName}
-                placeholder={'Memento name'}
-              />
-              <View style={{ marginBottom: 12 }}>
-                {!this.validateName() && (
-                  <Text style={_styles.textWarning}>
-                    Memento name must be lowercase and only contain letters and numbers
-                  </Text>
-                )}
+        <Screen style={{ padding: 16, flex: 1, overflow: 'hidden' }}>
+          <KeyboardAvoidingView
+            behavior={'padding'}
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={32}
+          >
+            <DismissKeyboard style={{ justifyContent: 'center', flex: 0 }}>
+              <View style={{ justifyContent: 'center' }}>
+                <Text style={_styles.textTitle}>Create Memento</Text>
+                <Text style={_styles.textMemento}>{this.mementoDomain()}</Text>
+                <Text style={_styles.textPlaceholder}>Name</Text>
+                <MainTextInput
+                  value={name}
+                  onChangeText={this.onChangeName}
+                  placeholder={'Memento name'}
+                />
+                <View style={{ marginBottom: 12 }}>
+                  {!this.validateName() && (
+                    <Text style={_styles.textWarning}>
+                      Memento name must be lowercase and only contain letters and numbers
+                    </Text>
+                  )}
+                </View>
+                <Text style={_styles.textPlaceholder}>Category</Text>
+                <DropDownInput
+                  options={MEMENTO_DOMAIN.map((memento) => memento.label)}
+                  onChange={this.onChangeCategory}
+                  placeholder={'Memento Category'}
+                />
+                <Text style={_styles.textPlaceholder}>Type</Text>
+                <DropDownInput
+                  options={MEMENTO_TYPE}
+                  onChange={this.onChangeTypeMemento}
+                  placeholder={'Memento Type'}
+                  searchable={false}
+                />
               </View>
-              <Text style={_styles.textPlaceholder}>Category</Text>
-              <DropDownInput
-                options={MEMENTO_DOMAIN.map((memento) => memento.label)}
-                onChange={this.onChangeCategory}
-                placeholder={'Memento Category'}
-              />
-              <Text style={_styles.textPlaceholder}>Type</Text>
-              <DropDownInput
-                options={MEMENTO_TYPE}
-                onChange={this.onChangeTypeMemento}
-                placeholder={'Memento Type'}
-              />
-            </View>
-          </DismissKeyboard>
+            </DismissKeyboard>
+          </KeyboardAvoidingView>
         </Screen>
       </>
     );

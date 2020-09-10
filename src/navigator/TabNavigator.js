@@ -59,18 +59,21 @@ const tabBarIcon = (color, route, profileData) => {
   const { name } = route;
   const xml = assetSvg.bottomTab[name];
 
+  const width = name === 'NewPostTab' ? 32 : 26;
+  const height = name === 'NewPostTab' ? 32 : 26;
+
   if (name === 'ProfileTab') {
     return (
       <View style={{ borderWidth: 3, borderRadius: 20, borderColor: color }}>
         <FastImage
           source={{ uri: getImageUrl(profileData.imgAvatar) }}
-          style={{ width: 32, height: 32 }}
+          style={{ width: 30, height: 30 }}
         />
       </View>
     );
   }
 
-  return <SvgXml xml={xml} width="30" height="30" fill={color} />;
+  return <SvgXml xml={xml} width={width} height={height} fill={color} />;
 };
 
 const mapStateToProps = (state) => ({

@@ -9,11 +9,15 @@ import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 
-const Profile = ({ data, type = 'user' }) => {
+const Profile = ({ data, type = 'user', currentUser = false }) => {
   const img = type === 'user' ? data.imgAvatar : data.img;
   const desc = type === 'user' ? data.bio : data.desc;
 
   const navigation = useNavigation();
+
+  const editProfile = () => {
+    navigation.navigate('EditProfile');
+  };
 
   return (
     <View style={{ marginVertical: 8 }}>
@@ -31,7 +35,11 @@ const Profile = ({ data, type = 'user' }) => {
         </TouchableWithoutFeedback>
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
-      <MainButton title={'FOLLOW'} containerStyle={{ alignSelf: 'center', width: 150 }} />
+      <MainButton
+        title={currentUser ? 'EDIT PROFILE' : 'FOLLOW'}
+        containerStyle={{ alignSelf: 'center', width: 150 }}
+        onPress={currentUser ? editProfile : null}
+      />
     </View>
   );
 };

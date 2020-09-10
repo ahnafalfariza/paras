@@ -56,7 +56,7 @@ class ProfileScreen extends Component {
 
   render() {
     const { postList, hasMore, optionModal } = this.state;
-    const { profileData } = this.props;
+    const { profileData, dispatchLogoutUser } = this.props;
 
     if (this.props.profileData === null && !this.props.isLoggedIn) {
       return null;
@@ -88,9 +88,10 @@ class ProfileScreen extends Component {
             hasMore={hasMore}
           />
           <ProfileOptionModal
+            profileId={profileData.id}
             isVisible={optionModal}
             onClose={this.toggleModal}
-            logoutUser={this.props.logoutUser}
+            logoutUser={dispatchLogoutUser}
           />
         </Screen>
       </>
@@ -104,7 +105,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  logoutUser,
+  dispatchLogoutUser: logoutUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

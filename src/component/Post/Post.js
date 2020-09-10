@@ -1,34 +1,47 @@
 import React, { PureComponent, useState } from 'react';
-import { View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 
 import PostContent from './PostContent';
 import PostOwner from './PostOwner';
 import PostMemento from './PostMemento';
 import PostAction from './PostAction';
+import PostDate from './PostDate';
+import PostOptionModal from '../Modal/Common/PostOptionModal';
 
 import Colors from '../../utils/color';
-import PostDate from './PostDate';
 
 class Post extends PureComponent {
+  state = {
+    showOption: false,
+  };
+
+  onPressOptionPost = () => {
+    this.setState((prevState) => ({ showOption: !prevState.showOption }));
+  };
+
   render() {
+    const { showOption } = this.state;
     const { refreshTimeline } = this.props;
     const { contentList, user, memento, createdAt, id } = this.props.post;
+
     return (
-      <View
-        style={{
-          marginVertical: 8,
-          borderRadius: 10,
-          backgroundColor: Colors['dark-8'],
-          overflow: 'hidden',
-        }}
-      >
-        <PostMemento memento={memento} />
-        <PostOwner user={user} id={id} refreshTimeline={refreshTimeline} />
-        <PostContent contentList={contentList} />
-        <PostDate date={createdAt} />
-        <PostAction id={id} />
-      </View>
+      <>
+        <View style={_styles.postContainer}>
+          <PostMemento memento={memento} />
+          <PostOwner user={user} onPressOption={this.onPressOptionPost} />
+          <PostContent contentList={contentList} />
+          <PostDate date={createdAt} />
+          <PostAction id={id} />
+        </View>
+        <PostOptionModal
+          isVisible={showOption}
+          onClose={this.onPressOptionPost}
+          postId={id}
+          userIdPost={user.id}
+          refreshTimeline={refreshTimeline}
+        />
+      </>
     );
   }
 }
@@ -76,3 +89,12 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
 };
 
 export default PostList;
+
+const _styles = StyleSheet.create({
+  postContainer: {
+    marginVertical: 8,
+    borderRadius: 10,
+    backgroundColor: Colors['dark-8'],
+    overflow: 'hidden',
+  },
+});

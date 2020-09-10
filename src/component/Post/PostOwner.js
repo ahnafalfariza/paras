@@ -9,16 +9,10 @@ import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 import RoutesName from '../../utils/RoutesName';
-import PostOptionModal from '../Modal/Common/PostOptionModal';
 
-const PostOwner = ({ user, id, refreshTimeline }) => {
-  const [showOption, setShowOption] = useState(false);
+const PostOwner = ({ user, id, onPressOption }) => {
   const navigation = useNavigation();
   const route = useRoute();
-
-  const onPressOptionPost = () => {
-    setShowOption(!showOption);
-  };
 
   let isSameRoute = false;
   if (route.name === 'UserProfile') {
@@ -26,35 +20,26 @@ const PostOwner = ({ user, id, refreshTimeline }) => {
   }
 
   return (
-    <>
-      <View style={_styles.container}>
-        <TouchableWithoutFeedback
-          onPress={() => (isSameRoute ? null : navigation.push(RoutesName.UserProfile, { user }))}
-        >
-          <View style={_styles.userView}>
-            <FastImage source={{ uri: getImageUrl(user.imgAvatar) }} style={_styles.userImage} />
-            <Text style={_styles.userText}>{user.id}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={onPressOptionPost}>
-          <View style={{ padding: 8 }}>
-            <SvgXml
-              xml={assetSvg.common.more}
-              width="24"
-              height="24"
-              style={{ justifyContent: 'flex-end' }}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-      <PostOptionModal
-        isVisible={showOption}
-        onClose={onPressOptionPost}
-        postId={id}
-        userIdPost={user.id}
-        refreshTimeline={refreshTimeline}
-      />
-    </>
+    <View style={_styles.container}>
+      <TouchableWithoutFeedback
+        onPress={() => (isSameRoute ? null : navigation.push(RoutesName.UserProfile, { user }))}
+      >
+        <View style={_styles.userView}>
+          <FastImage source={{ uri: getImageUrl(user.imgAvatar) }} style={_styles.userImage} />
+          <Text style={_styles.userText}>{user.id}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={onPressOption}>
+        <View style={{ padding: 8 }}>
+          <SvgXml
+            xml={assetSvg.common.more}
+            width="24"
+            height="24"
+            style={{ justifyContent: 'flex-end' }}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 

@@ -18,7 +18,7 @@ const Confirmation = ({
       <View style={_styles.subTitleContainer}>
         {loading ? (
           <View style={_styles.subTitleView}>
-            <ActivityIndicator size={'small'} />
+            <ActivityIndicator size={'small'} color={Colors['white-1']} />
           </View>
         ) : (
           <>

@@ -37,8 +37,8 @@ export default PostMemento;
 
 const _styles = StyleSheet.create({
   mementoText: {
-    fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 16,
+    fontFamily: 'Inconsolata-Regular',
+    fontSize: 14,
     color: Colors['white-1'],
   },
   mementoImage: {
@@ -48,7 +48,7 @@ const _styles = StyleSheet.create({
   },
   mementoView: {
     backgroundColor: Colors['dark-2'],
-    padding: 6,
+    padding: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

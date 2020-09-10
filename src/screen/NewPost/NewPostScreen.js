@@ -228,7 +228,7 @@ class NewPostScreen extends Component {
           rightComponent={() => (
             <TouchableWithoutFeedback onPress={this.uploadPost} disabled={!this.validateCreate()}>
               {isLoading ? (
-                <ActivityIndicator size="small" />
+                <ActivityIndicator size="small" color={Colors['white-1']} />
               ) : (
                 <SvgXml
                   xml={assetSvg.header.check}

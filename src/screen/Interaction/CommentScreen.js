@@ -49,7 +49,7 @@ const CommentScreen = ({ route }) => {
       />
       <Screen style={{ padding: 16 }}>
         {isLoading ? (
-          <ActivityIndicator size={'large'} />
+          <ActivityIndicator size={'large'} color={Colors['white-1']} />
         ) : (
           <CommentList
             data={commentList}
@@ -88,7 +88,7 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: 24,
     textAlign: 'center',
-    marginBottom: 16,
+    marginVertical: 16,
   },
   textEmptyCommentDesc: {
     fontFamily: 'Inconsolata-Regular',

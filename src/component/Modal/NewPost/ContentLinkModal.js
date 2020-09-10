@@ -78,7 +78,7 @@ const ContentLinkModal = ({ onDismiss, onComplete }) => {
                     <Text style={_styles.headerText}>Add Link</Text>
                     <TouchableNativeFeedback onPress={onPressComplete} disabled={!validateLink()}>
                       {isLoading ? (
-                        <ActivityIndicator size="small" />
+                        <ActivityIndicator size="small" color={Colors['white-1']} />
                       ) : (
                         <SvgXml
                           xml={assetSvg.header.check}

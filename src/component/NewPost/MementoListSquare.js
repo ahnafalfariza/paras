@@ -1,6 +1,5 @@
 import React from 'react';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 
@@ -35,7 +34,6 @@ const MementoListSquare = ({ list, header }) => {
       numColumns={2}
       ListHeaderComponent={header}
       columnWrapperStyle={{ justifyContent: 'space-between' }}
-      keyboardShouldPersistTaps={'always'}
       contentContainerStyle={{ marginVertical: 4 }}
       style={{ marginTop: 4 }}
     />

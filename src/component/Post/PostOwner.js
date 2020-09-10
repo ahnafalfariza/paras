@@ -20,14 +20,7 @@ const PostOwner = ({ user }) => {
   }
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'space-between',
-      }}
-    >
+    <View style={_styles.container}>
       <TouchableWithoutFeedback
         onPress={() => (isSameRoute ? null : navigation.push(RoutesName.UserProfile, { user }))}
       >
@@ -37,7 +30,7 @@ const PostOwner = ({ user }) => {
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback onPress={() => console.log('more')}>
-        <View style={{ padding: 16 }}>
+        <View style={{ padding: 8 }}>
           <SvgXml
             xml={assetSvg.common.more}
             width="24"
@@ -53,15 +46,21 @@ const PostOwner = ({ user }) => {
 export default PostOwner;
 
 const _styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   userText: {
     fontFamily: 'Inconsolata-Bold',
-    fontSize: 18,
+    fontSize: 16,
     color: Colors['white-1'],
   },
   userImage: {
-    height: 36,
-    width: 36,
-    margin: 10,
+    height: 32,
+    width: 32,
+    margin: 8,
   },
   userView: {
     flexDirection: 'row',

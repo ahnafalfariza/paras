@@ -16,7 +16,7 @@ const PostDate = ({ date }) => {
           fontFamily: 'Inconsolata-Regular',
           color: Colors['white-2'],
           margin: 8,
-          fontSize: 13,
+          fontSize: 12,
         }}
       >
         {timeAgo.format(new Date(date / 10 ** 6))}

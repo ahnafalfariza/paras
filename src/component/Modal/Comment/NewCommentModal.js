@@ -61,7 +61,7 @@ const NewCommentModal = ({ onDismiss, onComplete, isVisible, postId }) => {
                   <Text style={_styles.headerText}>Add Comment</Text>
                   <TouchableNativeFeedback disabled={value === ''} onPress={postComment}>
                     {isLoading ? (
-                      <ActivityIndicator size={'small'} />
+                      <ActivityIndicator size={'small'} color={Colors['white-1']} />
                     ) : (
                       <SvgXml
                         xml={assetSvg.header.check}

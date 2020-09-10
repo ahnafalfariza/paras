@@ -9,7 +9,7 @@ import Colors from '../../utils/color';
 const PostAction = ({ id }) => {
   const navigation = useNavigation();
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12 }}>
       <TouchableWithoutFeedback onPress={() => console.log('pieces')}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml

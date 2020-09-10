@@ -16,8 +16,7 @@ class Post extends PureComponent {
     return (
       <View
         style={{
-          marginVertical: 16,
-          marginHorizontal: 8,
+          marginVertical: 8,
           borderRadius: 10,
           backgroundColor: Colors['dark-8'],
           overflow: 'hidden',
@@ -67,11 +66,11 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
         }
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
-        contentContainerStyle={{ margin: 8, paddingBottom: 16 }}
+        contentContainerStyle={{ marginVertical: 8, marginHorizontal: 12, paddingBottom: 16 }}
         ListHeaderComponent={header}
         ListFooterComponent={() => {
           return hasMore ? (
-            <ActivityIndicator color="#ffffff" style={{ marginBottom: 16 }} />
+            <ActivityIndicator color={Colors['white-1']} style={{ marginBottom: 16 }} />
           ) : null;
         }}
         onEndReachedThreshold={0.9}

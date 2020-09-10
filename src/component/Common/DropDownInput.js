@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableWithoutFeedback, Keyboard, StyleSheet } from 'react-native';
+import { View, Text, Keyboard, StyleSheet } from 'react-native';
+import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import MainTextInput from './MainTextInput';
 import { SCREEN_WIDTH } from '../../utils/constant';
 import Colors from '../../utils/color';
 
-const DropDownInput = ({ options, onChange, placeholder, searchable }) => {
+const DropDownInput = ({ options, onChange, placeholder, searchable = true }) => {
   const [text, setText] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 

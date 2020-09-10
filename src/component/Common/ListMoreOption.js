@@ -24,9 +24,10 @@ const _styles = StyleSheet.create({
   containerView: {
     backgroundColor: 'white',
     justifyContent: 'center',
+    alignSelf: 'center',
     marginHorizontal: 42,
     borderRadius: 6,
-    width: SCREEN_WIDTH - 120,
+    width: SCREEN_WIDTH - 96,
     overflow: 'hidden',
   },
   itemView: {

@@ -10,7 +10,7 @@ import { DELETE_COMMENT } from '../../../utils/api';
 import Confirmation from '../../Common/Confimation';
 import ListMoreOption from '../../Common/ListMoreOption';
 
-const MoreCommentModal = ({ isVisible, onClose, commentData, refreshComment }) => {
+const CommentOptionModal = ({ isVisible, onClose, commentData, refreshComment }) => {
   const navigation = useNavigation();
   const userId = useSelector((state) => state.user.profile.id);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -64,6 +64,7 @@ const MoreCommentModal = ({ isVisible, onClose, commentData, refreshComment }) =
       onBackdropPress={!showConfirm ? onClose : null}
       onBackButtonPress={!showConfirm ? onClose : null}
       backdropOpacity={showConfirm ? 1 : 0.7}
+      useNativeDriver
     >
       <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
         {showConfirm ? (
@@ -83,4 +84,4 @@ const MoreCommentModal = ({ isVisible, onClose, commentData, refreshComment }) =
   );
 };
 
-export default MoreCommentModal;
+export default CommentOptionModal;

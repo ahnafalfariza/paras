@@ -4,7 +4,7 @@ import ListMoreOption from '../../Common/ListMoreOption';
 import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../../utils/RoutesName';
 
-const MoreProfileModal = ({ isVisible, onClose, logoutUser }) => {
+const ProfileOptionModal = ({ isVisible, onClose, logoutUser }) => {
   const navigation = useNavigation();
   const listOptionsModal = [
     {
@@ -50,4 +50,4 @@ const MoreProfileModal = ({ isVisible, onClose, logoutUser }) => {
   );
 };
 
-export default MoreProfileModal;
+export default ProfileOptionModal;

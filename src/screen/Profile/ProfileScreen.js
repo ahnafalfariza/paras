@@ -13,7 +13,7 @@ import { logoutUser } from '../../actions/user';
 import { PROFILE_POST_URL } from '../../utils/api';
 import { postLimit } from '../../utils/constant';
 import PostList from '../../component/Post/Post';
-import MoreProfileModal from '../../component/Modal/Profile/MoreProfileModal';
+import ProfileOptionModal from '../../component/Modal/Profile/ProfileOptionModal';
 
 class ProfileScreen extends Component {
   state = {
@@ -87,7 +87,7 @@ class ProfileScreen extends Component {
             onRefresh={this.onRefresh}
             hasMore={hasMore}
           />
-          <MoreProfileModal
+          <ProfileOptionModal
             isVisible={optionModal}
             onClose={this.toggleModal}
             logoutUser={this.props.logoutUser}

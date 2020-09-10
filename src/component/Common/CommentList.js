@@ -11,7 +11,7 @@ import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 import RoutesName from '../../utils/RoutesName';
-import MoreCommentModal from '../Modal/Common/MoreCommentModal';
+import CommentOptionModal from '../Modal/Common/CommentOptionModal';
 
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -102,7 +102,7 @@ const CommentList = ({ data, onRefresh, emptyComponent }) => {
         keyExtractor={(item) => item.id}
       />
       {commentData !== null && (
-        <MoreCommentModal
+        <CommentOptionModal
           isVisible={isModalVisible}
           onClose={onCloseModal}
           commentData={commentData}

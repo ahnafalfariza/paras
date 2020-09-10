@@ -2,7 +2,7 @@ import React from 'react';
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
 
-const UserMementoScreen = () => {
+const ProfileMementoScreen = () => {
   return (
     <>
       <MainHeader title={'My Memento'} leftComponent={'back'} />
@@ -11,4 +11,4 @@ const UserMementoScreen = () => {
   );
 };
 
-export default UserMementoScreen;
+export default ProfileMementoScreen;

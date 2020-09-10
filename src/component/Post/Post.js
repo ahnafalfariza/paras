@@ -12,6 +12,7 @@ import PostDate from './PostDate';
 
 class Post extends PureComponent {
   render() {
+    const { refreshTimeline } = this.props;
     const { contentList, user, memento, createdAt, id } = this.props.post;
     return (
       <View
@@ -23,7 +24,7 @@ class Post extends PureComponent {
         }}
       >
         <PostMemento memento={memento} />
-        <PostOwner user={user} />
+        <PostOwner user={user} id={id} refreshTimeline={refreshTimeline} />
         <PostContent contentList={contentList} />
         <PostDate date={createdAt} />
         <PostAction id={id} />
@@ -48,35 +49,29 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
     setRefresh(false);
   };
 
-  const renderItem = ({ item }) => <Post post={item} />;
+  const renderItem = ({ item }) => <Post post={item} refreshTimeline={refreshFlatlist} />;
 
   useScrollToTop(ref);
 
   return (
-    <View>
-      <FlatList
-        ref={ref}
-        data={list}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            tintColor={'#ffffff'}
-            onRefresh={refreshFlatlist}
-          />
-        }
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={{ marginVertical: 8, marginHorizontal: 12, paddingBottom: 16 }}
-        ListHeaderComponent={header}
-        ListFooterComponent={() => {
-          return hasMore ? (
-            <ActivityIndicator color={Colors['white-1']} style={{ marginBottom: 16 }} />
-          ) : null;
-        }}
-        onEndReachedThreshold={0.9}
-        onEndReached={hasMore ? onLoadMore : null}
-      />
-    </View>
+    <FlatList
+      ref={ref}
+      data={list}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} tintColor={'#ffffff'} onRefresh={refreshFlatlist} />
+      }
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+      contentContainerStyle={{ marginVertical: 8, marginHorizontal: 12, paddingBottom: 16 }}
+      ListHeaderComponent={header}
+      ListFooterComponent={() => {
+        return hasMore ? (
+          <ActivityIndicator color={Colors['white-1']} style={{ marginBottom: 16 }} />
+        ) : null;
+      }}
+      onEndReachedThreshold={0.9}
+      onEndReached={hasMore ? onLoadMore : null}
+    />
   );
 };
 

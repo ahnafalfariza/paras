@@ -45,11 +45,11 @@ const ContentLinkModal = ({ onDismiss, onComplete }) => {
           desc: meta.description,
           url: meta.url,
         };
+        setLoading(false);
         onComplete({
           type: 'url',
           body: JSON.stringify(body),
         });
-        setLoading(false);
       })
       .catch((err) => console.log(err));
   };

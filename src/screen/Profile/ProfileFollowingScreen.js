@@ -6,7 +6,7 @@ import { FOLLOWING_LIST } from '../../utils/api';
 import { FlatList, Text, View } from 'react-native';
 import Colors from '../../utils/color';
 
-const UserFollowingScreen = () => {
+const ProfileFollowingScreen = () => {
   const [listFollowing, setListFollowing] = useState([]);
 
   useEffect(() => {
@@ -39,4 +39,4 @@ const Following = ({ data }) => {
   );
 };
 
-export default UserFollowingScreen;
+export default ProfileFollowingScreen;

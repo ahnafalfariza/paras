@@ -9,18 +9,18 @@ import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
 import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
-import Colors from '../../utils/color';
-import MainButton from '../../component/Common/MainButton';
 import { logoutUser } from '../../actions/user';
 import { PROFILE_POST_URL } from '../../utils/api';
 import { postLimit } from '../../utils/constant';
 import PostList from '../../component/Post/Post';
+import MoreProfileModal from '../../component/Modal/Profile/MoreProfileModal';
 
 class ProfileScreen extends Component {
   state = {
     page: 1,
     postList: [],
     hasMore: true,
+    optionModal: false,
   };
 
   componentDidMount() {
@@ -50,8 +50,12 @@ class ProfileScreen extends Component {
     this.setState({ page });
   };
 
+  toggleModal = () => {
+    this.setState((prevState) => ({ optionModal: !prevState.optionModal }));
+  };
+
   render() {
-    const { postList, hasMore } = this.state;
+    const { postList, hasMore, optionModal } = this.state;
     const { profileData } = this.props;
 
     if (this.props.profileData === null && !this.props.isLoggedIn) {
@@ -63,7 +67,7 @@ class ProfileScreen extends Component {
         <MainHeader
           title={'Profile'}
           rightComponent={() => (
-            <TouchableWithoutFeedback onPress={() => console.log('more profile')}>
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
               <View style={{ paddingRight: 4 }}>
                 <SvgXml
                   xml={assetSvg.common.more}
@@ -76,13 +80,17 @@ class ProfileScreen extends Component {
           )}
         />
         <Screen>
-          {/* <MainButton title={'Logout'} onPress={this.props.logoutUser} /> */}
           <PostList
             list={postList}
-            header={<Profile data={profileData} type={'user'} />}
+            header={<Profile data={profileData} type={'user'} currentUser />}
             onLoadMore={this.loadMorePost}
             onRefresh={this.onRefresh}
             hasMore={hasMore}
+          />
+          <MoreProfileModal
+            isVisible={optionModal}
+            onClose={this.toggleModal}
+            logoutUser={this.props.logoutUser}
           />
         </Screen>
       </>

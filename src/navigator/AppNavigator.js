@@ -10,6 +10,7 @@ import LandingNavigator from './LandingNavigator';
 import AuthNavigator from './AuthNavigator';
 import { VERIFY_TOKEN } from '../utils/api';
 import CommentScreen from '../screen/Interaction/CommentScreen';
+import EditProfileScreen from '../screen/Profile/EditProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,14 @@ const AppNavigator = ({ isLoggedIn }) => {
             <Stack.Screen
               name="Comment"
               component={CommentScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureDirection: 'vertical',
+              }}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfileScreen}
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
                 gestureDirection: 'vertical',

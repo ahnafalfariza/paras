@@ -16,8 +16,9 @@ import CommentOptionModal from '../Modal/Common/CommentOptionModal';
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
-const Comment = ({ data, onPressMore }) => {
+const Comment = ({ data, onRefresh }) => {
   const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const onPressProfile = () => {
     navigation.navigate('TabNavigator', {
@@ -32,37 +33,43 @@ const Comment = ({ data, onPressMore }) => {
   };
 
   return (
-    <View style={_styles.containerView}>
-      <View style={_styles.profileContainerView}>
-        <TouchableNativeFeedback onPress={onPressProfile}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <FastImage
-              source={{ uri: getImageUrl(data.user.imgAvatar) }}
-              style={{ height: 48, width: 48 }}
-            />
-            <View style={{ marginLeft: 12 }}>
-              <Text style={_styles.userText}>{data.user.id}</Text>
-              <Text style={_styles.dateText}>
-                {timeAgo.format(new Date(data.createdAt / 10 ** 6))}
-              </Text>
+    <>
+      <View style={_styles.containerView}>
+        <View style={_styles.profileContainerView}>
+          <TouchableNativeFeedback onPress={onPressProfile}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <FastImage
+                source={{ uri: getImageUrl(data.user.imgAvatar) }}
+                style={{ height: 48, width: 48 }}
+              />
+              <View style={{ marginLeft: 12 }}>
+                <Text style={_styles.userText}>{data.user.id}</Text>
+                <Text style={_styles.dateText}>
+                  {timeAgo.format(new Date(data.createdAt / 10 ** 6))}
+                </Text>
+              </View>
             </View>
-          </View>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={() => onPressMore(data)}>
-          <View style={{ paddingVertical: 8 }}>
-            <SvgXml xml={assetSvg.common.more} width="24" height="24" />
-          </View>
-        </TouchableNativeFeedback>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={() => setModalVisible(true)}>
+            <View style={{ paddingVertical: 8 }}>
+              <SvgXml xml={assetSvg.common.more} width="24" height="24" />
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+        <Text style={_styles.commentText}>{data.body}</Text>
       </View>
-      <Text style={_styles.commentText}>{data.body}</Text>
-    </View>
+      <CommentOptionModal
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        commentData={data}
+        refreshComment={onRefresh}
+      />
+    </>
   );
 };
 
 const CommentList = ({ data, onRefresh, emptyComponent }) => {
   const [refreshing, setRefresh] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [commentData, setCommentData] = useState(null);
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -76,40 +83,16 @@ const CommentList = ({ data, onRefresh, emptyComponent }) => {
     setRefresh(false);
   };
 
-  const onPressMore = (item) => {
-    setModalVisible(true);
-    setCommentData(item);
-  };
-
-  const onCloseModal = () => {
-    setModalVisible(false);
-    setCommentData(null);
-  };
-
   return (
-    <>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Comment data={item} onPressMore={onPressMore} />}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            tintColor={'#ffffff'}
-            onRefresh={refreshComment}
-          />
-        }
-        ListEmptyComponent={emptyComponent}
-        keyExtractor={(item) => item.id}
-      />
-      {commentData !== null && (
-        <CommentOptionModal
-          isVisible={isModalVisible}
-          onClose={onCloseModal}
-          commentData={commentData}
-          refreshComment={onRefresh}
-        />
-      )}
-    </>
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <Comment data={item} onRefresh={onRefresh} />}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} tintColor={'#ffffff'} onRefresh={refreshComment} />
+      }
+      ListEmptyComponent={emptyComponent}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 

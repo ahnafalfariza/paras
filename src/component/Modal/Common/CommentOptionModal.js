@@ -42,16 +42,20 @@ const CommentOptionModal = ({ isVisible, onClose, commentData, refreshComment })
       .then(() => {
         refreshComment();
         setLoadingDelete(false);
+        setShowConfirm(false);
         onClose();
       })
       .catch((err) => console.log(err));
   };
 
   if (commentData.user.id === userId) {
-    listOptionsModal.splice(0, 0, {
-      title: 'Forget',
-      onPress: () => setShowConfirm(true),
-    });
+    listOptionsModal = [
+      ...listOptionsModal,
+      {
+        title: 'Forget',
+        onPress: () => setShowConfirm(true),
+      },
+    ];
   }
 
   if (!isVisible) {
@@ -66,20 +70,18 @@ const CommentOptionModal = ({ isVisible, onClose, commentData, refreshComment })
       backdropOpacity={showConfirm ? 1 : 0.7}
       useNativeDriver
     >
-      <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
-        {showConfirm ? (
-          <Confirmation
-            titleText={'Remove this comment?'}
-            leftText={'Cancel'}
-            rightText={'Remove'}
-            onPressLeft={() => setShowConfirm(false)}
-            onPressRight={deleteComment}
-            loading={loadingDelete}
-          />
-        ) : (
-          <ListMoreOption data={listOptionsModal} />
-        )}
-      </View>
+      {showConfirm ? (
+        <Confirmation
+          titleText={'Remove this comment?'}
+          leftText={'Cancel'}
+          rightText={'Remove'}
+          onPressLeft={() => setShowConfirm(false)}
+          onPressRight={deleteComment}
+          loading={loadingDelete}
+        />
+      ) : (
+        <ListMoreOption data={listOptionsModal} />
+      )}
     </Modal>
   );
 };

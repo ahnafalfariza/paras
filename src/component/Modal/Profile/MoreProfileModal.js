@@ -15,14 +15,14 @@ const MoreProfileModal = ({ isVisible, onClose, logoutUser }) => {
       title: 'View Memento',
       onPress: () => {
         onClose();
-        navigation.navigate(RoutesName.UserMemento);
+        navigation.navigate(RoutesName.ProfileMemento);
       },
     },
     {
       title: 'View Following',
       onPress: () => {
         onClose();
-        navigation.navigate(RoutesName.UserFollowing);
+        navigation.navigate(RoutesName.ProfileFollowing);
       },
     },
     {
@@ -39,7 +39,12 @@ const MoreProfileModal = ({ isVisible, onClose, logoutUser }) => {
   ];
 
   return (
-    <Modal isVisible={isVisible} onBackButtonPress={onClose} onBackdropPress={onClose}>
+    <Modal
+      isVisible={isVisible}
+      onBackButtonPress={onClose}
+      onBackdropPress={onClose}
+      useNativeDriver
+    >
       <ListMoreOption data={listOptionsModal} />
     </Modal>
   );

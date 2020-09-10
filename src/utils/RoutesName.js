@@ -34,6 +34,6 @@ export default {
   ChooseMemento: 'ChooseMemento',
 
   Profile: 'Profile',
-  UserMemento: 'UserMemento',
-  UserFollowing: 'UserFollowing',
+  ProfileMemento: 'ProfileMemento',
+  ProfileFollowing: 'ProfileFollowing',
 };

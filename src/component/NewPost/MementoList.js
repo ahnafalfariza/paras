@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const Memento = ({ data }) => {
   const navigation = useNavigation();
@@ -58,11 +59,11 @@ const _styles = StyleSheet.create({
   mementoText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   typeText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['primary-5'],
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
   },
 });

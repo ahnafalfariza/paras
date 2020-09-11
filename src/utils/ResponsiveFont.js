@@ -4,7 +4,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const scale = SCREEN_WIDTH / 320;
 
-export function normalize(size) {
+export function ResponsiveFont(size) {
   const newSize = size * scale;
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize));

@@ -6,6 +6,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const SeedPasswordScreen = ({ navigation, route }) => {
   const { data } = route.params;
@@ -64,7 +65,7 @@ export default SeedPasswordScreen;
 const _styles = StyleSheet.create({
   textDesc: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     lineHeight: 18,
   },
@@ -75,7 +76,7 @@ const _styles = StyleSheet.create({
   },
   seedPasswordText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 16,
     color: Colors['white-1'],
     textAlign: 'center',

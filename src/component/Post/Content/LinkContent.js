@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 
 import Colors from '../../../utils/color';
 import { getImageUrl } from '../../../utils/image';
+import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
 const LinkContent = ({ body, disabled = false }) => {
   const link = JSON.parse(body);
@@ -60,7 +61,7 @@ const _styles = StyleSheet.create({
   },
   imageText: {
     fontFamily: 'Inconsolata-ExtraBold',
-    fontSize: 28,
+    fontSize: ResponsiveFont(24),
     color: Colors['white-1'],
     textAlign: 'center',
     width: '70%',
@@ -72,7 +73,7 @@ const _styles = StyleSheet.create({
   },
   descText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     color: Colors['white-1'],
   },
   linkView: {
@@ -83,7 +84,7 @@ const _styles = StyleSheet.create({
   },
   linkText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     color: Colors['white-1'],
   },
 });

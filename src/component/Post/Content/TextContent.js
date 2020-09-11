@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Colors from '../../../utils/color';
+import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
 const TextContent = ({ body }) => {
   return (
@@ -34,7 +35,7 @@ const _styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
   },

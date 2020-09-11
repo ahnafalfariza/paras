@@ -13,6 +13,7 @@ import Colors from '../../utils/color';
 import { USER_MEMENTO, SEARCH_MEMENTO } from '../../utils/api';
 import MementoListSquare from '../../component/NewPost/MementoListSquare';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class ChooseMementoScreen extends Component {
   state = {
@@ -106,7 +107,7 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     marginBottom: 16,
     backgroundColor: Colors['dark-8'],
@@ -114,7 +115,7 @@ const _styles = StyleSheet.create({
   title: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     marginBottom: 4,
   },
 });

@@ -12,6 +12,7 @@ import { initUser } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
 import Axios from 'axios';
 import { LOGIN } from '../../utils/api';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
@@ -76,7 +77,7 @@ export default connect(null, mapDispatchToProps)(SeedConfirmationScreen);
 const _styles = StyleSheet.create({
   textDesc: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     color: Colors['white-1'],
   },
   textInput: {
@@ -84,7 +85,7 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },

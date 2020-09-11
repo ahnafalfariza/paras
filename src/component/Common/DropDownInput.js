@@ -5,6 +5,7 @@ import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler
 import MainTextInput from './MainTextInput';
 import { SCREEN_WIDTH } from '../../utils/constant';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const DropDownInput = ({ options, onChange, placeholder, searchable = true }) => {
   const [text, setText] = useState('');
@@ -73,7 +74,7 @@ const _styles = StyleSheet.create({
   optionsText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     padding: 10,
   },
 });

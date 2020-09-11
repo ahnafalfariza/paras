@@ -7,6 +7,7 @@ import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const SearchResultList = ({ result }) => {
   const renderItem = ({ item }) => <SearchResult item={item} />;
@@ -48,7 +49,7 @@ const SearchResult = ({ item }) => {
           <Text
             style={{
               fontFamily: 'Inconsolata-Bold',
-              fontSize: 18,
+              fontSize: ResponsiveFont(15),
               color: Colors['white-1'],
               marginLeft: 8,
             }}

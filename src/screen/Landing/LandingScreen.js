@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const LandingScreen = ({ navigation }) => {
   return (
@@ -55,13 +56,13 @@ const _styles = {
   },
   textTitle: {
     fontFamily: 'Inconsolata-Bold',
-    fontSize: 32,
+    fontSize: ResponsiveFont(28),
     color: Colors['white-1'],
     marginLeft: 16,
   },
   textDesc: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     marginTop: 16,
     marginHorizontal: 8,

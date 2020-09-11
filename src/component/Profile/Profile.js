@@ -8,6 +8,7 @@ import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const Profile = ({ data, type = 'user', currentUser = false }) => {
   const img = type === 'user' ? data.imgAvatar : data.img;
@@ -59,7 +60,7 @@ const _styles = StyleSheet.create({
   idText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 24,
+    fontSize: ResponsiveFont(18),
     margin: 16,
     marginBottom: 0,
     textAlign: 'center',
@@ -67,14 +68,14 @@ const _styles = StyleSheet.create({
   ownerText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     textAlign: 'center',
   },
   descText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     paddingHorizontal: 12,
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     margin: 8,
     textAlign: 'center',
   },

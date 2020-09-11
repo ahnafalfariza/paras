@@ -21,6 +21,7 @@ import { MEMENTO_DOMAIN, MEMENTO_TYPE } from '../../utils/MementoCreateHelper';
 import MainTextInput from '../../component/Common/MainTextInput';
 import { CREATE_MEMENTO } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class NewMementoScreen extends Component {
   state = {
@@ -178,21 +179,21 @@ const _styles = StyleSheet.create({
   textTitle: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     textAlign: 'center',
     marginTop: 16,
   },
   textMemento: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 24,
+    fontSize: ResponsiveFont(20),
     marginTop: 12,
     marginBottom: 16,
     textAlign: 'center',
   },
   textWarning: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 14,
+    fontSize: ResponsiveFont(12),
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,
@@ -200,14 +201,14 @@ const _styles = StyleSheet.create({
   textPlaceholder: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     marginBottom: 8,
   },
   textInput: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     marginBottom: 12,
     backgroundColor: Colors['dark-8'],

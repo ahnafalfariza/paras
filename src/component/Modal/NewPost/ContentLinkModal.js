@@ -18,6 +18,7 @@ import { SCREEN_WIDTH, isIOS } from '../../../utils/constant';
 import Confirmation from '../../Common/Confimation';
 import DismissKeyboard from '../../Common/DismissKeyboard';
 import { META_URL } from '../../../utils/api';
+import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
 const ContentLinkModal = ({ onDismiss, onComplete, body }) => {
   const initialValue = body ? JSON.parse(body).url : '';
@@ -133,7 +134,7 @@ const _styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   contentView: {
     padding: 12,

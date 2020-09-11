@@ -8,6 +8,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import { SEARCH_USER_SEND } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class WalletTransactionScreen extends Component {
   state = {
@@ -117,20 +118,20 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },
   textTo: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     marginBottom: 8,
   },
   textAmount: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     marginTop: 16,
     marginBottom: 8,
   },

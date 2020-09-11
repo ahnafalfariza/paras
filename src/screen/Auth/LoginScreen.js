@@ -21,6 +21,7 @@ import RoutesName from '../../utils/RoutesName';
 import { LOGIN, FOLLOWING_LIST } from '../../utils/api';
 import { initUser, initFollowing } from '../../actions/user';
 import { isIOS } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class LoginScreen extends Component {
   state = {
@@ -155,7 +156,7 @@ export default connect(null, mapDispatchToProps)(LoginScreen);
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 48,
+    fontSize: ResponsiveFont(36),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 16,
@@ -170,20 +171,20 @@ const _styles = StyleSheet.create({
   textInput: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     paddingRight: 4,
     flex: 1,
   },
   textHelper: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     marginRight: 16,
   },
   errorText: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 10,
+    fontSize: ResponsiveFont(12),
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,

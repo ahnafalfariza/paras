@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const MainTextInput = ({
   style,
@@ -38,7 +39,7 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },

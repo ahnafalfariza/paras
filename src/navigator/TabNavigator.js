@@ -51,7 +51,6 @@ const tabBarOption = {
   activeTintColor: Colors['primary-5'],
   inactiveTintColor: Colors['white-1'],
   style: { backgroundColor: Colors['dark-12'], borderTopWidth: 0 },
-  labelStyle: { fontFamily: 'Inconsolata-Bold' },
   showLabel: false,
   keyboardHidesTabBar: true,
 };

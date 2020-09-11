@@ -14,6 +14,7 @@ import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 import { VERIFY_USER } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const CELL_COUNT = 6;
 
@@ -97,13 +98,13 @@ export default VerificationScreen;
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 32,
+    fontSize: ResponsiveFont(28),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 12,
   },
   subTitle: {
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Regular',
   },
@@ -120,7 +121,7 @@ const _styles = StyleSheet.create({
   },
   cellText: {
     lineHeight: 48,
-    fontSize: 24,
+    fontSize: ResponsiveFont(20),
     textAlign: 'center',
     color: Colors['white-1'],
   },

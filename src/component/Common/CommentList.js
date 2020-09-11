@@ -12,6 +12,7 @@ import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 import RoutesName from '../../utils/RoutesName';
 import CommentOptionModal from '../Modal/Common/CommentOptionModal';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -113,18 +114,18 @@ const _styles = StyleSheet.create({
   userText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   dateText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-2'],
-    fontSize: 14,
+    fontSize: ResponsiveFont(12),
     marginTop: 4,
   },
   commentText: {
     marginTop: 16,
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
 });

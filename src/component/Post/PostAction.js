@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 // import Share from 'react-native-share';
 
 const PostAction = ({ id }) => {
@@ -73,7 +74,7 @@ export default PostAction;
 const _styles = StyleSheet.create({
   memento: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 14,
+    fontSize: ResponsiveFont(12),
     color: Colors['white-1'],
   },
 });

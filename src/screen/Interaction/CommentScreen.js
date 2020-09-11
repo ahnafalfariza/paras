@@ -11,6 +11,7 @@ import assetSvg from '../../assets/svg/svg';
 import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
 import NewCommentModal from '../../component/Modal/Comment/NewCommentModal';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const CommentScreen = ({ route }) => {
   const { id } = route.params;
@@ -86,14 +87,14 @@ const _styles = StyleSheet.create({
   textEmptyCommentTitle: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 24,
+    fontSize: ResponsiveFont(20),
     textAlign: 'center',
     marginVertical: 16,
   },
   textEmptyCommentDesc: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     textAlign: 'center',
     lineHeight: 24,
   },

@@ -6,6 +6,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import Axios from 'axios';
 import { HOME_PICKS } from '../../utils/api';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class HomePicks extends Component {
   componentDidMount() {
@@ -23,7 +24,7 @@ class HomePicks extends Component {
             style={{
               fontFamily: 'Inconsolata-Regular',
               color: Colors['white-1'],
-              fontSize: 24,
+              fontSize: ResponsiveFont(20),
             }}
           >
             Picks

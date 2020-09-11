@@ -6,6 +6,7 @@ import MainHeader from './MainHeader';
 import Colors from '../../utils/color';
 import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const HomeHeader = ({ active = 'picks' }) => {
   return <MainHeader centerComponent={<CenterHeaderComponent active={active} />} />;
@@ -23,7 +24,7 @@ const CenterHeaderComponent = ({ active }) => {
           style={{
             fontFamily: active === 'picks' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
             color: Colors['white-1'],
-            fontSize: 18,
+            fontSize: ResponsiveFont(15),
             padding: 8,
           }}
         >
@@ -39,7 +40,7 @@ const CenterHeaderComponent = ({ active }) => {
           style={{
             fontFamily: active === 'following' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
             color: Colors['white-1'],
-            fontSize: 18,
+            fontSize: ResponsiveFont(15),
             padding: 8,
           }}
         >

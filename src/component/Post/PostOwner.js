@@ -9,6 +9,7 @@ import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const PostOwner = ({ user, id, onPressOption }) => {
   const navigation = useNavigation();
@@ -54,7 +55,7 @@ const _styles = StyleSheet.create({
   },
   userText: {
     fontFamily: 'Inconsolata-Bold',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
   },
   userImage: {

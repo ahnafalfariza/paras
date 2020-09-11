@@ -3,6 +3,7 @@ import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const MainButton = ({
   title,
@@ -45,6 +46,6 @@ const _styles = StyleSheet.create({
   textStyle: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(14),
   },
 });

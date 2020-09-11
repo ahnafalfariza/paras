@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../utils/color';
 import FastImage from 'react-native-fast-image';
 import { SCREEN_HEIGHT } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const FeatureDetail = ({ textTitle, textSubTitle, textDesc, image }) => {
   return (
@@ -28,12 +29,12 @@ const _styles = StyleSheet.create({
   textTitle: {
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-ExtraBold',
-    fontSize: 32,
+    fontSize: ResponsiveFont(28),
   },
   textSubTitle: {
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 14,
+    fontSize: ResponsiveFont(12),
     textAlign: 'center',
     marginHorizontal: 64,
     marginVertical: 8,
@@ -41,7 +42,7 @@ const _styles = StyleSheet.create({
   textDesc: {
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     margin: 16,
     marginTop: 0,
     marginHorizontal: 32,

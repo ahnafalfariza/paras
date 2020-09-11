@@ -15,6 +15,7 @@ import assetSvg from '../../../assets/svg/svg';
 import { SCREEN_HEIGHT, SCREEN_WIDTH, isIOS } from '../../../utils/constant';
 import Confirmation from '../../Common/Confimation';
 import DismissKeyboard from '../../Common/DismissKeyboard';
+import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
 const MaximumCharacter = 400;
 
@@ -116,7 +117,7 @@ const _styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   contentView: {
     padding: 12,

@@ -3,6 +3,7 @@ import { View, Text, TouchableNativeFeedback, StyleSheet, ActivityIndicator } fr
 
 import Colors from '../../utils/color';
 import { SCREEN_WIDTH } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const Confirmation = ({
   onPressLeft,
@@ -55,7 +56,7 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     marginLeft: 12,
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   subTitleContainer: {
     flexDirection: 'row',
@@ -70,7 +71,7 @@ const _styles = StyleSheet.create({
   },
   subTitleText: {
     fontFamily: 'Inconsolata-Bold',
-    fontSize: 16,
+    fontSize: ResponsiveFont(13),
     color: Colors['white-1'],
     textAlign: 'center',
   },

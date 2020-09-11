@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { FOLLOWING_LIST } from '../../utils/api';
 import { FlatList, Text, View } from 'react-native';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const ProfileFollowingScreen = () => {
   const [listFollowing, setListFollowing] = useState([]);
@@ -32,7 +33,13 @@ const ProfileFollowingScreen = () => {
 const Following = ({ data }) => {
   return (
     <View style={{ paddingVertical: 6 }}>
-      <Text style={{ fontFamily: 'Inconsolata-Bold', fontSize: 16, color: Colors['white-1'] }}>
+      <Text
+        style={{
+          fontFamily: 'Inconsolata-Bold',
+          fontSize: ResponsiveFont(14),
+          color: Colors['white-1'],
+        }}
+      >
         {data.targetId}
       </Text>
     </View>

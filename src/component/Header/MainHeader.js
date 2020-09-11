@@ -7,6 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const MainHeader = ({ leftComponent, title, rightComponent, centerComponent }) => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const MainHeader = ({ leftComponent, title, rightComponent, centerComponent }) =
     style: {
       color: Colors['white-1'],
       fontFamily: 'Inconsolata-Bold',
-      fontSize: 22,
+      fontSize: ResponsiveFont(18),
       padding: 0,
     },
   };
@@ -45,12 +46,12 @@ const MainHeader = ({ leftComponent, title, rightComponent, centerComponent }) =
     <Header
       placement={centerComponent ? 'center' : 'left'}
       leftComponent={leftComponent ? leftComponentIcon : null}
-      leftContainerStyle={{ flex: 0, marginRight: 4, marginLeft: leftComponent ? 8 : 0 }}
+      leftContainerStyle={{ flex: 0, marginHorizontal: leftComponent ? 8 : 4 }}
       rightComponent={rightComponent}
-      rightContainerStyle={{ flex: 0, marginRight: rightComponent ? 8 : 0 }}
+      rightContainerStyle={{ flex: 0, marginHorizontal: rightComponent ? 8 : 4 }}
       centerComponent={isCenterCustom ? centerComponent : titleComponent}
       centerContainerStyle={{
-        paddingHorizontal: 8,
+        paddingHorizontal: 0,
       }}
       containerStyle={{
         backgroundColor: Colors['dark-12'],

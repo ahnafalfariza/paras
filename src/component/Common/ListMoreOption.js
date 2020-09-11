@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 
 import Colors from '../../utils/color';
 import { SCREEN_WIDTH } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const ListMoreOption = ({ data }) => {
   return (
@@ -38,6 +39,6 @@ const _styles = StyleSheet.create({
   itemText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
 });

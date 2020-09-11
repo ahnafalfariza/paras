@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../utils/RoutesName';
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const ChooseMemento = ({ mementoData }) => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ const _styles = StyleSheet.create({
   defaultText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   defaultMementoView: {
     backgroundColor: Colors['dark-8'],
@@ -65,6 +66,6 @@ const _styles = StyleSheet.create({
   mementoText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
 });

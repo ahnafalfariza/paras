@@ -18,6 +18,7 @@ import Axios from 'axios';
 import { CREATE_USER } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
 import { isIOS } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class RegistrationScreen extends Component {
   state = {
@@ -129,7 +130,7 @@ export default RegistrationScreen;
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 48,
+    fontSize: ResponsiveFont(36),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 16,
@@ -138,13 +139,13 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },
   errorText: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 10,
+    fontSize: ResponsiveFont(12),
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,

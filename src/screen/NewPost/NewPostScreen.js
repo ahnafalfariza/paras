@@ -25,6 +25,7 @@ import LinkContent from '../../component/Post/Content/LinkContent';
 import MainButton from '../../component/Common/MainButton';
 import ChooseMemento from '../../component/NewPost/ChooseMemento';
 import { CREATE_POST, EDIT_POST } from '../../utils/api';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const ContentDimension = SCREEN_WIDTH - 32;
 
@@ -301,7 +302,7 @@ const _styles = StyleSheet.create({
   defaultText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   paginationButton: {
     position: 'absolute',

@@ -7,6 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const PostMemento = ({ memento }) => {
   const navigation = useNavigation();
@@ -38,7 +39,7 @@ export default PostMemento;
 const _styles = StyleSheet.create({
   mementoText: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 14,
+    fontSize: ResponsiveFont(12),
     color: Colors['white-1'],
   },
   mementoImage: {

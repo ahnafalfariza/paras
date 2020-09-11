@@ -9,6 +9,7 @@ import Colors from '../../utils/color';
 import assetSvg from '../../assets/svg/svg';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 class WalletScreen extends Component {
   render() {
@@ -46,7 +47,7 @@ const _styles = StyleSheet.create({
   balanceText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 48,
+    fontSize: ResponsiveFont(40),
     marginRight: 12,
   },
   balanceView: {
@@ -57,11 +58,11 @@ const _styles = StyleSheet.create({
   textSemiBold: {
     fontFamily: 'Inconsolata-SemiBold',
     color: Colors['white-1'],
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
   },
   textRegular: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
   },
 });

@@ -24,7 +24,7 @@ import ImageContent from '../../component/Post/Content/ImageContent';
 import LinkContent from '../../component/Post/Content/LinkContent';
 import MainButton from '../../component/Common/MainButton';
 import ChooseMemento from '../../component/NewPost/ChooseMemento';
-import { CREATE_POST } from '../../utils/api';
+import { CREATE_POST, EDIT_POST } from '../../utils/api';
 
 const ContentDimension = SCREEN_WIDTH - 32;
 
@@ -33,10 +33,10 @@ class NewPostScreen extends Component {
     super(props);
     this.scroll = createRef();
     this.state = {
-      mementoData: null,
+      mementoData: this.props.route.params.mementoData,
+      contentList: this.props.route.params.contentList,
       currentPage: 0,
       showModal: null,
-      contentList: [{ type: null, body: null }],
       isLoading: false,
     };
   }
@@ -68,6 +68,31 @@ class NewPostScreen extends Component {
 
     this.setState({ isLoading: true });
     Axios.post(CREATE_POST, {
+      mementoId: mementoData.id,
+      contentList: filteredContent,
+    })
+      .then((res) => {
+        console.log('berhasil', res.data.data);
+        this.setState({ isLoading: false });
+      })
+      .catch((err) => {
+        Alert.alert(
+          'Error',
+          err.response.data.message,
+          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
+          { cancelable: false },
+        );
+      });
+  };
+
+  editPost = () => {
+    const { mementoData, contentList } = this.state;
+    const { postId } = this.props.route.params;
+
+    const filteredContent = contentList.filter((content) => content.type !== null);
+
+    this.setState({ isLoading: true });
+    Axios.put(EDIT_POST(postId), {
       mementoId: mementoData.id,
       contentList: filteredContent,
     })
@@ -224,13 +249,18 @@ class NewPostScreen extends Component {
 
   render() {
     const { mementoData, contentList, isLoading, showModal, currentPage } = this.state;
+    const { isEdit } = this.props.route.params;
+
     return (
       <>
         <MainHeader
-          title={'New Post'}
+          title={isEdit ? 'Edit Post' : 'New Post'}
           leftComponent={'back'}
           rightComponent={() => (
-            <TouchableWithoutFeedback onPress={this.uploadPost} disabled={!this.validateCreate()}>
+            <TouchableWithoutFeedback
+              onPress={isEdit ? this.editPost : this.uploadPost}
+              disabled={!this.validateCreate()}
+            >
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors['white-1']} />
               ) : (

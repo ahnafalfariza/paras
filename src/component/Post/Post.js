@@ -22,8 +22,9 @@ class Post extends PureComponent {
 
   render() {
     const { showOption } = this.state;
-    const { refreshTimeline } = this.props;
-    const { contentList, user, memento, createdAt, id } = this.props.post;
+    const { refreshTimeline, post } = this.props;
+
+    const { contentList, user, memento, createdAt, id } = post;
 
     return (
       <>
@@ -37,8 +38,7 @@ class Post extends PureComponent {
         <PostOptionModal
           isVisible={showOption}
           onClose={this.onPressOptionPost}
-          postId={id}
-          userIdPost={user.id}
+          postData={post}
           refreshTimeline={refreshTimeline}
         />
       </>

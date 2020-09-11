@@ -14,7 +14,12 @@ const NewPostNavigator = () => {
       <Stack.Screen
         name={RoutesName.NewPost}
         component={NewPostScreen}
-        initialParams={{ mementoData: null }}
+        initialParams={{
+          mementoData: null,
+          contentList: [{ type: null, body: null }],
+          isEdit: false,
+          postId: null,
+        }}
       />
       <Stack.Screen name={RoutesName.ChooseMemento} component={ChooseMementoScreen} />
       <Stack.Screen name={RoutesName.NewMemento} component={NewMementoScreen} />

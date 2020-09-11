@@ -8,13 +8,19 @@ import Clipboard from '@react-native-community/clipboard';
 import Confirmation from '../../Common/Confimation';
 import { DELETE_POST, REDACT_POST } from '../../../utils/api';
 import Axios from 'axios';
+import RoutesName from '../../../utils/RoutesName';
 
-const PostOptionModal = ({ isVisible, onClose, postId, userIdPost, refreshTimeline }) => {
+const PostOptionModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
   const navigation = useNavigation();
   const profile = useSelector((state) => state.user.profile);
   const [confirmType, setConfirmType] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { contentList, user, memento } = postData;
+
+  const userIdPost = user.id;
+  const postId = postData.id;
 
   let listOptionsModal = [
     {
@@ -36,7 +42,18 @@ const PostOptionModal = ({ isVisible, onClose, postId, userIdPost, refreshTimeli
       ...[
         {
           title: 'Edit',
-          onPress: () => console.log('edit'),
+          onPress: () => {
+            onClose();
+            navigation.navigate('New Post', {
+              screen: RoutesName.NewPost,
+              params: {
+                mementoData: memento,
+                contentList: contentList,
+                postId: postId,
+                isEdit: true,
+              },
+            });
+          },
         },
         {
           title: 'Forget',

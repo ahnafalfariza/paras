@@ -23,6 +23,7 @@
     "axios": "^0.20.0",
     "formik": "^2.1.5",
     "javascript-time-ago": "^2.0.13",
+    "jsbi": "^3.1.4",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.2",

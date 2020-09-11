@@ -53,6 +53,7 @@ const tabBarOption = {
   style: { backgroundColor: Colors['dark-12'], borderTopWidth: 0 },
   labelStyle: { fontFamily: 'Inconsolata-Bold' },
   showLabel: false,
+  keyboardHidesTabBar: true,
 };
 
 const tabBarIcon = (color, route, profileData) => {

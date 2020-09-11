@@ -11,7 +11,6 @@ import {
 import { connect } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
-import SoftInputMode from 'react-native-set-soft-input-mode';
 
 import Colors from '../../utils/color';
 import MainHeader from '../../component/Header/MainHeader';
@@ -22,7 +21,6 @@ import { MEMENTO_DOMAIN, MEMENTO_TYPE } from '../../utils/MementoCreateHelper';
 import MainTextInput from '../../component/Common/MainTextInput';
 import { CREATE_MEMENTO } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
-import RoutesName from '../../utils/RoutesName';
 
 class NewMementoScreen extends Component {
   state = {
@@ -31,10 +29,6 @@ class NewMementoScreen extends Component {
     type: null,
     isLoading: false,
   };
-
-  componentDidMount() {
-    SoftInputMode.set(SoftInputMode.ADJUST_RESIZE);
-  }
 
   createMemento = () => {
     const { name, category, type } = this.state;
@@ -46,8 +40,8 @@ class NewMementoScreen extends Component {
       type: type.toLowerCase(),
     })
       .then(() => {
-        this.props.navigation.navigate(RoutesName.ChooseMemento);
         this.setState({ isLoading: false });
+        this.props.navigation.goBack();
       })
       .catch((err) => {
         Alert.alert(

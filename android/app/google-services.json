@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "805925740157",
+    "firebase_url": "https://paras-271707.firebaseio.com",
+    "project_id": "paras-271707",
+    "storage_bucket": "paras-271707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805925740157:android:948e7eeee64bbe4df85b14",
+        "android_client_info": {
+          "package_name": "com.paras"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805925740157-limlvp11npgl6laa3g0sg3g5ql5d8so3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paras",
+            "certificate_hash": "5487326a5dd32adbf59af89122a0925440a486aa"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWXTBz1Urpz09Rl_SrH7mqCKFBP2KyM60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805925740157-74ahh4u69cqtlmbe5djuf1jbm9bki82c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.paras"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

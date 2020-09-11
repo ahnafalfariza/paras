@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import Modal from 'react-native-modal';
-import { useNavigation } from '@react-navigation/native';
+import Axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
 import ListMoreOption from '../../Common/ListMoreOption';
 import Clipboard from '@react-native-community/clipboard';
 import Confirmation from '../../Common/Confimation';
 import { DELETE_POST, REDACT_POST } from '../../../utils/api';
-import Axios from 'axios';
 import RoutesName from '../../../utils/RoutesName';
 
 const PostOptionModal = ({ isVisible, onClose, refreshTimeline, postData }) => {

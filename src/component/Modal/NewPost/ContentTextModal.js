@@ -18,14 +18,15 @@ import DismissKeyboard from '../../Common/DismissKeyboard';
 
 const MaximumCharacter = 400;
 
-const ContentTextModal = ({ onDismiss, onComplete }) => {
+const ContentTextModal = ({ onDismiss, onComplete, body }) => {
+  const initialValue = body ? body : '';
   const [showDiscard, setShowDiscard] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue);
 
   const lineWidth = (value.length / MaximumCharacter) * 100;
 
   const onPressClose = () => {
-    value === '' ? onDismiss() : setShowDiscard(true);
+    value === initialValue ? onDismiss() : setShowDiscard(true);
   };
 
   return (
@@ -49,7 +50,7 @@ const ContentTextModal = ({ onDismiss, onComplete }) => {
                     <TouchableNativeFeedback onPress={onPressClose}>
                       <SvgXml xml={assetSvg.header.close} width="28" height="28" />
                     </TouchableNativeFeedback>
-                    <Text style={_styles.headerText}>Add Text</Text>
+                    <Text style={_styles.headerText}>{body ? 'Edit Text' : 'Add Text'}</Text>
                     <TouchableNativeFeedback
                       disabled={value === ''}
                       onPress={() => onComplete({ type: 'text', body: value })}

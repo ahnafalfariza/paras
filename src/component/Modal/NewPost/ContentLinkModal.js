@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import Axios from 'axios';
 import { SvgXml } from 'react-native-svg';
 
 import Colors from '../../../utils/color';
@@ -16,16 +17,16 @@ import assetSvg from '../../../assets/svg/svg';
 import { SCREEN_WIDTH, isIOS } from '../../../utils/constant';
 import Confirmation from '../../Common/Confimation';
 import DismissKeyboard from '../../Common/DismissKeyboard';
-import Axios from 'axios';
 import { META_URL } from '../../../utils/api';
 
-const ContentLinkModal = ({ onDismiss, onComplete }) => {
+const ContentLinkModal = ({ onDismiss, onComplete, body }) => {
+  const initialValue = body ? JSON.parse(body).url : '';
   const [showDiscard, setShowDiscard] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue);
   const [isLoading, setLoading] = useState(false);
 
   const onPressClose = () => {
-    value === '' ? onDismiss() : setShowDiscard(true);
+    value === initialValue ? onDismiss() : setShowDiscard(true);
   };
 
   const validateLink = () => {
@@ -39,7 +40,7 @@ const ContentLinkModal = ({ onDismiss, onComplete }) => {
     Axios.get(META_URL(value))
       .then((res) => {
         const meta = res.data.data;
-        const body = {
+        const linkData = {
           img: meta.image,
           title: meta.title,
           desc: meta.description,
@@ -48,7 +49,7 @@ const ContentLinkModal = ({ onDismiss, onComplete }) => {
         setLoading(false);
         onComplete({
           type: 'url',
-          body: JSON.stringify(body),
+          body: JSON.stringify(linkData),
         });
       })
       .catch((err) => console.log(err));
@@ -75,7 +76,7 @@ const ContentLinkModal = ({ onDismiss, onComplete }) => {
                     <TouchableNativeFeedback onPress={onPressClose}>
                       <SvgXml xml={assetSvg.header.close} width="28" height="28" />
                     </TouchableNativeFeedback>
-                    <Text style={_styles.headerText}>Add Link</Text>
+                    <Text style={_styles.headerText}>{body ? 'Edit Link' : 'Add Link'}</Text>
                     <TouchableNativeFeedback onPress={onPressComplete} disabled={!validateLink()}>
                       {isLoading ? (
                         <ActivityIndicator size="small" color={Colors['white-1']} />

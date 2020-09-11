@@ -160,7 +160,11 @@ class NewPostScreen extends Component {
     const { contentList, currentPage } = this.state;
     return (
       <View style={{ position: 'absolute', right: 0, margin: 12, flexDirection: 'row' }}>
-        <TouchableNativeFeedback onPress={() => console.log('edit')}>
+        <TouchableNativeFeedback
+          onPress={() => {
+            this.onPressChooseContent(contentList[currentPage].type);
+          }}
+        >
           <SvgXml xml={assetSvg.newPost.edit} width="36" height="36" />
         </TouchableNativeFeedback>
         <TouchableNativeFeedback

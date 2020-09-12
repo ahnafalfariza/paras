@@ -52,7 +52,7 @@ class LoginScreen extends Component {
   getUserFollowing = () => {
     Axios.get(FOLLOWING_LIST).then((res) => {
       this.props.dispatchInitFollowing({
-        followingList: res.data.data,
+        followingList: res.data.data.map((following) => following.targetId),
       });
     });
   };

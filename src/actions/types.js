@@ -3,3 +3,7 @@ export const Auth = {
   INIT_FOLLOWING: 'INIT_FOLLOWING',
   LOGOUT_USER: 'LOGOUT_USER',
 };
+
+export const User = {
+  TOGGLE_FOLLOW: 'TOGGLE_FOLLOW',
+};

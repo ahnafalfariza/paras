@@ -48,3 +48,7 @@ export const REDACT_POST = (postId) => `${BASE_URL}/posts/${postId}/redact`;
 export const COMMENT = (postId) => `${BASE_URL}/comments?postId=${postId}`;
 export const POST_COMMENT = `${BASE_URL}/comments`;
 export const DELETE_COMMENT = (commentId) => `${BASE_URL}/comments/${commentId}`;
+
+//follow unfollow
+export const FOLLOW = `${BASE_URL}/follow`;
+export const UNFOLLOW = `${BASE_URL}/unfollow`;

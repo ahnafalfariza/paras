@@ -1,4 +1,4 @@
-import { Auth } from './types';
+import { Auth, User } from './types';
 
 export const initUser = (data) => ({
   type: Auth.INIT_USER,
@@ -13,6 +13,13 @@ export const initFollowing = (data) => ({
   type: Auth.INIT_FOLLOWING,
   payload: {
     followingList: data.followingList,
+  },
+});
+
+export const toggleFollow = (id) => ({
+  type: User.TOGGLE_FOLLOW,
+  payload: {
+    id: id,
   },
 });
 

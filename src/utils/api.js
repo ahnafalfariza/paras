@@ -26,7 +26,8 @@ export const VERIFY_USER = `${BASE_URL}/register/confirm`;
 export const VERIFY_TOKEN = `${BASE_URL}/verify`;
 export const FOLLOWING_LIST = `${BASE_URL}/follow`;
 
-export const HOME_FEED = `${BASE_URL}/feeds`;
+export const HOME_FEED = (page) =>
+  `${BASE_URL}/feeds?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
 
 //wallet

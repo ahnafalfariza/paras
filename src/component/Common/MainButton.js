@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import Colors from '../../utils/color';
@@ -25,7 +25,6 @@ const MainButton = ({
       disabledTitleStyle={{ opacity: 0.75, color: Colors['white-1'] }}
       loading={loading}
       containerStyle={StyleSheet.flatten([_styles.containerStyle, containerStyle])}
-      // TouchableComponent={TouchableWithoutFeedback}
     />
   );
 };

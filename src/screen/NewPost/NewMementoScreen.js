@@ -59,6 +59,7 @@ class NewMementoScreen extends Component {
   };
 
   onChangeCategory = (text) => {
+    text = text === null ? '' : text;
     let category = MEMENTO_DOMAIN.find(
       (memento) => memento.label.toLowerCase() === text.toLowerCase(),
     );

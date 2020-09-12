@@ -11,6 +11,7 @@ const MainTextInput = ({
   onBlur,
   onFocus,
   placeholder,
+  keyboardType = 'default',
   maxLength = null,
   multiline = false,
 }) => {
@@ -26,6 +27,7 @@ const MainTextInput = ({
       multiline={multiline}
       placeholderTextColor={Colors['white-3']}
       onChangeText={onChangeText}
+      keyboardType={keyboardType}
       onBlur={onBlur}
       onFocus={onFocus}
     />

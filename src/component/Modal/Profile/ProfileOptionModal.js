@@ -38,10 +38,7 @@ const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
     },
     {
       title: 'Log Out',
-      onPress: () => {
-        onClose();
-        logoutUser();
-      },
+      onPress: () => logoutUser(),
     },
   ];
 

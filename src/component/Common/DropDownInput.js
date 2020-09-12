@@ -7,7 +7,7 @@ import { SCREEN_WIDTH } from '../../utils/constant';
 import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const DropDownInput = ({ options, onChange, placeholder, searchable = true }) => {
+const DropDownInput = ({ options, onChange, placeholder, searchable = true, children }) => {
   const [text, setText] = useState('');
   const [showOptions, setShowOptions] = useState(false);
 
@@ -27,10 +27,16 @@ const DropDownInput = ({ options, onChange, placeholder, searchable = true }) =>
           const choosenOpt = filteredOptions.find(
             (opt) => opt.toLowerCase() === text.toLowerCase(),
           );
-          typeof choosenOpt !== 'undefined' ? setText(choosenOpt) : setText('');
+          if (typeof choosenOpt !== 'undefined') {
+            setText(choosenOpt);
+          } else {
+            setText('');
+            onChange(null);
+          }
           setShowOptions(false);
         }}
       />
+      {children}
       {showOptions && (
         <View style={_styles.optionsView}>
           <FlatList

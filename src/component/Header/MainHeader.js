@@ -9,7 +9,14 @@ import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const MainHeader = ({ leftComponent, title, rightComponent, centerComponent }) => {
+const MainHeader = ({
+  title,
+  centerComponent,
+  leftComponent,
+  rightComponent,
+  onPressLeft,
+  onPressRight,
+}) => {
   const navigation = useNavigation();
 
   const leftComponentIcon = () => {

@@ -19,7 +19,7 @@ class ExploreScreen extends Component {
     page: 1,
     isLoaded: false,
     memoryGrants: {},
-    hasMore: false,
+    hasMore: true,
   };
 
   componentDidMount() {

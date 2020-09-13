@@ -25,13 +25,7 @@ const AppNavigator = ({ isLoggedIn }) => {
   const token = useSelector((state) => state.user.token)
   const [ready, setReady] = useState(false)
   const [tokenLoaded, setTokenLoaded] = useState(false)
-  const [onOpenScreen, setOnOpenScreen] = useState({
-    routeName: RoutesName.HomeTab,
-    params: {
-      screen: RoutesName.Profile,
-      user: 'abcdef.paras.testnet'
-    }
-  })
+  const [onOpenScreen, setOnOpenScreen] = useState(null)
 
   useEffect(() => {
     fcmService.registerAppWithFCM
@@ -68,8 +62,11 @@ const AppNavigator = ({ isLoggedIn }) => {
       // }
       if (notify.data) {
         if (notify.data.screen === 'walletHistory') {
-          setOnOpenScreen(RoutesName.WalletTab, {
-            screen: RoutesName.WalletHistory
+          setOnOpenScreen({
+            routeName: RoutesName.WalletTab,
+            params: {
+              screen: RoutesName.WalletHistory
+            }
           })
         }
       }

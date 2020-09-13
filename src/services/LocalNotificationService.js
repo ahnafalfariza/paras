@@ -1,24 +1,24 @@
-import PushNotification from 'react-native-push-notification'
-import PushNotificationIOS from '@react-native-community/push-notification-ios'
-import { Platform } from 'react-native'
+import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { Platform } from 'react-native';
 
 class LocalNotificationService {
   configure = (onOpenNotification) => {
     PushNotification.configure({
       onRegister: function (token) {
-        console.log('[LocalNotificationService] onRegister:', token)
+        console.log('[LocalNotificationService] onRegister:', token);
       },
       onNotification: function (notification) {
-        console.log('[LocalNotificationService] onNotification:', notification)
+        console.log('[LocalNotificationService] onNotification:', notification);
         if (!notification?.data) {
-          return
+          return;
         }
-        notification.userInteraction = true
-        onOpenNotification(Platform.OS === 'ios' ? notification.data.item : notification.data)
+        notification.userInteraction = true;
+        onOpenNotification(Platform.OS === 'ios' ? notification.data.item : notification.data);
 
         if (Platform.OS === 'ios') {
           // (required) Called when a remote is received or opened, or local notification is opened
-          notification.finish(PushNotificationIOS.FetchResult.NoData)
+          notification.finish(PushNotificationIOS.FetchResult.NoData);
         }
       },
 
@@ -41,11 +41,11 @@ class LocalNotificationService {
        *     requestPermissions: Platform.OS === 'ios'
        */
       requestPermissions: true,
-    })
+    });
   };
 
   unRegister = () => {
-    PushNotification.unregister()
+    PushNotification.unregister();
   };
 
   showNotification = (id, title, message, data = {}, options = {}) => {
@@ -60,7 +60,7 @@ class LocalNotificationService {
       playSound: options.playSound || false,
       soundName: options.soundName || 'default',
       userInteraction: false, // BOOLEAN: If the notification was opened by the user from the notification area or not
-    })
+    });
   };
 
   buildAndroidNotification = (id, title, message, data = {}, options = {}) => {
@@ -76,7 +76,7 @@ class LocalNotificationService {
       priority: options.priority || 'high',
       importance: options.importance || 'high', // (optional) set notification importance, default: high,
       data: data,
-    }
+    };
   };
 
   buildIOSNotification = (id, title, message, data = {}, options = {}) => {
@@ -87,21 +87,21 @@ class LocalNotificationService {
         id: id,
         item: data,
       },
-    }
+    };
   };
 
   cancelAllLocalNotifications = () => {
     if (Platform.OS === 'ios') {
-      PushNotificationIOS.removeAllDeliveredNotifications()
+      PushNotificationIOS.removeAllDeliveredNotifications();
     } else {
-      PushNotification.cancelAllLocalNotifications()
+      PushNotification.cancelAllLocalNotifications();
     }
   };
 
   removeDeliveredNotificationByID = (notificationId) => {
-    console.log('[LocalNotificationService] removeDeliveredNotificationByID: ', notificationId)
-    PushNotification.cancelLocalNotifications({ id: `${notificationId}` })
+    console.log('[LocalNotificationService] removeDeliveredNotificationByID: ', notificationId);
+    PushNotification.cancelLocalNotifications({ id: `${notificationId}` });
   };
 }
 
-export const localNotificationService = new LocalNotificationService()
+export const localNotificationService = new LocalNotificationService();

@@ -25,7 +25,13 @@ const AppNavigator = ({ isLoggedIn }) => {
   const token = useSelector((state) => state.user.token)
   const [ready, setReady] = useState(false)
   const [tokenLoaded, setTokenLoaded] = useState(false)
-  const [onOpenScreen, setOnOpenScreen] = useState(null)
+  const [onOpenScreen, setOnOpenScreen] = useState({
+    routeName: RoutesName.HomeTab,
+    params: {
+      screen: RoutesName.Profile,
+      user: 'abcdef.paras.testnet'
+    }
+  })
 
   useEffect(() => {
     fcmService.registerAppWithFCM
@@ -56,9 +62,15 @@ const AppNavigator = ({ isLoggedIn }) => {
 
     function onOpenNotification(notify) {
       console.log('[App] onOpenNotification: ', notify)
+      // notify.data = {
+      //   screen: 'post || comment || walletHistory',
+      //   id: 'postId || postId'
+      // }
       if (notify.data) {
         if (notify.data.screen === 'walletHistory') {
-          setOnOpenScreen(RoutesName.WalletTab)
+          setOnOpenScreen(RoutesName.WalletTab, {
+            screen: RoutesName.WalletHistory
+          })
         }
       }
       //alert("Open Notification: " + notify.body)
@@ -88,7 +100,7 @@ const AppNavigator = ({ isLoggedIn }) => {
     if (ready && onOpenScreen) {
       // check push notification
       console.log(`[App] Navigate to ${onOpenScreen}`)
-      navRef.current.navigate(onOpenScreen)
+      navRef.current.navigate(onOpenScreen.routeName, onOpenScreen.params || {})
       setOnOpenScreen(null)
     }
   }, [ready, onOpenScreen])

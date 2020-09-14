@@ -25,6 +25,7 @@ export const LOGIN = `${BASE_URL}/login`;
 export const VERIFY_USER = `${BASE_URL}/register/confirm`;
 export const VERIFY_TOKEN = `${BASE_URL}/verify`;
 export const FOLLOWING_LIST = `${BASE_URL}/follow`;
+export const REGISTER_DEVICE = `${BASE_URL}/register/device`;
 
 export const HOME_FEED = (page) =>
   `${BASE_URL}/feeds?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;

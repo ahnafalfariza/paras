@@ -74,7 +74,7 @@ class FCMService {
         remoteMessage,
       );
       if (remoteMessage) {
-        const notification = remoteMessage.notification;
+        const notification = remoteMessage;
         onOpenNotification(notification);
         // this.removeDeliveredNotification(notification.notificationId)
       }
@@ -90,7 +90,7 @@ class FCMService {
         );
 
         if (remoteMessage) {
-          const notification = remoteMessage.notification;
+          const notification = remoteMessage;
           onOpenNotification(notification);
           //  this.removeDeliveredNotification(notification.notificationId)
         }
@@ -102,9 +102,9 @@ class FCMService {
       if (remoteMessage) {
         let notification = null;
         if (Platform.OS === 'ios') {
-          notification = remoteMessage.data.notification;
+          notification = remoteMessage.data;
         } else {
-          notification = remoteMessage.notification;
+          notification = remoteMessage;
         }
         onNotification(notification);
       }

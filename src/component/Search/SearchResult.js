@@ -57,7 +57,7 @@ const SearchResult = ({ item }) => {
             {item.id}
           </Text>
         </View>
-        <View></View>
+        <View />
       </View>
     </TouchableWithoutFeedback>
   );

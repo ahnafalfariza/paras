@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableNativeFeedback, StyleSheet, ActivityIndicator } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 import Modal from 'react-native-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import Axios from 'axios';
@@ -10,6 +11,7 @@ import { WALLET_BALANCE, WALLET_PIECE } from '../../../utils/api';
 import { prettyBalance } from '../../../utils/utils';
 import { CustomToast } from '../../../utils/CustomToast';
 import { setWalletBalance } from '../../../actions/user';
+import assetSvg from '../../../assets/svg/svg';
 
 const PostPieceModal = ({ isVisible, postId, onClose }) => {
   const dispatch = useDispatch();
@@ -70,7 +72,10 @@ const PostPieceModal = ({ isVisible, postId, onClose }) => {
         <Text style={_styles.headerText}>Send Piece</Text>
         <View style={_styles.balanceView}>
           <Text style={_styles.balanceDescText}>Available balance</Text>
-          <Text style={_styles.balanceNumberText}>{prettyBalance(walletBalance)}</Text>
+          <View style={_styles.balanceNumberView}>
+            <Text style={_styles.balanceNumberText}>{prettyBalance(walletBalance)}</Text>
+            <SvgXml xml={assetSvg.wallet.pac} width="28" height="28" style={{ marginLeft: 4 }} />
+          </View>
         </View>
         <View style={_styles.pieceChooseView}>
           {listPieceValue.map((val) => {
@@ -85,18 +90,16 @@ const PostPieceModal = ({ isVisible, postId, onClose }) => {
             );
           })}
         </View>
-        <Text style={_styles.amountSendText}>Send {pieceValue}</Text>
+        <View style={_styles.balanceNumberView}>
+          <Text style={_styles.amountSendText}>Send {pieceValue}</Text>
+          <SvgXml xml={assetSvg.wallet.pac} width="18" height="18" style={{ marginLeft: 4 }} />
+        </View>
         <View style={_styles.subTitleContainer}>
           {isLoading ? (
             <ActivityIndicator
               size={'small'}
               color={Colors['white-1']}
-              style={{
-                alignSelf: 'center',
-                flex: 1,
-                paddingVertical: 12,
-                backgroundColor: Colors['primary-5'],
-              }}
+              style={_styles.activityIndicator}
             />
           ) : (
             <>
@@ -127,7 +130,7 @@ const _styles = StyleSheet.create({
     borderRadius: 8,
   },
   headerText: {
-    backgroundColor: Colors['dark-6'],
+    backgroundColor: Colors['dark-8'],
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
     padding: 12,
@@ -141,6 +144,11 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     fontSize: ResponsiveFont(16),
+  },
+  balanceNumberView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   balanceNumberText: {
     fontFamily: 'Inconsolata-Bold',
@@ -188,5 +196,11 @@ const _styles = StyleSheet.create({
     fontSize: ResponsiveFont(13),
     color: Colors['white-1'],
     textAlign: 'center',
+  },
+  activityIndicator: {
+    alignSelf: 'center',
+    flex: 1,
+    paddingVertical: 12,
+    backgroundColor: Colors['primary-5'],
   },
 });

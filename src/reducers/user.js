@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   token: null,
   isLoggedIn: false,
   followingList: [],
+  walletBalance: 0,
   error: false,
 };
 
@@ -22,6 +23,12 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         followingList: action.payload.followingList,
       };
+    case Auth.SET_BALANCE:
+      return {
+        ...state,
+        walletBalance: action.payload.walletBalance,
+      };
+
     case User.TOGGLE_FOLLOW: {
       const newList = [...state.followingList];
       const idx = newList.indexOf(action.payload.id);

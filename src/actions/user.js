@@ -16,6 +16,13 @@ export const initFollowing = (data) => ({
   },
 });
 
+export const setWalletBalance = (data) => ({
+  type: Auth.SET_BALANCE,
+  payload: {
+    walletBalance: data.walletBalance,
+  },
+});
+
 export const toggleFollow = (id) => ({
   type: User.TOGGLE_FOLLOW,
   payload: {

@@ -10,18 +10,24 @@ import PostDate from './PostDate';
 import PostOptionModal from '../Modal/Common/PostOptionModal';
 
 import Colors from '../../utils/color';
+import PostShareModal from '../Modal/Common/PostShareModal';
 
 class Post extends PureComponent {
   state = {
     showOption: false,
+    showShare: false,
   };
 
   onPressOptionPost = () => {
     this.setState((prevState) => ({ showOption: !prevState.showOption }));
   };
 
+  onPressSharePost = () => {
+    this.setState((prevState) => ({ showShare: !prevState.showShare }));
+  }
+
   render() {
-    const { showOption } = this.state;
+    const { showOption, showShare } = this.state;
     const { refreshTimeline, post } = this.props;
 
     const { contentList, user, memento, createdAt, id } = post;
@@ -33,11 +39,17 @@ class Post extends PureComponent {
           <PostOwner user={user} onPressOption={this.onPressOptionPost} />
           <PostContent contentList={contentList} />
           <PostDate date={createdAt} />
-          <PostAction id={id} />
+          <PostAction id={id} onPressShare={this.onPressSharePost} />
         </View>
         <PostOptionModal
           isVisible={showOption}
           onClose={this.onPressOptionPost}
+          postData={post}
+          refreshTimeline={refreshTimeline}
+        />
+        <PostShareModal
+          isVisible={showShare}
+          onClose={this.onPressSharePost}
           postData={post}
           refreshTimeline={refreshTimeline}
         />
@@ -46,7 +58,7 @@ class Post extends PureComponent {
   }
 }
 
-const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, hasMore }) => {
+const PostList = ({ list, onLoadMore = () => { }, header, onRefresh = () => { }, hasMore }) => {
   const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
 

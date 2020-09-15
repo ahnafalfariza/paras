@@ -30,6 +30,7 @@ const Colors = {
   'white-1': '#E2E2E2',
   'white-2': '#A5A5A5',
   'white-3': '#787878',
+  'green-1': '#39C16C',
 };
 
 export const Dark = () => (

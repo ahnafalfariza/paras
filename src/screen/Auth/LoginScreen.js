@@ -18,8 +18,8 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import RoutesName from '../../utils/RoutesName';
-import { LOGIN, FOLLOWING_LIST } from '../../utils/api';
-import { initUser, initFollowing } from '../../actions/user';
+import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
+import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import { isIOS } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
@@ -36,6 +36,7 @@ class LoginScreen extends Component {
       .then((res) => {
         Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
         this.getUserFollowing();
+        this.getWalletBalance(res.data.data.profile.id);
         this.props.dispatchInitUser(res.data.data);
         this.setState({ isLoading: false });
       })
@@ -53,6 +54,14 @@ class LoginScreen extends Component {
     Axios.get(FOLLOWING_LIST).then((res) => {
       this.props.dispatchInitFollowing({
         followingList: res.data.data.map((following) => following.targetId),
+      });
+    });
+  };
+
+  getWalletBalance = (userId) => {
+    Axios.get(WALLET_BALANCE(userId)).then((res) => {
+      this.props.dispatchsetWalletBalance({
+        walletBalance: res.data.data,
       });
     });
   };
@@ -150,6 +159,7 @@ class LoginScreen extends Component {
 const mapDispatchToProps = {
   dispatchInitUser: initUser,
   dispatchInitFollowing: initFollowing,
+  dispatchsetWalletBalance: setWalletBalance,
 };
 
 export default connect(null, mapDispatchToProps)(LoginScreen);

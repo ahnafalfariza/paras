@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
+import Axios from 'axios';
+import { connect } from 'react-redux';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
@@ -10,8 +12,6 @@ import assetSvg from '../../assets/svg/svg';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
-import Axios from 'axios';
-import { connect } from 'react-redux';
 import { WALLET_BALANCE, WALLET_HISTORY } from '../../utils/api';
 import { setWalletBalance } from '../../actions/user';
 import { prettyBalance } from '../../utils/utils';

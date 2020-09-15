@@ -11,7 +11,7 @@ export const CustomToast = (
   Toast.show(message, {
     containerStyle: {
       width: SCREEN_WIDTH - 32,
-      marginBottom: isIOS && 72,
+      marginBottom: isIOS ? 72 : 0,
       padding: 12,
       paddingVertical: 8,
       borderRadius: 6,

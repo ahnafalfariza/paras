@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
-import Toast from 'react-native-root-toast';
+import { connect } from 'react-redux';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
@@ -20,10 +20,7 @@ import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import DropDownInput from '../../component/Common/DropDownInput';
 import assetSvg from '../../assets/svg/svg';
 import MainTextInput from '../../component/Common/MainTextInput';
-import { connect } from 'react-redux';
 import { setWalletBalance } from '../../actions/user';
-import MainButton from '../../component/Common/MainButton';
-import { SCREEN_WIDTH } from '../../utils/constant';
 import { CustomToast } from '../../utils/CustomToast';
 
 class WalletTransactionScreen extends Component {

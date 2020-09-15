@@ -4,7 +4,6 @@ export const initUser = (data) => ({
   type: Auth.INIT_USER,
   payload: {
     profile: data.profile,
-    profileId: data.profileId,
     token: data.token,
   },
 });

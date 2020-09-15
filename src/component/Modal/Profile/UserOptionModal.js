@@ -1,12 +1,12 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import Clipboard from '@react-native-community/clipboard';
 import { useNavigation } from '@react-navigation/native';
+import Clipboard from '@react-native-community/clipboard';
 
 import ListMoreOption from '../../Common/ListMoreOption';
 import RoutesName from '../../../utils/RoutesName';
 
-const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
+const UserOptionModal = ({ isVisible, onClose, profileId }) => {
   const navigation = useNavigation();
   const listOptionsModal = [
     {
@@ -23,24 +23,6 @@ const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
         navigation.navigate(RoutesName.ProfileMemento);
       },
     },
-    {
-      title: 'View Following',
-      onPress: () => {
-        onClose();
-        navigation.navigate(RoutesName.ProfileFollowing);
-      },
-    },
-    {
-      title: 'Edit Profile',
-      onPress: () => {
-        onClose();
-        navigation.navigate('EditProfile');
-      },
-    },
-    {
-      title: 'Log Out',
-      onPress: () => logoutUser(),
-    },
   ];
 
   return (
@@ -55,7 +37,7 @@ const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
   );
 };
 
-export default ProfileOptionModal;
+export default UserOptionModal;
 
 const copyToClipboard = (userId) => {
   Clipboard.setString(`https://alpha.paras.id/${userId}`);

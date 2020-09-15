@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import Axios from 'axios';
 
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { FOLLOW, UNFOLLOW } from '../../utils/api';
+import { toggleFollow } from '../../actions/user';
 
 const Profile = ({ data, type = 'user', currentUser = false }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const followingList = useSelector((state) => state.user.followingList);
+  const [isFollowing, setIsFollowing] = useState(followingList.includes(data.id));
+  const [isLoading, setIsLoading] = useState(false);
+
   const img = type === 'user' ? data.imgAvatar : data.img;
   const desc = type === 'user' ? data.bio : data.desc;
 
-  const navigation = useNavigation();
-
   const editProfile = () => {
     navigation.navigate('EditProfile');
+  };
+
+  const pressRelation = () => {
+    setIsLoading(true);
+    Axios.post(isFollowing ? UNFOLLOW : FOLLOW, {
+      targetId: data.id,
+      targetType: type,
+    })
+      .then(() => {
+        dispatch(toggleFollow(data.id));
+        setIsLoading(false);
+        setIsFollowing(!isFollowing);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   };
 
   return (
@@ -37,9 +63,12 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
       <MainButton
-        title={currentUser ? 'EDIT PROFILE' : 'FOLLOW'}
+        title={!currentUser ? (isFollowing ? 'UNFOLLOW' : 'FOLLOW') : 'EDIT PROFILE'}
+        secondary={!currentUser && isFollowing}
+        loading={isLoading}
+        loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
         containerStyle={{ alignSelf: 'center', width: 150 }}
-        onPress={currentUser ? editProfile : null}
+        onPress={currentUser ? editProfile : pressRelation}
       />
     </View>
   );

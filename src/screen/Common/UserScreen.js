@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TouchableWithoutFeedback } from 'react-native';
 import Axios from 'axios';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { SvgXml } from 'react-native-svg';
 
 import Screen from '../../component/Common/Screen';
@@ -11,12 +11,14 @@ import { PROFILE_POST_URL, PROFILE_URL } from '../../utils/api';
 import PostList from '../../component/Post/Post';
 import { postLimit } from '../../utils/constant';
 import assetSvg from '../../assets/svg/svg';
+import UserOptionModal from '../../component/Modal/Profile/UserOptionModal';
 
 class UserScreen extends Component {
   state = {
     page: 1,
     postList: [],
     user: this.props.route.params.user,
+    userOptionModal: false,
     hasMore: true,
   };
 
@@ -57,8 +59,12 @@ class UserScreen extends Component {
     this.setState({ page });
   };
 
+  toggleModal = () => {
+    this.setState((prevState) => ({ userOptionModal: !prevState.userOptionModal }));
+  };
+
   render() {
-    const { postList, hasMore, user } = this.state;
+    const { postList, hasMore, user, userOptionModal } = this.state;
     const { id } = this.props.profileData;
 
     return (
@@ -66,16 +72,18 @@ class UserScreen extends Component {
         <MainHeader
           title={user.id}
           leftComponent={'back'}
-          rightComponent={() => (
-            <TouchableWithoutFeedback>
-              <SvgXml
-                xml={assetSvg.common.more}
-                width="28"
-                height="28"
-                style={{ justifyContent: 'flex-end' }}
-              />
-            </TouchableWithoutFeedback>
-          )}
+          rightComponent={() =>
+            user.id === id ? null : (
+              <TouchableWithoutFeedback onPress={this.toggleModal}>
+                <SvgXml
+                  xml={assetSvg.common.more}
+                  width="28"
+                  height="28"
+                  style={{ justifyContent: 'flex-end' }}
+                />
+              </TouchableWithoutFeedback>
+            )
+          }
         />
         <Screen>
           <PostList
@@ -84,6 +92,11 @@ class UserScreen extends Component {
             onLoadMore={this.loadMorePost}
             onRefresh={this.onRefresh}
             hasMore={hasMore}
+          />
+          <UserOptionModal
+            isVisible={userOptionModal}
+            profileId={user.id}
+            onClose={this.toggleModal}
           />
         </Screen>
       </>

@@ -8,8 +8,12 @@ import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 // import Share from 'react-native-share';
 
-const PostAction = ({ id }) => {
+const PostAction = ({ id, showModalPiece }) => {
   const navigation = useNavigation();
+
+  const onPressPiece = () => {
+    showModalPiece(id);
+  };
 
   const onPressComment = () => {
     navigation.navigate('Comment', { id: id });
@@ -32,7 +36,7 @@ const PostAction = ({ id }) => {
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12 }}>
-      <TouchableWithoutFeedback onPress={() => console.log('pieces')}>
+      <TouchableWithoutFeedback onPress={onPressPiece}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.piece}

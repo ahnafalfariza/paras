@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, ActivityIndicator, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+  View,
+  Keyboard,
+} from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
+import Toast from 'react-native-root-toast';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
-import { SEARCH_USER_SEND } from '../../utils/api';
+import { SEARCH_USER_SEND, WALLET_SEND } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import DropDownInput from '../../component/Common/DropDownInput';
 import assetSvg from '../../assets/svg/svg';
 import MainTextInput from '../../component/Common/MainTextInput';
+import { connect } from 'react-redux';
+import { setWalletBalance } from '../../actions/user';
+import MainButton from '../../component/Common/MainButton';
+import { SCREEN_WIDTH } from '../../utils/constant';
+import { CustomToast } from '../../utils/CustomToast';
 
 class WalletTransactionScreen extends Component {
   state = {
@@ -57,6 +70,35 @@ class WalletTransactionScreen extends Component {
     this.setState({ sendPacAmount: number });
   };
 
+  onPressSend = () => {
+    Keyboard.dismiss();
+
+    const { sendPacAmount, sendPacUser } = this.state;
+    const { walletBalance } = this.props;
+    const valueSend = sendPacAmount * 10 ** 18;
+
+    if (walletBalance < valueSend) {
+      CustomToast('You dont have enough coins', 0, 'error');
+    } else {
+      setTimeout(() => {
+        this.setState({ isLoading: true });
+        Axios.post(WALLET_SEND, {
+          targetUserId: sendPacUser,
+          value: valueSend,
+        })
+          .then((res) => {
+            this.props.dispatchsetWalletBalance({ walletBalance: res.data.data });
+            CustomToast('Your coin has been sent successfully', 1000, 'success');
+            this.setState({ isLoading: false });
+          })
+          .catch((err) => {
+            console.log(err.response.message);
+            this.setState({ isLoading: false });
+          });
+      }, 2000);
+    }
+  };
+
   render() {
     const { userData, isLoading, sendPacAmount } = this.state;
     return (
@@ -65,10 +107,7 @@ class WalletTransactionScreen extends Component {
           title={'Send PAC'}
           leftComponent={'back'}
           rightComponent={() => (
-            <TouchableWithoutFeedback
-              onPress={() => console.log('submit')}
-              disabled={!this.validateSend()}
-            >
+            <TouchableWithoutFeedback onPress={this.onPressSend} disabled={!this.validateSend()}>
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors['white-1']} />
               ) : (
@@ -108,7 +147,15 @@ class WalletTransactionScreen extends Component {
   }
 }
 
-export default WalletTransactionScreen;
+const mapStateToProps = (state) => ({
+  walletBalance: state.user.walletBalance,
+});
+
+const mapDispatchToProps = {
+  dispatchsetWalletBalance: setWalletBalance,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTransactionScreen);
 
 const _styles = StyleSheet.create({
   textMain: {

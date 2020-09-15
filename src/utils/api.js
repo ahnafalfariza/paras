@@ -32,8 +32,9 @@ export const HOME_FEED = (page) =>
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
 
 //wallet
-export const WALLET_BALANCE = (user) => `${BASE_URL}/balances/${user}`;
-export const WALLET_HISTORY = `${BASE_URL}/transactions`;
+export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;
+export const WALLET_HISTORY = (userId) => `${BASE_URL}/transactions?id=${userId}`;
+export const WALLET_SEND = `${BASE_URL}/wallet/transfer`;
 export const SEARCH_USER_SEND = (query) => `${BASE_URL}/users?id__re=${query}`;
 
 //newPost

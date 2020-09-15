@@ -24,7 +24,7 @@ class Post extends PureComponent {
 
   onPressSharePost = () => {
     this.setState((prevState) => ({ showShare: !prevState.showShare }));
-  }
+  };
 
   render() {
     const { showOption, showShare } = this.state;
@@ -58,7 +58,7 @@ class Post extends PureComponent {
   }
 }
 
-const PostList = ({ list, onLoadMore = () => { }, header, onRefresh = () => { }, hasMore }) => {
+const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, hasMore }) => {
   const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
 

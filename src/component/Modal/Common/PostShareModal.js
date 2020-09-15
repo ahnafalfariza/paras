@@ -31,14 +31,14 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     {
       title: 'Twitter',
       onPress: () => {
-        onPressShareTwitter()
+        onPressShareTwitter();
         onClose();
       },
     },
     {
       title: 'Facebook',
       onPress: () => {
-        onPressShareFacebook()
+        onPressShareFacebook();
         onClose();
       },
     },
@@ -52,7 +52,7 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     {
       title: 'More',
       onPress: () => {
-        onPressShareMore()
+        onPressShareMore();
         onClose();
       },
     },
@@ -65,17 +65,15 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
   const onPressShareIGStories = async () => {
     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
 
-    const contentImg = contentList.filter(content => content.type === 'img');
+    const contentImg = contentList.filter((content) => content.type === 'img');
 
     const imgUrl = contentImg.length > 0 ? getImageUrl(JSON.parse(contentImg[0].body)) : null;
 
     const mementoImgUrl = getImageUrl(memento.img);
 
-    const stickerImg = await RNFetchBlob
-      .config({
-        fileCache: true,
-      })
-      .fetch('GET', imgUrl || mementoImgUrl);
+    const stickerImg = await RNFetchBlob.config({
+      fileCache: true,
+    }).fetch('GET', imgUrl || mementoImgUrl);
 
     const stickerPath = stickerImg.path();
 
@@ -88,7 +86,7 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     try {
       Share.shareSingle(shareOptions);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -96,27 +94,27 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     const shareOptions = {
       message: `Here's a post by ${user.id}`,
       url: `http://beta.paras.id/post/${id}`,
-      social: Share.Social.TWITTER
+      social: Share.Social.TWITTER,
     };
 
     try {
       Share.shareSingle(shareOptions);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   const onPressShareFacebook = () => {
     const shareOptions = {
-      message: ``,
+      message: '',
       url: `http://beta.paras.id/post/${id}`,
-      social: Share.Social.FACEBOOK
+      social: Share.Social.FACEBOOK,
     };
 
     try {
       Share.shareSingle(shareOptions);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -124,12 +122,16 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     const options = {
       message: '',
       title: 'Share post to',
-      url: `https://beta.paras.id/post/${id}`
+      url: `https://beta.paras.id/post/${id}`,
     };
 
     Share.open(options)
-      .then((res) => { console.log(res) })
-      .catch((err) => { err && console.log(err); });
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        err && console.log(err);
+      });
   };
 
   const deletePost = () => {
@@ -173,8 +175,8 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
           loading={loading}
         />
       ) : (
-          <ListMoreOption data={listOptionsModal} />
-        )}
+        <ListMoreOption data={listOptionsModal} />
+      )}
     </Modal>
   );
 };

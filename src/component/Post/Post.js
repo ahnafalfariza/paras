@@ -49,7 +49,11 @@ class Post extends PureComponent {
           <PostOwner user={user} onPressOption={this.onPressOptionPost} />
           <PostContent contentList={contentList} />
           <PostDate date={createdAt} />
-          <PostAction id={id} onPressShare={this.onPressSharePost} showModalPiece={this.onPressPiece} />
+          <PostAction
+            id={id}
+            onPressShare={this.onPressSharePost}
+            showModalPiece={this.onPressPiece}
+          />
         </View>
         <PostOptionModal
           isVisible={showOption}
@@ -62,6 +66,7 @@ class Post extends PureComponent {
           onClose={this.onPressSharePost}
           postData={post}
           refreshTimeline={refreshTimeline}
+        />
         <PostPieceModal
           isVisible={showPieceModal}
           onClose={this.onPressPiece}

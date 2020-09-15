@@ -39,7 +39,10 @@ export default function (state = INITIAL_STATE, action) {
       };
     }
     case Auth.LOGOUT_USER:
-      return INITIAL_STATE;
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

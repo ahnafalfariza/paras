@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
-import Axios from 'axios';
-import { useSelector } from 'react-redux';
 import Share from 'react-native-share';
 import Clipboard from '@react-native-community/clipboard';
 import RNFetchBlob from 'rn-fetch-blob';
 
 import ListMoreOption from '../../Common/ListMoreOption';
-import { DELETE_POST, REDACT_POST } from '../../../utils/api';
 import { getImageUrl } from '../../../utils/image';
 import { PermissionsAndroid } from 'react-native';
 
-const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
-  const profile = useSelector((state) => state.user.profile);
-  const [confirmType, setConfirmType] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+const PostShareModal = ({ isVisible, onClose, postData }) => {
   const { id, contentList, user, memento } = postData;
   const postId = postData.id;
 
@@ -134,49 +126,14 @@ const PostShareModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
       });
   };
 
-  const deletePost = () => {
-    setLoading(true);
-    Axios.delete(DELETE_POST(postId))
-      .then(() => {
-        refreshTimeline();
-        setLoading(false);
-        setShowConfirm(false);
-        onClose();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const redactPost = () => {
-    setLoading(true);
-    Axios.put(REDACT_POST(postId))
-      .then(() => {
-        refreshTimeline();
-        setLoading(false);
-        setShowConfirm(false);
-        onClose();
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
     <Modal
       isVisible={isVisible}
-      onBackdropPress={!showConfirm ? onClose : null}
-      onBackButtonPress={!showConfirm ? onClose : null}
-      backdropOpacity={showConfirm ? 1 : 0.7}
+      onBackdropPress={onClose}
+      onBackButtonPress={onClose}
       useNativeDriver
     >
-      {showConfirm ? (
-        <ConfirmationHelper
-          type={confirmType}
-          onPressLeft={() => setShowConfirm(false)}
-          onPressDelete={deletePost}
-          onPressRedact={redactPost}
-          loading={loading}
-        />
-      ) : (
-        <ListMoreOption data={listOptionsModal} />
-      )}
+      <ListMoreOption data={listOptionsModal} />
     </Modal>
   );
 };

@@ -37,13 +37,14 @@
     "react-native-root-toast": "^3.2.1",
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "^2.10.1",
-    "react-native-share": "^3.7.0",
+    "react-native-share": "^3.7.1",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^7.0.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
+    "rn-fetch-blob": "^0.12.0",
     "yup": "^0.29.3"
   },
   "devDependencies": {

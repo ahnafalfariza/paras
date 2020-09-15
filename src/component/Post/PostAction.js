@@ -6,9 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
-// import Share from 'react-native-share';
 
-const PostAction = ({ id, showModalPiece }) => {
+const PostAction = ({ id, onPressShare, showModalPiece }) => {
   const navigation = useNavigation();
 
   const onPressPiece = () => {
@@ -17,21 +16,6 @@ const PostAction = ({ id, showModalPiece }) => {
 
   const onPressComment = () => {
     navigation.navigate('Comment', { id: id });
-  };
-
-  const onPressShare = () => {
-    // const shareOptions = {
-    //   title: 'Share Your Post',
-    //   url: 'https://google.com',
-    //   showAppsToView: true,
-    // };
-    // Share.open(shareOptions)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     err && console.log(err);
-    //   });
   };
 
   return (

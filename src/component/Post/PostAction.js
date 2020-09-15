@@ -7,8 +7,12 @@ import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const PostAction = ({ id, onPressShare }) => {
+const PostAction = ({ id, onPressShare, showModalPiece }) => {
   const navigation = useNavigation();
+
+  const onPressPiece = () => {
+    showModalPiece(id);
+  };
 
   const onPressComment = () => {
     navigation.navigate('Comment', { id: id });
@@ -16,7 +20,7 @@ const PostAction = ({ id, onPressShare }) => {
 
   return (
     <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12 }}>
-      <TouchableWithoutFeedback onPress={() => console.log('pieces')}>
+      <TouchableWithoutFeedback onPress={onPressPiece}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.piece}

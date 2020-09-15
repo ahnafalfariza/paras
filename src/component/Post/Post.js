@@ -11,11 +11,21 @@ import PostOptionModal from '../Modal/Common/PostOptionModal';
 
 import Colors from '../../utils/color';
 import PostShareModal from '../Modal/Common/PostShareModal';
+import PostPieceModal from '../Modal/Common/PostPieceModal';
 
 class Post extends PureComponent {
   state = {
     showOption: false,
     showShare: false,
+    showPieceModal: false,
+    postIdPiece: null,
+  };
+
+  onPressPiece = (postId = null) => {
+    this.setState((prevState) => ({
+      showPieceModal: !prevState.showPieceModal,
+      postIdPiece: postId,
+    }));
   };
 
   onPressOptionPost = () => {
@@ -27,7 +37,7 @@ class Post extends PureComponent {
   };
 
   render() {
-    const { showOption, showShare } = this.state;
+    const { showOption, showShare, showPieceModal, postIdPiece } = this.state;
     const { refreshTimeline, post } = this.props;
 
     const { contentList, user, memento, createdAt, id } = post;
@@ -39,7 +49,7 @@ class Post extends PureComponent {
           <PostOwner user={user} onPressOption={this.onPressOptionPost} />
           <PostContent contentList={contentList} />
           <PostDate date={createdAt} />
-          <PostAction id={id} onPressShare={this.onPressSharePost} />
+          <PostAction id={id} onPressShare={this.onPressSharePost} showModalPiece={this.onPressPiece} />
         </View>
         <PostOptionModal
           isVisible={showOption}
@@ -52,6 +62,10 @@ class Post extends PureComponent {
           onClose={this.onPressSharePost}
           postData={post}
           refreshTimeline={refreshTimeline}
+        <PostPieceModal
+          isVisible={showPieceModal}
+          onClose={this.onPressPiece}
+          postId={postIdPiece}
         />
       </>
     );
@@ -87,7 +101,7 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
       }
       keyExtractor={(item) => item.id}
       renderItem={renderItem}
-      contentContainerStyle={{ marginVertical: 8, marginHorizontal: 12, paddingBottom: 16 }}
+      contentContainerStyle={{ marginVertical: 8, marginHorizontal: 16, paddingBottom: 16 }}
       ListHeaderComponent={header}
       ListFooterComponent={() => {
         return hasMore ? (

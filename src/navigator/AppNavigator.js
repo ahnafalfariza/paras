@@ -28,15 +28,17 @@ const AppNavigator = ({ isLoggedIn }) => {
   const [onOpenScreen, setOnOpenScreen] = useState(null);
 
   useEffect(() => {
-    fcmService.registerAppWithFCM;
-    fcmService.register(onRegister, onNotification, onOpenNotification);
-    localNotificationService.configure(onOpenNotification);
+    if (isLoggedIn) {
+      fcmService.registerAppWithFCM;
+      fcmService.register(onRegister, onNotification, onOpenNotification);
+      localNotificationService.configure(onOpenNotification);
+    }
 
-    function onRegister(token) {
-      console.log('[App] onRegister: ', token);
-      Axios.post(REGISTER_DEVICE, { deviceId: token, type: Platform.OS })
+    function onRegister(deviceId) {
+      console.log('[App] onRegister: ', deviceId);
+      Axios.post(REGISTER_DEVICE, { deviceId: deviceId, type: Platform.OS })
         .then((res) => {
-          console.log(res.data.data);
+          console.log('device registered', res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -85,7 +87,7 @@ const AppNavigator = ({ isLoggedIn }) => {
       fcmService.unRegister();
       localNotificationService.unRegister();
     };
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (token) {

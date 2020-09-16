@@ -18,41 +18,12 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
     ImagePicker.openCamera({
       width: 400,
       height: 400,
-      // cropping: true,
+      cropping: true,
       mediaType: 'photo',
       forceJpg: true,
     }).then((image) => {
       console.log('image', image);
-      const photo = {
-        path: image.path,
-        // type: image.mime,
-        // name: 'photo.jpg',
-      };
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-
-      const file = {
-        name: 'photo.jpg',
-        type: image.mime,
-        uri: image.path,
-      };
-
-      const formData = new FormData();
-      formData.append('file', file)
-
-      setIsUploading(true);
-      Axios.post(UPLOAD, formData, config)
-        .then((res) => {
-          console.log(res.data.data);
-          setIsUploading(false);
-        })
-        .catch((err) => {
-          console.log(JSON.stringify(err));
-          setIsUploading(false);
-        });
+      uploadImage(image);
     });
   };
 
@@ -64,9 +35,31 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
       mediaType: 'photo',
       forceJpg: true,
     }).then((image) => {
-      setIsUploading(true);
       console.log(image);
+      uploadImage(image);
     });
+  };
+
+  const uploadImage = (image) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const file = { name: 'photo.jpg', type: image.mime, uri: image.path };
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    setIsUploading(true);
+    Axios.post(UPLOAD, formData, config)
+      .then((res) => {
+        setIsUploading(false);
+        onComplete({
+          type: 'img',
+          body: JSON.stringify(res.data.data),
+        });
+      })
+      .catch((err) => {
+        console.log(JSON.stringify(err));
+        setIsUploading(false);
+      });
   };
 
   return (
@@ -98,19 +91,19 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
                 </Text>
               </>
             ) : (
-                <>
-                  <MainButton
-                    title={'Take Photo'}
-                    onPress={onPressCamera}
-                    containerStyle={{ marginTop: 0, width: 'auto' }}
-                  />
-                  <MainButton
-                    title={'Choose from Library'}
-                    onPress={onPressGallery}
-                    containerStyle={{ marginVertical: 0, width: 'auto' }}
-                  />
-                </>
-              )}
+              <>
+                <MainButton
+                  title={'Take Photo'}
+                  onPress={onPressCamera}
+                  containerStyle={{ marginTop: 0, width: 'auto' }}
+                />
+                <MainButton
+                  title={'Choose from Library'}
+                  onPress={onPressGallery}
+                  containerStyle={{ marginVertical: 0, width: 'auto' }}
+                />
+              </>
+            )}
           </View>
         </View>
       </Modal>

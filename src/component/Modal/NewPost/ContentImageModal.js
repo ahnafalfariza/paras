@@ -28,7 +28,6 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
         // type: image.mime,
         // name: 'photo.jpg',
       };
-      const formData = new FormData();
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -36,19 +35,22 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
       };
 
       const file = {
-        filename: 'photo.jpg',
-        path: image.path,
+        name: 'photo.jpg',
+        type: image.mime,
+        uri: image.path,
       };
-      formData.append('file', photo);
+
+      const formData = new FormData();
+      formData.append('file', file)
 
       setIsUploading(true);
-      Axios.post(UPLOAD, file, config)
+      Axios.post(UPLOAD, formData, config)
         .then((res) => {
           console.log(res.data.data);
           setIsUploading(false);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(JSON.stringify(err));
           setIsUploading(false);
         });
     });
@@ -96,19 +98,19 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
                 </Text>
               </>
             ) : (
-              <>
-                <MainButton
-                  title={'Take Photo'}
-                  onPress={onPressCamera}
-                  containerStyle={{ marginTop: 0, width: 'auto' }}
-                />
-                <MainButton
-                  title={'Choose from Library'}
-                  onPress={onPressGallery}
-                  containerStyle={{ marginVertical: 0, width: 'auto' }}
-                />
-              </>
-            )}
+                <>
+                  <MainButton
+                    title={'Take Photo'}
+                    onPress={onPressCamera}
+                    containerStyle={{ marginTop: 0, width: 'auto' }}
+                  />
+                  <MainButton
+                    title={'Choose from Library'}
+                    onPress={onPressGallery}
+                    containerStyle={{ marginVertical: 0, width: 'auto' }}
+                  />
+                </>
+              )}
           </View>
         </View>
       </Modal>

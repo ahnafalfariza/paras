@@ -13,28 +13,23 @@ import { UPLOAD } from '../../../utils/api';
 
 const ContentImageModal = ({ onDismiss, onComplete, body }) => {
   const [isUploading, setIsUploading] = useState(false);
+  const pickerOptions = {
+    width: 400,
+    height: 400,
+    cropping: true,
+    mediaType: 'photo',
+    forceJpg: true,
+  };
 
   const onPressCamera = () => {
-    ImagePicker.openCamera({
-      width: 400,
-      height: 400,
-      cropping: true,
-      mediaType: 'photo',
-      forceJpg: true,
-    }).then((image) => {
+    ImagePicker.openCamera(pickerOptions).then((image) => {
       console.log('image', image);
       uploadImage(image);
     });
   };
 
   const onPressGallery = () => {
-    ImagePicker.openPicker({
-      width: 400,
-      height: 400,
-      cropping: true,
-      mediaType: 'photo',
-      forceJpg: true,
-    }).then((image) => {
+    ImagePicker.openPicker(pickerOptions).then((image) => {
       console.log(image);
       uploadImage(image);
     });

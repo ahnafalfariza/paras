@@ -13,13 +13,16 @@ const LinkContent = ({ body, disabled = false }) => {
   const link = JSON.parse(body);
 
   return (
-    <TouchableNativeFeedback onPress={() => {
-      console.log('go to', link.url)
-      navigation.navigate('WebNavigator', {
-        title: link.title,
-        url: link.url
-      });
-    }} disabled={disabled}>
+    <TouchableNativeFeedback
+      onPress={() => {
+        console.log('go to', link.url);
+        navigation.navigate('WebNavigator', {
+          title: link.title,
+          url: link.url,
+        });
+      }}
+      disabled={disabled}
+    >
       <View style={_styles.container}>
         <View style={_styles.imageView}>
           <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />

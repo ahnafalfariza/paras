@@ -6,10 +6,10 @@ const Web = ({ url }) => {
     <WebView
       source={{ uri: url }}
       style={{
-        height: 1000
+        height: 1000,
       }}
     />
   );
-}
+};
 
 export default Web;

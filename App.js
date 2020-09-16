@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import { RootSiblingParent } from 'react-native-root-siblings';
 
 import configureStore from './src/store';
-import FlashMessage from "react-native-flash-message";
+import FlashMessage from 'react-native-flash-message';
 import AppNavigator from './src/navigator/AppNavigator';
 import { View } from 'react-native';
 
@@ -16,7 +16,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <RootSiblingParent>
           <AppNavigator />
-          <FlashMessage position='center' />
+          <FlashMessage position="center" />
         </RootSiblingParent>
       </PersistGate>
     </Provider>

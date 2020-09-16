@@ -129,42 +129,42 @@ const AppNavigator = ({ isLoggedIn }) => {
             <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
           </>
         ) : (
-            <>
-              <Stack.Screen name="TabNavigator" component={TabNavigator} />
-              <Stack.Screen
-                name="WebNavigator"
-                component={WebNavigator}
-                options={{
-                  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                  gestureEnabled: false,
-                }}
-              />
-              <Stack.Screen
-                name="New Post"
-                component={NewPostNavigator}
-                options={{
-                  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                  gestureEnabled: false,
-                }}
-              />
-              <Stack.Screen
-                name="Comment"
-                component={CommentScreen}
-                options={{
-                  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                  gestureDirection: 'vertical',
-                }}
-              />
-              <Stack.Screen
-                name="EditProfile"
-                component={EditProfileScreen}
-                options={{
-                  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                  gestureDirection: 'vertical',
-                }}
-              />
-            </>
-          )}
+          <>
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen
+              name="WebNavigator"
+              component={WebNavigator}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="New Post"
+              component={NewPostNavigator}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="Comment"
+              component={CommentScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureDirection: 'vertical',
+              }}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfileScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureDirection: 'vertical',
+              }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

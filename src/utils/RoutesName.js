@@ -7,6 +7,7 @@ export default {
 
   HomePicks: 'HomePicks',
   HomeFollowing: 'HomeFollowing',
+  HomeNotification: 'HomeNotification',
 
   Explore: 'Explore',
   ExploreSerach: 'ExploreSearch',

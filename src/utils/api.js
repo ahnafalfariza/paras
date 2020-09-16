@@ -1,4 +1,4 @@
-import { postLimit } from './constant';
+import { postLimit, notifLimit } from './constant';
 
 const BASE_URL = 'https://api.dev.paras.id';
 
@@ -9,14 +9,12 @@ export const SEARCH_URL = (query) => `${BASE_URL}/search?id__re=${query}`;
 
 export const PROFILE_URL = (id) => `${BASE_URL}/users?id=${id}`;
 export const PROFILE_POST_URL = (id, page) =>
-  `${BASE_URL}/posts?owner=${id}&__skip=${
-    (page - 1) * postLimit
+  `${BASE_URL}/posts?owner=${id}&__skip=${(page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
 
 export const MEMENTO_URL = (id) => `${BASE_URL}/mementos?id=${id}`;
 export const MEMENTO_POST_URL = (id, page) =>
-  `${BASE_URL}/posts?mementoId=${id}&__skip=${
-    (page - 1) * postLimit
+  `${BASE_URL}/posts?mementoId=${id}&__skip=${(page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
 
 //auth
@@ -30,6 +28,9 @@ export const REGISTER_DEVICE = `${BASE_URL}/register/device`;
 export const HOME_FEED = (page) =>
   `${BASE_URL}/feeds?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
+
+export const HOME_NOTIFICATION = (page) =>
+  `${BASE_URL}/notifications?__skip=${(page - 1) * notifLimit}&__limit=${notifLimit}&__sort=-createdAt`;
 
 //wallet
 export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;

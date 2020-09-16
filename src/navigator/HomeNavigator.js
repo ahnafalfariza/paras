@@ -6,6 +6,7 @@ import HomeFollowing from '../screen/Home/HomeFollowingScreen';
 import RoutesName from '../utils/RoutesName';
 import UserScreen from '../screen/Common/UserScreen';
 import MementoScreen from '../screen/Common/MementoScreen';
+import HomeNotification from '../screen/Home/HomeNotificationScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const HomeNavigator = () => {
         component={HomeFollowing}
         options={{ cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }}
       />
+      <Stack.Screen name={RoutesName.HomeNotification} component={HomeNotification} />
       <Stack.Screen name={RoutesName.Memento} component={MementoScreen} />
       <Stack.Screen name={RoutesName.UserProfile} component={UserScreen} />
     </Stack.Navigator>

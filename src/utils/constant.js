@@ -7,3 +7,4 @@ export const isAndroid = Platform.OS === 'android';
 export const isIOS = Platform.OS === 'ios';
 
 export const postLimit = 10;
+export const notifLimit = 20;

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -7,9 +8,18 @@ import { getImageUrl } from '../../../utils/image';
 import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
 const LinkContent = ({ body, disabled = false }) => {
+  const navigation = useNavigation();
+
   const link = JSON.parse(body);
+
   return (
-    <TouchableNativeFeedback onPress={() => console.log('go to', link.url)} disabled={disabled}>
+    <TouchableNativeFeedback onPress={() => {
+      console.log('go to', link.url)
+      navigation.navigate('WebNavigator', {
+        title: link.title,
+        url: link.url
+      });
+    }} disabled={disabled}>
       <View style={_styles.container}>
         <View style={_styles.imageView}>
           <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />

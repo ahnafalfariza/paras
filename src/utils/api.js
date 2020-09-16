@@ -57,3 +57,6 @@ export const DELETE_COMMENT = (commentId) => `${BASE_URL}/comments/${commentId}`
 //follow unfollow
 export const FOLLOW = `${BASE_URL}/follow`;
 export const UNFOLLOW = `${BASE_URL}/unfollow`;
+
+//uplaod
+export const UPLOAD = `${BASE_URL}/upload`;

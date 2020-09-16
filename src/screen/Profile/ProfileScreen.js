@@ -16,15 +16,30 @@ import PostList from '../../component/Post/Post';
 import ProfileOptionModal from '../../component/Modal/Profile/ProfileOptionModal';
 
 class ProfileScreen extends Component {
-  state = {
-    page: 1,
-    postList: [],
-    hasMore: true,
-    optionModal: false,
-  };
+  constructor(props) {
+    super(props);
+    this.postList = React.createRef();
+    this.state = {
+      page: 1,
+      postList: [],
+      hasMore: true,
+      optionModal: false,
+    };
+  }
 
   componentDidMount() {
-    this.getPostData(this.state.page);
+    this.getPostData(this.state.page, true);
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      const { uploadNewPost } = this.props.route.params;
+      if (uploadNewPost) {
+        this.postList.current.toggleRefresh();
+        this.props.navigation.setParams({ uploadNewPost: false });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   getPostData = (page, onRefresh = false) => {
@@ -81,6 +96,7 @@ class ProfileScreen extends Component {
         />
         <Screen>
           <PostList
+            ref={this.postList}
             list={postList}
             header={<Profile data={profileData} type={'user'} currentUser />}
             onLoadMore={this.loadMorePost}

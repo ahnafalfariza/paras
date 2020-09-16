@@ -11,6 +11,7 @@ import { Platform } from 'react-native';
 
 import NewPostNavigator from './NewPostNavigator';
 import TabNavigator from './TabNavigator';
+import WebNavigator from './WebNavigator';
 import LandingNavigator from './LandingNavigator';
 import AuthNavigator from './AuthNavigator';
 import { VERIFY_TOKEN } from '../utils/api';
@@ -130,6 +131,14 @@ const AppNavigator = ({ isLoggedIn }) => {
         ) : (
           <>
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen
+              name="WebNavigator"
+              component={WebNavigator}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                gestureEnabled: 'vertical',
+              }}
+            />
             <Stack.Screen
               name="New Post"
               component={NewPostNavigator}

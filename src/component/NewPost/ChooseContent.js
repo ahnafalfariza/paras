@@ -15,7 +15,7 @@ const ChooseContent = ({ onPress, onPressDelete, canDelete }) => {
           flexDirection: 'row',
         }}
       >
-        <TouchableNativeFeedback onPress={() => console.log('image')}>
+        <TouchableNativeFeedback onPress={() => onPress('img')}>
           <SvgXml xml={assetSvg.newPost.image} width="36" height="36" style={{ margin: 8 }} />
         </TouchableNativeFeedback>
         <TouchableNativeFeedback onPress={() => onPress('text')}>

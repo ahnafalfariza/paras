@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from 'react';
+import React, { PureComponent, useState, useImperativeHandle, forwardRef } from 'react';
 import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 
@@ -77,9 +77,18 @@ class Post extends PureComponent {
   }
 }
 
-const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, hasMore }) => {
+const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, hasMore }, ref) => {
   const [refreshing, setRefresh] = useState(false);
-  const ref = React.useRef(null);
+  const flatListRef = React.useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    toggleRefresh() {
+      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+      refreshFlatlist();
+    },
+  }));
+
+  useScrollToTop(flatListRef);
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -95,11 +104,9 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
 
   const renderItem = ({ item }) => <Post post={item} refreshTimeline={refreshFlatlist} />;
 
-  useScrollToTop(ref);
-
   return (
     <FlatList
-      ref={ref}
+      ref={flatListRef}
       data={list}
       refreshControl={
         <RefreshControl refreshing={refreshing} tintColor={'#ffffff'} onRefresh={refreshFlatlist} />
@@ -119,7 +126,7 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
   );
 };
 
-export default PostList;
+export default forwardRef(PostList);
 
 const _styles = StyleSheet.create({
   postContainer: {

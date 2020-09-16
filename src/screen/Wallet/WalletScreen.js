@@ -36,7 +36,6 @@ class WalletScreen extends Component {
     const { walletBalance } = this.props;
     const { id } = this.props.profileData;
 
-    console.log('refresh');
     Axios.get(WALLET_BALANCE(id)).then((res) => {
       if (res.data.data !== walletBalance) {
         this.props.dispatchsetWalletBalance({ walletBalance: res.data.data });

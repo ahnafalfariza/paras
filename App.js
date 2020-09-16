@@ -6,7 +6,6 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 import configureStore from './src/store';
 import FlashMessage from 'react-native-flash-message';
 import AppNavigator from './src/navigator/AppNavigator';
-import { View } from 'react-native';
 
 const { persistor, store } = configureStore();
 

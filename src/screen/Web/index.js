@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Web from '../../component/Common/Web';

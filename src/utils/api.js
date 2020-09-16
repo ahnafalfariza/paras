@@ -9,12 +9,14 @@ export const SEARCH_URL = (query) => `${BASE_URL}/search?id__re=${query}`;
 
 export const PROFILE_URL = (id) => `${BASE_URL}/users?id=${id}`;
 export const PROFILE_POST_URL = (id, page) =>
-  `${BASE_URL}/posts?owner=${id}&__skip=${(page - 1) * postLimit
+  `${BASE_URL}/posts?owner=${id}&__skip=${
+    (page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
 
 export const MEMENTO_URL = (id) => `${BASE_URL}/mementos?id=${id}`;
 export const MEMENTO_POST_URL = (id, page) =>
-  `${BASE_URL}/posts?mementoId=${id}&__skip=${(page - 1) * postLimit
+  `${BASE_URL}/posts?mementoId=${id}&__skip=${
+    (page - 1) * postLimit
   }&__limit=${postLimit}&__sort=-createdAt`;
 
 //auth
@@ -30,7 +32,9 @@ export const HOME_FEED = (page) =>
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
 
 export const HOME_NOTIFICATION = (page) =>
-  `${BASE_URL}/notifications?__skip=${(page - 1) * notifLimit}&__limit=${notifLimit}&__sort=-createdAt`;
+  `${BASE_URL}/notifications?__skip=${
+    (page - 1) * notifLimit
+  }&__limit=${notifLimit}&__sort=-createdAt`;
 
 //wallet
 export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;
@@ -48,6 +52,7 @@ export const DELETE_POST = (postId) => `${BASE_URL}/posts/${postId}`;
 export const EDIT_POST = (postId) => `${BASE_URL}/posts/${postId}`;
 export const META_URL = (link) => `${BASE_URL}/metaget?link=${link}`;
 export const REDACT_POST = (postId) => `${BASE_URL}/posts/${postId}/redact`;
+export const POST_BY_ID = (postId) => `${BASE_URL}/posts?id=${postId}`;
 
 //comment
 export const COMMENT = (postId) => `${BASE_URL}/comments?postId=${postId}`;

@@ -1,5 +1,5 @@
 import React, { PureComponent, useState } from 'react';
-import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet, Text, TouchableOpacityComponent } from 'react-native';
+import { View, FlatList, ActivityIndicator, RefreshControl, StyleSheet, Text } from 'react-native';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import TimeAgo from 'javascript-time-ago';
@@ -13,6 +13,20 @@ TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
 class Notification extends PureComponent {
+  typeNotification = () => {
+    const { payload } = this.props.notification;
+    switch (payload.screen) {
+      case 'post':
+        return 'Post';
+      case 'comment':
+        return 'Comment';
+      case 'walletHistory':
+        return 'Wallet';
+      default:
+        break;
+    }
+  };
+
   render() {
     const { notification, navigateTo } = this.props;
 
@@ -22,7 +36,9 @@ class Notification extends PureComponent {
         <TouchableWithoutFeedback onPress={() => navigateTo(payload)}>
           <View style={_styles.notifContainer}>
             <Text style={_styles.msgText}>{message}</Text>
-            <Text style={_styles.dateText}>{timeAgo.format(new Date(createdAt))}</Text>
+            <Text style={_styles.dateText}>
+              {timeAgo.format(new Date(createdAt))} | {this.typeNotification()}
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       </>
@@ -30,24 +46,29 @@ class Notification extends PureComponent {
   }
 }
 
-const NotificationList = ({ list, onLoadMore = () => { }, header, onRefresh = () => { }, hasMore }) => {
-  const navigation = useNavigation()
+const NotificationList = ({
+  list,
+  header,
+  hasMore,
+  onLoadMore = () => {},
+  onRefresh = () => {},
+}) => {
+  const navigation = useNavigation();
 
   const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
 
   const navigateTo = (payload) => {
-    if (payload.screen === 'user') {
-      navigation.navigate(RoutesName.UserProfile, {
-        user: {
-          id: payload.id
-        }
-      })
+    if (payload.screen === 'comment') {
+      navigation.navigate('Comment', { id: payload.id });
+    } else if (payload.screen === 'walletHistory') {
+      navigation.navigate(RoutesName.WalletTab, {
+        screen: RoutesName.WalletHistory,
+      });
+    } else if (payload.screen === 'post') {
+      navigation.navigate(RoutesName.SinglePost, { postId: payload.id });
     }
-    if (payload.screen === 'walletHistory') {
-      navigation.navigate(RoutesName.WalletTab)
-    }
-  }
+  };
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -61,7 +82,9 @@ const NotificationList = ({ list, onLoadMore = () => { }, header, onRefresh = ()
     setRefresh(false);
   };
 
-  const renderItem = ({ item }) => <Notification navigateTo={navigateTo} notification={item} refreshTimeline={refreshFlatlist} />;
+  const renderItem = ({ item }) => (
+    <Notification navigateTo={navigateTo} notification={item} refreshTimeline={refreshFlatlist} />
+  );
 
   useScrollToTop(ref);
 
@@ -93,7 +116,7 @@ const _styles = StyleSheet.create({
   notifContainer: {
     padding: 12,
     marginVertical: 8,
-    borderRadius: 10,
+    borderRadius: 4,
     backgroundColor: Colors['dark-8'],
     overflow: 'hidden',
   },

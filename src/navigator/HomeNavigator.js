@@ -7,6 +7,7 @@ import RoutesName from '../utils/RoutesName';
 import UserScreen from '../screen/Common/UserScreen';
 import MementoScreen from '../screen/Common/MementoScreen';
 import HomeNotification from '../screen/Home/HomeNotificationScreen';
+import SinglePostScreen from '../screen/Common/SinglePostScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const HomeNavigator = () => {
       <Stack.Screen name={RoutesName.HomeNotification} component={HomeNotification} />
       <Stack.Screen name={RoutesName.Memento} component={MementoScreen} />
       <Stack.Screen name={RoutesName.UserProfile} component={UserScreen} />
+      <Stack.Screen name={RoutesName.SinglePost} component={SinglePostScreen} />
     </Stack.Navigator>
   );
 };

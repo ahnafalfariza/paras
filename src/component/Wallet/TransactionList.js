@@ -54,9 +54,7 @@ const Transaction = ({ data }) => {
                 {data.msg}
               </Text>
             )}
-            <Text style={_styles.dateText}>
-              {timeAgo.format(new Date(data.createdAt / 10 ** 6))}
-            </Text>
+            <Text style={_styles.dateText}>{timeAgo.format(new Date(data.createdAt))}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={_styles.userText} numberOfLines={1}>

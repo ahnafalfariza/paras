@@ -20,7 +20,7 @@ const PostDate = ({ date }) => {
           fontSize: ResponsiveFont(11),
         }}
       >
-        {timeAgo.format(new Date(date / 10 ** 6))}
+        {timeAgo.format(new Date(date))}
       </Text>
       <View style={{ backgroundColor: Colors['white-1'], height: 1, marginHorizontal: 8 }} />
     </View>

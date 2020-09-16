@@ -45,9 +45,7 @@ const Comment = ({ data, onRefresh }) => {
               />
               <View style={{ marginLeft: 12 }}>
                 <Text style={_styles.userText}>{data.user.id}</Text>
-                <Text style={_styles.dateText}>
-                  {timeAgo.format(new Date(data.createdAt / 10 ** 6))}
-                </Text>
+                <Text style={_styles.dateText}>{timeAgo.format(new Date(data.createdAt))}</Text>
               </View>
             </View>
           </TouchableNativeFeedback>

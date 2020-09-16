@@ -8,15 +8,21 @@ import Colors from '../../utils/color';
 import { TextInput } from 'react-native-gesture-handler';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
-import { initUser } from '../../actions/user';
+import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
 import Axios from 'axios';
-import { LOGIN } from '../../utils/api';
+import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
-const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
+const SeedConfirmationScreen = ({
+  navigation,
+  route,
+  dispatchInitUser,
+  dispatchInitFollowing,
+  dispatchsetWalletBalance,
+}) => {
   const { data } = route.params;
   const seedPassword = data.seedPassword.split(' ');
 
@@ -32,6 +38,8 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
       Axios.post(LOGIN, { userId: data.username + '.paras.testnet', seed: data.seedPassword })
         .then((res) => {
           Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+          getUserFollowing();
+          getWalletBalance(res.data.data.profile.id);
           dispatchInitUser(res.data.data);
           setIsLoading(false);
         })
@@ -44,6 +52,22 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
         { cancelable: false },
       );
     }
+  };
+
+  const getUserFollowing = () => {
+    Axios.get(FOLLOWING_LIST).then((res) => {
+      dispatchInitFollowing({
+        followingList: res.data.data.map((following) => following.targetId),
+      });
+    });
+  };
+
+  const getWalletBalance = (userId) => {
+    Axios.get(WALLET_BALANCE(userId)).then((res) => {
+      dispatchsetWalletBalance({
+        walletBalance: res.data.data,
+      });
+    });
   };
 
   return (
@@ -70,6 +94,8 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
 
 const mapDispatchToProps = {
   dispatchInitUser: initUser,
+  dispatchInitFollowing: initFollowing,
+  dispatchsetWalletBalance: setWalletBalance,
 };
 
 export default connect(null, mapDispatchToProps)(SeedConfirmationScreen);

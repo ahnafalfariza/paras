@@ -36,4 +36,6 @@ export default {
   Profile: 'Profile',
   ProfileMemento: 'ProfileMemento',
   ProfileFollowing: 'ProfileFollowing',
+
+  SinglePost: 'SinglePost',
 };

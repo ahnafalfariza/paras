@@ -136,7 +136,7 @@ const AppNavigator = ({ isLoggedIn }) => {
               component={WebNavigator}
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                gestureEnabled: false,
+                gestureEnabled: 'vertical',
               }}
             />
             <Stack.Screen

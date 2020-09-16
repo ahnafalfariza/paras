@@ -5,7 +5,6 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Web from '../../component/Common/Web';
 import MainHeader from '../../component/Header/MainHeader';
-import Colors from '../../utils/color';
 import { CustomToast } from '../../utils/CustomToast';
 
 const WebScreen = ({ title, url }) => {

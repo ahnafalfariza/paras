@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import Share from 'react-native-share';
 import Clipboard from '@react-native-community/clipboard';
-import RNFetchBlob from 'rn-fetch-blob';
+// import RNFetchBlob from 'rn-fetch-blob';
 
 import ListMoreOption from '../../Common/ListMoreOption';
 import { getImageUrl } from '../../../utils/image';

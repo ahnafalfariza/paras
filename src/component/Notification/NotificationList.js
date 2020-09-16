@@ -46,13 +46,7 @@ class Notification extends PureComponent {
   }
 }
 
-const NotificationList = ({
-  list,
-  header,
-  hasMore,
-  onLoadMore = () => {},
-  onRefresh = () => {},
-}) => {
+const NotificationList = ({ list, hasMore, onLoadMore = () => {}, onRefresh = () => {} }) => {
   const navigation = useNavigation();
 
   const [refreshing, setRefresh] = useState(false);
@@ -62,9 +56,7 @@ const NotificationList = ({
     if (payload.screen === 'comment') {
       navigation.navigate('Comment', { id: payload.id });
     } else if (payload.screen === 'walletHistory') {
-      navigation.navigate(RoutesName.WalletTab, {
-        screen: RoutesName.WalletHistory,
-      });
+      navigation.navigate(RoutesName.WalletTab, { screen: RoutesName.WalletHistory });
     } else if (payload.screen === 'post') {
       navigation.navigate(RoutesName.SinglePost, { postId: payload.id });
     }
@@ -98,7 +90,6 @@ const NotificationList = ({
       keyExtractor={(item, idx) => idx.toString()}
       renderItem={renderItem}
       contentContainerStyle={{ marginVertical: 8, marginHorizontal: 16, paddingBottom: 16 }}
-      ListHeaderComponent={header}
       ListFooterComponent={() => {
         return hasMore ? (
           <ActivityIndicator color={Colors['white-1']} style={{ marginBottom: 16 }} />

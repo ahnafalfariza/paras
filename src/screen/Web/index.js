@@ -5,8 +5,8 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import Web from '../../component/Common/Web';
 import MainHeader from '../../component/Header/MainHeader';
-import { showMessage } from 'react-native-flash-message';
 import Colors from '../../utils/color';
+import { CustomToast } from '../../utils/CustomToast';
 
 const WebScreen = ({ title, url }) => {
   return (
@@ -18,20 +18,7 @@ const WebScreen = ({ title, url }) => {
           <TouchableWithoutFeedback
             onPress={() => {
               Clipboard.setString(url);
-              showMessage({
-                message: 'Copied Link!',
-                type: 'default',
-                duration: 500,
-                style: {
-                  minHeight: 0,
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  color: Colors['white-1'],
-                  backgroundColor: Colors['dark-0'],
-                },
-              });
+              CustomToast('Copied link!', 0, 'default', 1000);
             }}
           >
             <View>

@@ -26,6 +26,7 @@ import MainButton from '../../component/Common/MainButton';
 import ChooseMemento from '../../component/NewPost/ChooseMemento';
 import { CREATE_POST, EDIT_POST } from '../../utils/api';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import RoutesName from '../../utils/RoutesName';
 
 const ContentDimension = SCREEN_WIDTH - 32;
 
@@ -65,41 +66,30 @@ class NewPostScreen extends Component {
 
   uploadPost = () => {
     const { mementoData, contentList } = this.state;
-    const filteredContent = contentList.filter((content) => content.type !== null);
-
-    this.setState({ isLoading: true });
-    Axios.post(CREATE_POST, {
-      mementoId: mementoData.id,
-      contentList: filteredContent,
-    })
-      .then((res) => {
-        console.log('berhasil', res.data.data);
-        this.setState({ isLoading: false });
-      })
-      .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
-      });
-  };
-
-  editPost = () => {
-    const { mementoData, contentList } = this.state;
-    const { postId } = this.props.route.params;
+    const { postId, isEdit } = this.props.route.params;
 
     const filteredContent = contentList.filter((content) => content.type !== null);
 
     this.setState({ isLoading: true });
-    Axios.put(EDIT_POST(postId), {
-      mementoId: mementoData.id,
-      contentList: filteredContent,
+    Axios({
+      method: isEdit ? 'put' : 'post',
+      url: isEdit ? EDIT_POST(postId) : CREATE_POST,
+      data: {
+        mementoId: mementoData.id,
+        contentList: filteredContent,
+      },
     })
       .then((res) => {
-        console.log('berhasil', res.data.data);
         this.setState({ isLoading: false });
+        this.props.navigation.navigate('TabNavigator', {
+          screen: RoutesName.ProfileTab,
+          params: {
+            screen: RoutesName.Profile,
+            params: {
+              uploadNewPost: true,
+            },
+          },
+        });
       })
       .catch((err) => {
         Alert.alert(
@@ -258,10 +248,7 @@ class NewPostScreen extends Component {
           title={isEdit ? 'Edit Post' : 'New Post'}
           leftComponent={'back'}
           rightComponent={() => (
-            <TouchableWithoutFeedback
-              onPress={isEdit ? this.editPost : this.uploadPost}
-              disabled={!this.validateCreate()}
-            >
+            <TouchableWithoutFeedback onPress={this.uploadPost} disabled={!this.validateCreate()}>
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors['white-1']} />
               ) : (

@@ -13,7 +13,11 @@ const Stack = createStackNavigator();
 const ProfileNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={RoutesName.Profile} component={ProfileScreen} />
+      <Stack.Screen
+        name={RoutesName.Profile}
+        component={ProfileScreen}
+        initialParams={{ uploadNewPost: false }}
+      />
       <Stack.Screen name={RoutesName.ProfileMemento} component={ProfileMementoScreen} />
       <Stack.Screen name={RoutesName.ProfileFollowing} component={ProfileFollowingScreen} />
       <Stack.Screen name={RoutesName.Memento} component={MementoScreen} />

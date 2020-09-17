@@ -44,7 +44,7 @@ export const HOME_NOTIFICATION = (page) =>
 //wallet
 export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;
 export const WALLET_HISTORY = (userId, page) =>
-  `${BASE_URL}/transactions?id=${userId}&__skip${
+  `${BASE_URL}/transactions?id=${userId}&__skip=${
     (page - 1) * txLimit
   }&__limit=${txLimit}&__sort=-createdAt`;
 export const WALLET_SEND = `${BASE_URL}/wallet/transfer`;

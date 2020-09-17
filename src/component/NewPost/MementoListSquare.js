@@ -9,13 +9,20 @@ import RoutesName from '../../utils/RoutesName';
 import { SCREEN_WIDTH } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const Memento = ({ data }) => {
+const Memento = ({ data, isNewPost }) => {
   const navigation = useNavigation();
+
+  const onPressMemento = () => {
+    if (isNewPost) {
+      navigation.navigate(RoutesName.NewPost, { mementoData: data });
+    } else {
+      navigation.navigate(RoutesName.Memento, { memento: data });
+    }
+  };
+
   return (
     <View style={{ marginVertical: 4 }}>
-      <TouchableNativeFeedback
-        onPress={() => navigation.navigate(RoutesName.NewPost, { mementoData: data })}
-      >
+      <TouchableNativeFeedback onPress={onPressMemento}>
         <View>
           <FastImage source={{ uri: getImageUrl(data.img) }} style={_styles.mementoImage} />
           <Text style={_styles.mementoText}>{data.id}</Text>
@@ -26,12 +33,12 @@ const Memento = ({ data }) => {
   );
 };
 
-const MementoListSquare = ({ list, header }) => {
+const MementoListSquare = ({ list, header, isNewPost = true }) => {
   return (
     <FlatList
       data={list}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <Memento data={item} />}
+      renderItem={({ item }) => <Memento isNewPost={isNewPost} data={item} />}
       numColumns={2}
       ListHeaderComponent={header}
       columnWrapperStyle={{ justifyContent: 'space-between' }}

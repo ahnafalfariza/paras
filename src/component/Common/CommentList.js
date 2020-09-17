@@ -48,7 +48,7 @@ const Comment = ({ data, onRefresh }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FastImage
                 source={{ uri: getImageUrl(data.user.imgAvatar) }}
-                style={{ height: 48, width: 48 }}
+                style={{ height: 48, width: 48, borderRadius: 24 }}
               />
               <View style={{ marginLeft: 12 }}>
                 <Text style={_styles.userText}>{data.user.id}</Text>

@@ -56,7 +56,7 @@ const Transaction = ({ data }) => {
         {user !== null && (
           <FastImage
             source={{ uri: getImageUrl(user.imgAvatar) }}
-            style={{ height: 24, width: 24, marginRight: 8 }}
+            style={{ height: 24, width: 24, marginRight: 8, borderRadius: 12 }}
           />
         )}
         <Text

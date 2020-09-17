@@ -49,7 +49,10 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
   return (
     <View style={{ marginVertical: 8 }}>
       <View style={_styles.imageContainer}>
-        <FastImage source={{ uri: getImageUrl(img) }} style={_styles.image} />
+        <FastImage
+          source={{ uri: getImageUrl(img) }}
+          style={[_styles.image, { borderRadius: type === 'user' ? 90 : 0 }]}
+        />
       </View>
       <Text style={_styles.idText}>{data.id}</Text>
       {type === 'memento' && (

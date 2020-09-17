@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
+import React, { useState } from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
@@ -11,7 +12,6 @@ import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import { prettyBalance } from '../../utils/utils';
 import assetSvg from '../../assets/svg/svg';
-import { useNavigation, useScrollToTop } from '@react-navigation/native';
 
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -110,24 +110,12 @@ const TransactionList = ({
   headerComponent = null,
   footerComponent = null,
   list,
-  hasMore,
+  hasMore = false,
   onLoadMore = () => {},
   onRefresh = () => {},
 }) => {
-  const navigation = useNavigation();
-
   const [refreshing, setRefresh] = useState(false);
   const ref = React.useRef(null);
-
-  const navigateTo = (payload) => {
-    if (payload.screen === 'comment') {
-      navigation.navigate('Comment', { id: payload.id });
-    } else if (payload.screen === 'walletHistory') {
-      navigation.navigate(RoutesName.WalletTab, { screen: RoutesName.WalletHistory });
-    } else if (payload.screen === 'post') {
-      navigation.navigate(RoutesName.SinglePost, { postId: payload.id });
-    }
-  };
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -154,10 +142,16 @@ const TransactionList = ({
       }
       keyExtractor={(item, idx) => idx.toString()}
       renderItem={renderItem}
-      contentContainerStyle={{ marginVertical: 8, marginHorizontal: 16, paddingBottom: 16 }}
+      contentContainerStyle={{ paddingVertical: 6, paddingHorizontal: 12 }}
       ListHeaderComponent={headerComponent}
       ListHeaderComponentStyle={{ marginBottom: 12 }}
-      ListFooterComponent={footerComponent}
+      ListFooterComponent={
+        hasMore ? (
+          <ActivityIndicator color={Colors['white-1']} style={{ marginVertical: 8 }} />
+        ) : (
+          footerComponent
+        )
+      }
       onEndReachedThreshold={0.9}
       onEndReached={hasMore ? onLoadMore : null}
     />
@@ -171,7 +165,7 @@ const _styles = StyleSheet.create({
     padding: 12,
     backgroundColor: Colors['dark-4'],
     borderRadius: 6,
-    marginBottom: 12,
+    marginVertical: 6,
   },
   profileContainerView: {
     flexDirection: 'row',

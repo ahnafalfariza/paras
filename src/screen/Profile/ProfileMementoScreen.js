@@ -23,7 +23,7 @@ const ProfileMementoScreen = () => {
   return (
     <>
       <MainHeader title={'My Memento'} leftComponent={'back'} />
-      <Screen style={{ margin: 16 }}>
+      <Screen>
         <MementoListSquare list={userMemento} isNewPost={false} />
       </Screen>
     </>

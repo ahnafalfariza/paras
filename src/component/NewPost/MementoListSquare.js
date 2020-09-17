@@ -41,9 +41,9 @@ const MementoListSquare = ({ list, header, isNewPost = true }) => {
       renderItem={({ item }) => <Memento isNewPost={isNewPost} data={item} />}
       numColumns={2}
       ListHeaderComponent={header}
+      ListHeaderComponentStyle={{ marginTop: 4 }}
       columnWrapperStyle={{ justifyContent: 'space-between' }}
-      contentContainerStyle={{ marginVertical: 4 }}
-      style={{ marginTop: 4 }}
+      contentContainerStyle={{ padding: 16 }}
     />
   );
 };

@@ -64,7 +64,7 @@ class ChooseMementoScreen extends Component {
             </TouchableWithoutFeedback>
           }
         />
-        <Screen style={{ margin: 16 }}>
+        <Screen>
           <DismissKeyboard>
             <MementoListSquare
               header={

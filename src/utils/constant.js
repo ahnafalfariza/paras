@@ -8,4 +8,5 @@ export const isIOS = Platform.OS === 'ios';
 
 export const postLimit = 10;
 export const notifLimit = 20;
+export const commentLimit = 10;
 export const txLimit = 20;

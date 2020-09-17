@@ -11,7 +11,6 @@ const SinglePostScreen = ({ route }) => {
   const [postData, setPostData] = useState([]);
 
   useEffect(() => {
-    console.log(POST_BY_ID(postId));
     Axios.get(POST_BY_ID(postId))
       .then((res) => setPostData(res.data.data))
       .catch((err) => console.log(err));

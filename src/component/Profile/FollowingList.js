@@ -72,6 +72,9 @@ const Following = ({ data, navigation }) => {
           fontFamily: 'Inconsolata-Bold',
           fontSize: ResponsiveFont(12),
         }}
+        buttonStyle={{
+          padding: 0,
+        }}
         containerStyle={{ width: 80, height: 24, marginVertical: 0 }}
         onPress={pressRelation}
       />

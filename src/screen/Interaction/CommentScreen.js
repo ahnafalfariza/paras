@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import Axios from 'axios';
 import { SvgXml } from 'react-native-svg';
 
@@ -12,74 +11,98 @@ import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
 import NewCommentModal from '../../component/Modal/Comment/NewCommentModal';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { commentLimit } from '../../utils/constant';
 
-const CommentScreen = ({ route }) => {
-  const { id } = route.params;
+class CommentScreen extends Component {
+  state = {
+    commentList: [],
+    page: 1,
+    hasMore: true,
+    isModalVisible: false,
+  };
 
-  const [isLoading, setLoading] = useState(true);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [commentList, setCommentList] = useState([]);
+  componentDidMount() {
+    this.getCommentList(this.state.page);
+  }
 
-  useEffect(() => {
-    getCommentList();
-  }, []);
-
-  const getCommentList = () => {
-    Axios.get(COMMENT(id))
+  getCommentList = (page, onRefresh = false) => {
+    const { id } = this.props.route.params;
+    Axios.get(COMMENT(id, page))
       .then((res) => {
-        setCommentList(res.data.data);
-        setLoading(false);
+        this.setState((prevState) => ({
+          commentList: onRefresh ? res.data.data : [...prevState.commentList, ...res.data.data],
+          hasMore: res.data.data.length < commentLimit ? false : true,
+        }));
       })
-      .catch((err) => console.log(err.response.message));
+      .catch((err) => console.log(err));
   };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  onRefreshComment = () => {
+    this.getCommentList(1, true);
+    this.setState({ page: 1 });
   };
 
-  return (
-    <>
-      <MainHeader
-        leftComponent={'back'}
-        title={'Comment'}
-        rightComponent={
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <SvgXml xml={assetSvg.bottomTab.NewPostTab} width="24" height="24" />
-          </TouchableWithoutFeedback>
-        }
-      />
-      <Screen style={{ padding: 16 }}>
-        {isLoading ? (
-          <ActivityIndicator size={'large'} color={Colors['white-1']} />
-        ) : (
+  loadMoreComment = () => {
+    const page = this.state.page + 1;
+    this.getCommentList(page);
+    this.setState({ page });
+  };
+
+  toggleModal = () => {
+    this.setState((prevState) => ({ isModalVisible: !prevState.isModalVisible }));
+  };
+
+  render() {
+    const { id } = this.props.route.params;
+    const { commentList, isModalVisible, hasMore } = this.state;
+    return (
+      <>
+        <MainHeader
+          leftComponent={'back'}
+          title={'Comment'}
+          rightComponent={
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
+              <SvgXml xml={assetSvg.bottomTab.NewPostTab} width="24" height="24" />
+            </TouchableWithoutFeedback>
+          }
+        />
+        <Screen>
           <CommentList
             data={commentList}
-            onRefresh={getCommentList}
+            onRefresh={this.onRefreshComment}
+            onLoadMore={this.loadMoreComment}
+            hasMore={hasMore}
             emptyComponent={
-              <>
+              <View
+                style={{
+                  transform: [{ scaleY: -1 }],
+                  alignItems: 'center',
+                  flex: 1,
+                }}
+              >
                 <Text style={_styles.textEmptyCommentTitle}>Write a Comment</Text>
                 <Text style={_styles.textEmptyCommentDesc}>
                   Click on button at top right to add a comment
                 </Text>
-              </>
+              </View>
             }
           />
-        )}
-        <NewCommentModal
-          isVisible={isModalVisible}
-          onDismiss={toggleModal}
-          postId={id}
-          onComplete={() => {
-            toggleModal();
-            setTimeout(() => {
-              getCommentList();
-            }, 3000);
-          }}
-        />
-      </Screen>
-    </>
-  );
-};
+          <NewCommentModal
+            isVisible={isModalVisible}
+            onDismiss={this.toggleModal}
+            postId={id}
+            onComplete={() => {
+              this.toggleModal();
+              setTimeout(() => {
+                this.onRefreshComment();
+              }, 3000);
+            }}
+          />
+        </Screen>
+      </>
+    );
+  }
+}
 
 export default CommentScreen;
 
@@ -89,7 +112,7 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: ResponsiveFont(20),
     textAlign: 'center',
-    marginVertical: 16,
+    marginBottom: 16,
   },
   textEmptyCommentDesc: {
     fontFamily: 'Inconsolata-Regular',

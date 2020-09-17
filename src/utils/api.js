@@ -1,4 +1,4 @@
-import { postLimit, notifLimit } from './constant';
+import { postLimit, notifLimit, commentLimit } from './constant';
 
 const BASE_URL = 'https://api.dev.paras.id';
 
@@ -55,7 +55,10 @@ export const REDACT_POST = (postId) => `${BASE_URL}/posts/${postId}/redact`;
 export const POST_BY_ID = (postId) => `${BASE_URL}/posts?id=${postId}`;
 
 //comment
-export const COMMENT = (postId) => `${BASE_URL}/comments?postId=${postId}`;
+export const COMMENT = (postId, page) =>
+  `${BASE_URL}/comments?postId=${postId}&__skip=${
+    (page - 1) * commentLimit
+  }&__limit=${commentLimit}&__sort=-createdAt`;
 export const POST_COMMENT = `${BASE_URL}/comments`;
 export const DELETE_COMMENT = (commentId) => `${BASE_URL}/comments/${commentId}`;
 

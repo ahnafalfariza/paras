@@ -51,6 +51,7 @@ const EditProfileScreen = ({ navigation }) => {
         dispatch(updateUser({ profile: res.data.data }));
         navigation.navigate(RoutesName.ProfileTab, {
           screen: RoutesName.Profile,
+          params: { needToRefresh: true },
         });
       })
       .catch((err) => console.log(err));

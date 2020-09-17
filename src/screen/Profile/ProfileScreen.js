@@ -30,10 +30,10 @@ class ProfileScreen extends Component {
   componentDidMount() {
     this.getPostData(this.state.page, true);
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
-      const { uploadNewPost } = this.props.route.params;
-      if (uploadNewPost) {
+      const { needToRefresh } = this.props.route.params;
+      if (needToRefresh) {
         this.postList.current.toggleRefresh();
-        this.props.navigation.setParams({ uploadNewPost: false });
+        this.props.navigation.setParams({ needToRefresh: false });
       }
     });
   }

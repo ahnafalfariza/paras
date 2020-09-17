@@ -16,7 +16,7 @@ const ProfileNavigator = () => {
       <Stack.Screen
         name={RoutesName.Profile}
         component={ProfileScreen}
-        initialParams={{ uploadNewPost: false }}
+        initialParams={{ needToRefresh: false }}
       />
       <Stack.Screen name={RoutesName.ProfileMemento} component={ProfileMementoScreen} />
       <Stack.Screen name={RoutesName.ProfileFollowing} component={ProfileFollowingScreen} />

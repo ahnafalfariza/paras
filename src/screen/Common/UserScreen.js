@@ -50,6 +50,7 @@ class UserScreen extends Component {
 
   onRefresh = () => {
     this.getPostData(1, true);
+    this.getUserData();
     this.setState({ page: 1 });
   };
 

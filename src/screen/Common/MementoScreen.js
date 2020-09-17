@@ -23,8 +23,14 @@ class MementoScreen extends Component {
   };
 
   componentDidMount() {
-    this.getPostData(this.state.page);
-    this.getMementoData();
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.getPostData(this.state.page, true);
+      this.getMementoData();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   getPostData = (page, onRefresh = false) => {
@@ -50,6 +56,7 @@ class MementoScreen extends Component {
 
   onRefresh = () => {
     this.getPostData(1, true);
+    this.getMementoData();
     this.setState({ page: 1 });
   };
 
@@ -96,7 +103,7 @@ class MementoScreen extends Component {
             isVisible={mementoOptionModal}
             isUserOwner={memento.owner === id}
             onClose={this.toggleModal}
-            mementoId={memento.id}
+            mementoData={memento}
           />
         </Screen>
       </>

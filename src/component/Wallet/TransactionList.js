@@ -24,24 +24,24 @@ const Transaction = ({ data }) => {
     const splitMsg = msg.split('::');
     if (splitMsg[0] === 'System') {
       if (splitMsg[1] === 'RewardDisburse') {
-        return `Daily Reward`;
+        return 'Daily Reward';
       }
       if (splitMsg[1] === 'PieceSupporter') {
-        return `Piece Supporter Payout`;
+        return 'Piece Supporter Payout';
       }
       if (splitMsg[1] === 'Piece') {
-        return `Piece`;
+        return 'Piece';
       }
     }
 
     return msg;
   };
 
-  const parseUser = (data) => {
-    const userId = isTransactionOut ? data.to : data.from;
-    let user = isTransactionOut ? data.toUser : data.fromUser;
+  const parseUser = (txData) => {
+    const txUserId = isTransactionOut ? txData.to : txData.from;
+    let user = isTransactionOut ? txData.toUser : txData.fromUser;
 
-    const splitUserId = userId.split('::');
+    const splitUserId = txUserId.split('::');
     if (splitUserId.length > 0 && splitUserId[0] === 'paras') {
       user = {
         imgAvatar: {

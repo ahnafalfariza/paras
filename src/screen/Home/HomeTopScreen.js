@@ -4,10 +4,10 @@ import HomeHeader from '../../component/Header/HomeHeader';
 import Screen from '../../component/Common/Screen';
 import PostList from '../../component/Post/Post';
 import Axios from 'axios';
-import { HOME_FEED } from '../../utils/api';
+import { HOME_TOP } from '../../utils/api';
 import { postLimit } from '../../utils/constant';
 
-class HomeFollowing extends Component {
+class HomeTop extends Component {
   state = {
     data: [],
     page: 1,
@@ -19,10 +19,11 @@ class HomeFollowing extends Component {
   }
 
   getFeeds = (page, onRefresh = false) => {
-    Axios.get(HOME_FEED(page))
+    Axios.get(HOME_TOP(page))
       .then((res) => {
+        const newData = res.data.data.filter((data) => data != null);
         this.setState((prevState) => ({
-          data: onRefresh ? res.data.data : [...prevState.data, ...res.data.data],
+          data: onRefresh ? newData : [...prevState.data, ...newData],
           hasMore: res.data.data.length < postLimit ? false : true,
         }));
       })
@@ -43,8 +44,8 @@ class HomeFollowing extends Component {
   render() {
     return (
       <>
+        <HomeHeader active="top" />
         <Screen>
-          <HomeHeader active="following" />
           <PostList
             list={this.state.data}
             onLoadMore={this.loadMoreFeeds}
@@ -57,4 +58,4 @@ class HomeFollowing extends Component {
   }
 }
 
-export default HomeFollowing;
+export default HomeTop;

@@ -30,6 +30,8 @@ export const REGISTER_DEVICE = `${BASE_URL}/register/device`;
 export const HOME_FEED = (page) =>
   `${BASE_URL}/feeds?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
+export const HOME_TOP = (page) =>
+  `${BASE_URL}/feeds/top?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;
 
 export const HOME_NOTIFICATION = (page) =>
   `${BASE_URL}/notifications?__skip=${

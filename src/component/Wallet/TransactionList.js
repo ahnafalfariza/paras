@@ -42,7 +42,7 @@ const Transaction = ({ data }) => {
     let user = isTransactionOut ? txData.toUser : txData.fromUser;
 
     const splitUserId = txUserId.split('::');
-    if (splitUserId.length > 0 && splitUserId[0] === 'paras') {
+    if (splitUserId.length > 1 && splitUserId[0] === 'paras') {
       user = {
         imgAvatar: {
           type: 'ipfs',
@@ -67,7 +67,7 @@ const Transaction = ({ data }) => {
           }}
           numberOfLines={1}
         >
-          {userId}
+          {txUserId}
         </Text>
       </View>
     );

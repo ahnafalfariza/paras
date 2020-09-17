@@ -7,10 +7,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
-import Axios from 'axios';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
@@ -21,15 +19,15 @@ import assetSvg from '../../assets/svg/svg';
 import MainTextInput from '../../component/Common/MainTextInput';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import ContentImageModal from '../../component/Modal/NewPost/ContentImageModal';
-import { UPDATE_PROFILE } from '../../utils/api';
+import Axios from 'axios';
+import { EDIT_MEMENTO } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
-import { updateUser } from '../../actions/user';
 
-const EditProfileScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const profileData = useSelector((state) => state.user.profile);
-  const [value, setValue] = useState(profileData.bio);
-  const [avatar, setAvatar] = useState(profileData.imgAvatar);
+const EditMementoScreen = ({ route, navigation }) => {
+  const { mementoData } = route.params;
+
+  const [value, setValue] = useState(mementoData.desc);
+  const [image, setImage] = useState(mementoData.img);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
@@ -39,18 +37,18 @@ const EditProfileScreen = ({ navigation }) => {
 
   const onCompleteUpload = (newAvatar) => {
     toggleModal();
-    setAvatar(JSON.parse(newAvatar.body));
+    setImage(JSON.parse(newAvatar.body));
   };
 
-  const updateProfile = () => {
+  const updateMemento = () => {
     setLoading(true);
     Keyboard.dismiss();
-    Axios.put(UPDATE_PROFILE(profileData.id), { imgAvatar: avatar, bio: value })
+    Axios.put(EDIT_MEMENTO(mementoData.id), { img: image, desc: value })
       .then((res) => {
         setLoading(false);
-        dispatch(updateUser({ profile: res.data.data }));
         navigation.navigate(RoutesName.ProfileTab, {
-          screen: RoutesName.Profile,
+          screen: RoutesName.Memento,
+          params: { memento: res.data.data },
         });
       })
       .catch((err) => console.log(err));
@@ -59,13 +57,13 @@ const EditProfileScreen = ({ navigation }) => {
   return (
     <>
       <MainHeader
-        title={'Update Profile'}
+        title={'Edit Memento'}
         leftComponent={'back'}
         rightComponent={() => {
           return isLoading ? (
             <ActivityIndicator size="small" color={Colors['white-1']} />
           ) : (
-            <TouchableWithoutFeedback onPress={updateProfile}>
+            <TouchableWithoutFeedback onPress={updateMemento}>
               <SvgXml xml={assetSvg.header.check} width="24" height="24" />
             </TouchableWithoutFeedback>
           );
@@ -73,18 +71,20 @@ const EditProfileScreen = ({ navigation }) => {
       />
       <Screen style={{ margin: 16 }}>
         <DismissKeyboard>
-          <Text style={_styles.textTitle}>Avatar</Text>
+          <Text style={[_styles.textSubTitle, { textAlign: 'center' }]}>Edit Memento</Text>
+          <Text style={_styles.textTitle}>{mementoData.id}</Text>
+          <Text style={_styles.textSubTitle}>Image</Text>
           <TouchableWithoutFeedback onPress={toggleModal}>
             <View style={_styles.imageContainer}>
-              <FastImage source={{ uri: getImageUrl(avatar) }} style={_styles.image} />
+              <FastImage source={{ uri: getImageUrl(image) }} style={_styles.image} />
               <View style={_styles.cameraIcon}>
                 <SvgXml xml={assetSvg.newPost.image} width="36" height="36" />
               </View>
             </View>
           </TouchableWithoutFeedback>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={_styles.textTitle}>Bio</Text>
-            <Text style={_styles.textTitle}>{`${value.length}/150`}</Text>
+            <Text style={_styles.textSubTitle}>Desc</Text>
+            <Text style={_styles.textSubTitle}>{`${value.length}/150`}</Text>
           </View>
           <MainTextInput
             value={value}
@@ -97,7 +97,6 @@ const EditProfileScreen = ({ navigation }) => {
           <ContentImageModal
             onDismiss={toggleModal}
             isVisible={showModal}
-            isCircle={true}
             onComplete={onCompleteUpload}
           />
         </DismissKeyboard>
@@ -106,7 +105,7 @@ const EditProfileScreen = ({ navigation }) => {
   );
 };
 
-export default EditProfileScreen;
+export default EditMementoScreen;
 
 const _styles = StyleSheet.create({
   image: {
@@ -118,9 +117,7 @@ const _styles = StyleSheet.create({
     height: 180,
     width: 180,
     marginBottom: 16,
-    borderRadius: 90,
     overflow: 'hidden',
-
     marginTop: 8,
   },
   cameraIcon: {
@@ -133,6 +130,13 @@ const _styles = StyleSheet.create({
     alignItems: 'center',
   },
   textTitle: {
+    fontFamily: 'Inconsolata-Bold',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(18),
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+  textSubTitle: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
     fontSize: ResponsiveFont(15),

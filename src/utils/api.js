@@ -51,7 +51,9 @@ export const SEARCH_USER_SEND = (query) => `${BASE_URL}/users?id__re=${query}`;
 //newPost
 export const USER_MEMENTO = (user) => `${BASE_URL}/mementos?owner=${user}`;
 export const SEARCH_MEMENTO = (query) => `${BASE_URL}/mementos?id__re=${query}`;
+export const EDIT_MEMENTO = (mementoId) => `${BASE_URL}/mementos/${mementoId}`;
 export const CREATE_MEMENTO = `${BASE_URL}/mementos`;
+
 export const CREATE_POST = `${BASE_URL}/posts`;
 export const DELETE_POST = (postId) => `${BASE_URL}/posts/${postId}`;
 export const EDIT_POST = (postId) => `${BASE_URL}/posts/${postId}`;
@@ -73,3 +75,6 @@ export const UNFOLLOW = `${BASE_URL}/unfollow`;
 
 //uplaod
 export const UPLOAD = `${BASE_URL}/upload`;
+
+//update
+export const UPDATE_PROFILE = (userId) => `${BASE_URL}/users/${userId}`;

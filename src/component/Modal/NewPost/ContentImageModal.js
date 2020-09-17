@@ -11,13 +11,14 @@ import MainButton from '../../Common/MainButton';
 import Axios from 'axios';
 import { UPLOAD } from '../../../utils/api';
 
-const ContentImageModal = ({ onDismiss, onComplete, body }) => {
+const ContentImageModal = ({ isVisible = true, onDismiss, onComplete, isCircle = false }) => {
   const [isUploading, setIsUploading] = useState(false);
   const pickerOptions = {
     width: 400,
     height: 400,
     cropping: true,
     mediaType: 'photo',
+    cropperCircleOverlay: isCircle,
     forceJpg: true,
   };
 
@@ -59,7 +60,7 @@ const ContentImageModal = ({ onDismiss, onComplete, body }) => {
 
   return (
     <View>
-      <Modal isVisible={true} useNativeDriver onBackButtonPress={onDismiss}>
+      <Modal isVisible={isVisible} useNativeDriver onBackButtonPress={onDismiss}>
         <View style={{ borderRadius: 8, overflow: 'hidden' }}>
           <View style={_styles.headerView}>
             <TouchableNativeFeedback onPress={onDismiss}>

@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 const WalletNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={RoutesName.Wallet}>
       <Stack.Screen name={RoutesName.Wallet} component={WalletScreen} />
       <Stack.Screen
         name={RoutesName.WalletHistory}

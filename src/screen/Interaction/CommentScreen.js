@@ -1,85 +1,101 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 import Axios from 'axios';
-import { SvgXml } from 'react-native-svg';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
-import assetSvg from '../../assets/svg/svg';
 import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
-import NewCommentModal from '../../component/Modal/Comment/NewCommentModal';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { commentLimit } from '../../utils/constant';
+import CommentTextInput from '../../component/Common/CommentTextInput';
 
-const CommentScreen = ({ route }) => {
-  const { id } = route.params;
+class CommentScreen extends Component {
+  commentListRef = React.createRef();
+  state = {
+    commentList: [],
+    page: 1,
+    hasMore: true,
+  };
 
-  const [isLoading, setLoading] = useState(true);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [commentList, setCommentList] = useState([]);
+  componentDidMount() {
+    this.getCommentList(this.state.page);
+  }
 
-  useEffect(() => {
-    getCommentList();
-  }, []);
-
-  const getCommentList = () => {
-    Axios.get(COMMENT(id))
+  getCommentList = (page, onRefresh = false) => {
+    const { id } = this.props.route.params;
+    Axios.get(COMMENT(id, page))
       .then((res) => {
-        setCommentList(res.data.data);
-        setLoading(false);
+        this.setState((prevState) => ({
+          commentList: onRefresh ? res.data.data : [...prevState.commentList, ...res.data.data],
+          hasMore: res.data.data.length < commentLimit ? false : true,
+        }));
       })
-      .catch((err) => console.log(err.response.message));
+      .catch((err) => console.log(err));
   };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  onRefreshComment = () => {
+    this.getCommentList(1, true);
+    this.setState({ page: 1 });
   };
 
-  return (
-    <>
-      <MainHeader
-        leftComponent={'back'}
-        title={'Comment'}
-        rightComponent={
-          <TouchableWithoutFeedback onPress={toggleModal}>
-            <SvgXml xml={assetSvg.bottomTab.NewPostTab} width="24" height="24" />
-          </TouchableWithoutFeedback>
-        }
-      />
-      <Screen style={{ padding: 16 }}>
-        {isLoading ? (
-          <ActivityIndicator size={'large'} color={Colors['white-1']} />
-        ) : (
+  loadMoreComment = () => {
+    const page = this.state.page + 1;
+    this.getCommentList(page);
+    this.setState({ page });
+  };
+
+  toggleModal = () => {
+    this.setState((prevState) => ({ isModalVisible: !prevState.isModalVisible }));
+  };
+
+  render() {
+    const { id } = this.props.route.params;
+    const { commentList, hasMore } = this.state;
+    return (
+      <>
+        <MainHeader leftComponent={'back'} title={'Comment'} />
+        <Screen
+          transparent
+          containerStyle={{ backgroundColor: Colors['dark-4'] }}
+          style={{ backgroundColor: Colors['dark-0'] }}
+        >
           <CommentList
+            ref={this.commentListRef}
             data={commentList}
-            onRefresh={getCommentList}
+            onRefresh={this.onRefreshComment}
+            onLoadMore={this.loadMoreComment}
+            hasMore={hasMore}
             emptyComponent={
-              <>
+              <View
+                style={{
+                  transform: [{ scaleY: -1 }],
+                  alignItems: 'center',
+                  flex: 1,
+                }}
+              >
                 <Text style={_styles.textEmptyCommentTitle}>Write a Comment</Text>
                 <Text style={_styles.textEmptyCommentDesc}>
                   Click on button at top right to add a comment
                 </Text>
-              </>
+              </View>
             }
           />
-        )}
-        <NewCommentModal
-          isVisible={isModalVisible}
-          onDismiss={toggleModal}
-          postId={id}
-          onComplete={() => {
-            toggleModal();
-            setTimeout(() => {
-              getCommentList();
-            }, 3000);
-          }}
-        />
-      </Screen>
-    </>
-  );
-};
+          <CommentTextInput
+            postId={id}
+            onComplete={() => {
+              this.commentListRef.current.toggleRefresh();
+              setTimeout(() => {
+                this.onRefreshComment();
+              }, 3000);
+            }}
+          />
+        </Screen>
+      </>
+    );
+  }
+}
 
 export default CommentScreen;
 
@@ -89,7 +105,8 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: ResponsiveFont(20),
     textAlign: 'center',
-    marginVertical: 16,
+    marginTop: 8,
+    marginBottom: 16,
   },
   textEmptyCommentDesc: {
     fontFamily: 'Inconsolata-Regular',

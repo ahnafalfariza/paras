@@ -43,8 +43,8 @@ class HomeFollowing extends Component {
   render() {
     return (
       <>
+        <HomeHeader active="following" />
         <Screen>
-          <HomeHeader active="following" />
           <PostList
             list={this.state.data}
             onLoadMore={this.loadMoreFeeds}

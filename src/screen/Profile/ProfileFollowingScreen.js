@@ -1,48 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
-import Axios from 'axios';
+import FollowingList from '../../component/Profile/FollowingList';
 import { FOLLOWING_LIST } from '../../utils/api';
-import { FlatList, Text, View } from 'react-native';
-import Colors from '../../utils/color';
-import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import Axios from 'axios';
+import { defaultLimit } from '../../utils/constant';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileFollowingScreen = () => {
-  const [listFollowing, setListFollowing] = useState([]);
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    Axios.get(FOLLOWING_LIST)
-      .then((res) => setListFollowing(res.data.data))
-      .catch((err) => console.log(err));
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getFollowing();
+    });
 
+    getFollowing(1);
+
+    return unsubscribe;
+  }, [navigation, getFollowing]);
+
+  const getFollowing = useCallback(
+    (pageNum, onRefresh = false) => {
+      Axios.get(FOLLOWING_LIST(pageNum)).then((res) => {
+        const newData = onRefresh ? res.data.data : [...data, ...res.data.data];
+        setData(newData);
+        setHasMore(res.data.data.length < defaultLimit ? false : true);
+      });
+    },
+    [data],
+  );
+
+  const onRefreshFeeds = () => {
+    getFollowing(1, true);
+    setPage(1);
+  };
+
+  const loadMoreFeeds = () => {
+    getFollowing(page + 1);
+    setPage(page + 1);
+  };
   return (
     <>
       <MainHeader title={'Following'} leftComponent={'back'} />
-      <Screen style={{ padding: 12 }}>
-        <FlatList
-          data={listFollowing}
-          keyExtractor={(item) => item.targetId}
-          renderItem={({ item }) => <Following data={item} />}
+      <Screen>
+        <FollowingList
+          list={data}
+          onLoadMore={loadMoreFeeds}
+          onRefresh={onRefreshFeeds}
+          hasMore={hasMore}
         />
       </Screen>
     </>
-  );
-};
-
-const Following = ({ data }) => {
-  return (
-    <View style={{ paddingVertical: 6 }}>
-      <Text
-        style={{
-          fontFamily: 'Inconsolata-Bold',
-          fontSize: ResponsiveFont(14),
-          color: Colors['white-1'],
-        }}
-      >
-        {data.targetId}
-      </Text>
-    </View>
   );
 };
 

@@ -14,6 +14,7 @@ const MainButton = ({
   secondary = false,
   loading = false,
   loadingColor = Colors['white-1'],
+  loadingSize = 'small',
   disabled = false,
 }) => {
   return (
@@ -34,7 +35,10 @@ const MainButton = ({
       disabledStyle={{ opacity: 0.75, backgroundColor: Colors['primary-5'] }}
       disabledTitleStyle={{ opacity: 0.75, color: Colors['white-1'] }}
       loading={loading}
-      loadingProps={{ color: loadingColor }}
+      loadingProps={{
+        color: loadingColor,
+        size: loadingSize,
+      }}
       containerStyle={StyleSheet.flatten([
         _styles.containerStyle,
         secondary && _styles.containerStyleSecondary,

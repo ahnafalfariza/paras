@@ -1,4 +1,4 @@
-import { postLimit, notifLimit, commentLimit, txLimit } from './constant';
+import { postLimit, notifLimit, commentLimit, txLimit, defaultLimit } from './constant';
 
 const BASE_URL = 'https://api.dev.paras.id';
 
@@ -24,7 +24,10 @@ export const CREATE_USER = `${BASE_URL}/register`;
 export const LOGIN = `${BASE_URL}/login`;
 export const VERIFY_USER = `${BASE_URL}/register/confirm`;
 export const VERIFY_TOKEN = `${BASE_URL}/verify`;
-export const FOLLOWING_LIST = `${BASE_URL}/follow`;
+export const FOLLOWING_LIST = (page) =>
+  `${BASE_URL}/follow?__skip=${
+    (page - 1) * defaultLimit
+  }&__limit=${defaultLimit}&__sort=-createdAt`;
 export const REGISTER_DEVICE = `${BASE_URL}/register/device`;
 
 export const HOME_FEED = (page) =>

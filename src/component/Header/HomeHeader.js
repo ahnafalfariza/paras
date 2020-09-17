@@ -21,7 +21,7 @@ const CenterHeaderComponent = ({ active }) => {
     <View
       style={{
         position: 'relative',
-        width: `100%`,
+        width: '100%',
       }}
     >
       <View
@@ -68,7 +68,7 @@ const CenterHeaderComponent = ({ active }) => {
           justifyContent: 'center',
           position: 'absolute',
           right: 0,
-          height: `100%`,
+          height: '100%',
         }}
       >
         <TouchableWithoutFeedback

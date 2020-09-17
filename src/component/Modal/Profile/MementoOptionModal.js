@@ -1,14 +1,10 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import Clipboard from '@react-native-community/clipboard';
-import { useNavigation } from '@react-navigation/native';
 
 import ListMoreOption from '../../Common/ListMoreOption';
-import RoutesName from '../../../utils/RoutesName';
 
 const MementoOptionModal = ({ isVisible, onClose, mementoId, isUserOwner }) => {
-  const navigation = useNavigation();
-
   let listOptionsModal = [
     {
       title: 'Copy Link',

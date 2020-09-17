@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import HomeHeader from '../../component/Header/HomeHeader';
 import Screen from '../../component/Common/Screen';
 import Axios from 'axios';
 import { HOME_NOTIFICATION } from '../../utils/api';
@@ -44,10 +43,7 @@ class HomeNotification extends Component {
   render() {
     return (
       <>
-        <MainHeader
-          leftComponent="close"
-          title="Notification"
-        />
+        <MainHeader leftComponent="close" title="Notification" />
         <Screen>
           <NotificationList
             list={this.state.data}

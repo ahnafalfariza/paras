@@ -5,11 +5,9 @@ import Clipboard from '@react-native-community/clipboard';
 // import RNFetchBlob from 'rn-fetch-blob';
 
 import ListMoreOption from '../../Common/ListMoreOption';
-import { getImageUrl } from '../../../utils/image';
-import { PermissionsAndroid } from 'react-native';
 
 const PostShareModal = ({ isVisible, onClose, postData }) => {
-  const { id, contentList, user, memento } = postData;
+  const { id, user } = postData;
   const postId = postData.id;
 
   let listOptionsModal = [
@@ -54,33 +52,33 @@ const PostShareModal = ({ isVisible, onClose, postData }) => {
     return null;
   }
 
-  const onPressShareIGStories = async () => {
-    await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+  // const onPressShareIGStories = async () => {
+  //   await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
 
-    const contentImg = contentList.filter((content) => content.type === 'img');
+  //   const contentImg = contentList.filter((content) => content.type === 'img');
 
-    const imgUrl = contentImg.length > 0 ? getImageUrl(JSON.parse(contentImg[0].body)) : null;
+  //   const imgUrl = contentImg.length > 0 ? getImageUrl(JSON.parse(contentImg[0].body)) : null;
 
-    const mementoImgUrl = getImageUrl(memento.img);
+  //   const mementoImgUrl = getImageUrl(memento.img);
 
-    const stickerImg = await RNFetchBlob.config({
-      fileCache: true,
-    }).fetch('GET', imgUrl || mementoImgUrl);
+  //   const stickerImg = await RNFetchBlob.config({
+  //     fileCache: true,
+  //   }).fetch('GET', imgUrl || mementoImgUrl);
 
-    const stickerPath = stickerImg.path();
+  //   const stickerPath = stickerImg.path();
 
-    const shareOptions = {
-      method: Share.InstagramStories.SHARE_STICKER_IMAGE,
-      stickerImage: `file://${stickerPath}`,
-      social: Share.Social.INSTAGRAM_STORIES,
-    };
+  //   const shareOptions = {
+  //     method: Share.InstagramStories.SHARE_STICKER_IMAGE,
+  //     stickerImage: `file://${stickerPath}`,
+  //     social: Share.Social.INSTAGRAM_STORIES,
+  //   };
 
-    try {
-      Share.shareSingle(shareOptions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     Share.shareSingle(shareOptions);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const onPressShareTwitter = () => {
     const shareOptions = {

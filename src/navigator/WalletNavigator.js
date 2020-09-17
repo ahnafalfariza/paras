@@ -12,7 +12,11 @@ const WalletNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={RoutesName.Wallet} component={WalletScreen} />
-      <Stack.Screen name={RoutesName.WalletHistory} component={WalletHistoryScreen} />
+      <Stack.Screen
+        name={RoutesName.WalletHistory}
+        component={WalletHistoryScreen}
+        initialParams={{ transactionHistory: [] }}
+      />
       <Stack.Screen name={RoutesName.WalletTransaction} component={WalletTransactionScreen} />
     </Stack.Navigator>
   );

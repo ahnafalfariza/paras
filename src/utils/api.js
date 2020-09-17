@@ -1,4 +1,4 @@
-import { postLimit } from './constant';
+import { postLimit, notifLimit } from './constant';
 
 const BASE_URL = 'https://api.dev.paras.id';
 
@@ -31,6 +31,11 @@ export const HOME_FEED = (page) =>
   `${BASE_URL}/feeds?__skip=${(page - 1) * postLimit}&__limit=${postLimit}`;
 export const HOME_PICKS = `${BASE_URL}/timelines?id=editorsPick`;
 
+export const HOME_NOTIFICATION = (page) =>
+  `${BASE_URL}/notifications?__skip=${
+    (page - 1) * notifLimit
+  }&__limit=${notifLimit}&__sort=-createdAt`;
+
 //wallet
 export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;
 export const WALLET_HISTORY = (userId) => `${BASE_URL}/transactions?id=${userId}`;
@@ -47,6 +52,7 @@ export const DELETE_POST = (postId) => `${BASE_URL}/posts/${postId}`;
 export const EDIT_POST = (postId) => `${BASE_URL}/posts/${postId}`;
 export const META_URL = (link) => `${BASE_URL}/metaget?link=${link}`;
 export const REDACT_POST = (postId) => `${BASE_URL}/posts/${postId}/redact`;
+export const POST_BY_ID = (postId) => `${BASE_URL}/posts?id=${postId}`;
 
 //comment
 export const COMMENT = (postId) => `${BASE_URL}/comments?postId=${postId}`;

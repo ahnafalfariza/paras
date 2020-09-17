@@ -5,7 +5,7 @@ export default {
   WalletTab: 'WalletTab',
   ProfileTab: 'ProfileTab',
 
-  HomePicks: 'HomePicks',
+  HomeTop: 'HomeTop',
   HomeFollowing: 'HomeFollowing',
   HomeNotification: 'HomeNotification',
 

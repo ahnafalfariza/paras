@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -22,15 +22,18 @@ const WalletHistory = ({ navigation }) => {
     getWalletHistory(1);
 
     return unsubscribe;
-  }, [navigation, userId]);
+  }, [navigation, userId, getWalletHistory]);
 
-  const getWalletHistory = (page, onRefresh = false) => {
-    Axios.get(WALLET_HISTORY(userId, page)).then((res) => {
-      const newData = onRefresh ? res.data.data : [...data, ...res.data.data];
-      setData(newData);
-      setHasMore(res.data.data.length < txLimit ? false : true);
-    });
-  };
+  const getWalletHistory = useCallback(
+    (pageNum, onRefresh = false) => {
+      Axios.get(WALLET_HISTORY(userId, pageNum)).then((res) => {
+        const newData = onRefresh ? res.data.data : [...data, ...res.data.data];
+        setData(newData);
+        setHasMore(res.data.data.length < txLimit ? false : true);
+      });
+    },
+    [data, userId],
+  );
 
   const onRefreshFeeds = () => {
     getWalletHistory(1, true);

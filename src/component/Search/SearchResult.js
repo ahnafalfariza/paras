@@ -63,13 +63,4 @@ const SearchResult = ({ item }) => {
   );
 };
 
-const smallPost = () => {
-  return (
-    <FastImage
-      source={{ uri: getImageUrl(data.postList[0]) }}
-      style={{ height: 28, width: 28, margin: 4 }}
-    />
-  );
-};
-
 export default SearchResultList;

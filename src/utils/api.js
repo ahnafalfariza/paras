@@ -80,3 +80,5 @@ export const UPLOAD = `${BASE_URL}/upload`;
 
 //update
 export const UPDATE_PROFILE = (userId) => `${BASE_URL}/users/${userId}`;
+
+export const ACTIVITY_POINT = (userId) => `${BASE_URL}/activityPoint/${userId}`;

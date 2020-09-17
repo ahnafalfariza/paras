@@ -10,10 +10,11 @@ import MainHeader from '../../component/Header/MainHeader';
 import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
 import { logoutUser } from '../../actions/user';
-import { PROFILE_POST_URL } from '../../utils/api';
+import { ACTIVITY_POINT, PROFILE_POST_URL } from '../../utils/api';
 import { postLimit } from '../../utils/constant';
 import PostList from '../../component/Post/Post';
 import ProfileOptionModal from '../../component/Modal/Profile/ProfileOptionModal';
+import ProfilePoint from '../../component/Profile/ProfilePoint';
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class ProfileScreen extends Component {
       postList: [],
       hasMore: true,
       optionModal: false,
+      activityPoint: null,
     };
   }
 
@@ -35,6 +37,7 @@ class ProfileScreen extends Component {
         this.postList.current.toggleRefresh();
         this.props.navigation.setParams({ needToRefresh: false });
       }
+      this.getActivityPoint();
     });
   }
 
@@ -50,6 +53,16 @@ class ProfileScreen extends Component {
           postList: onRefresh ? res.data.data : [...prevState.postList, ...res.data.data],
           hasMore: res.data.data.length < postLimit ? false : true,
         }));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  getActivityPoint = () => {
+    const { id } = this.props.profileData;
+    Axios.get(ACTIVITY_POINT(id))
+      .then((res) => {
+        this.setState({ activityPoint: res.data.data });
+        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
   };
@@ -70,7 +83,7 @@ class ProfileScreen extends Component {
   };
 
   render() {
-    const { postList, hasMore, optionModal } = this.state;
+    const { postList, hasMore, optionModal, activityPoint } = this.state;
     const { profileData, dispatchLogoutUser } = this.props;
 
     if (this.props.profileData === null && !this.props.isLoggedIn) {
@@ -98,7 +111,7 @@ class ProfileScreen extends Component {
           <PostList
             ref={this.postList}
             list={postList}
-            header={<Profile data={profileData} type={'user'} currentUser />}
+            header={<ProfilePoint data={profileData} point={activityPoint} />}
             onLoadMore={this.loadMorePost}
             onRefresh={this.onRefresh}
             hasMore={hasMore}

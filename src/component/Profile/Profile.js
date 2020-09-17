@@ -65,14 +65,16 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
         </TouchableWithoutFeedback>
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
-      <MainButton
-        title={!currentUser ? (isFollowing ? 'UNFOLLOW' : 'FOLLOW') : 'EDIT PROFILE'}
-        secondary={!currentUser && isFollowing}
-        loading={isLoading}
-        loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
-        containerStyle={{ alignSelf: 'center', width: 150 }}
-        onPress={currentUser ? editProfile : pressRelation}
-      />
+      {!currentUser && (
+        <MainButton
+          title={!currentUser ? (isFollowing ? 'UNFOLLOW' : 'FOLLOW') : 'EDIT PROFILE'}
+          secondary={!currentUser && isFollowing}
+          loading={isLoading}
+          loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
+          containerStyle={{ alignSelf: 'center', width: 150 }}
+          onPress={currentUser ? editProfile : pressRelation}
+        />
+      )}
     </View>
   );
 };

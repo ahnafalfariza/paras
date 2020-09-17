@@ -44,8 +44,8 @@ const PostShareModal = ({ isVisible, onClose, postData }) => {
     {
       title: 'More',
       onPress: () => {
+        // onClose();
         onPressShareMore();
-        onClose();
       },
     },
   ];

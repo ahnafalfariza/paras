@@ -18,11 +18,13 @@ export default function (state = INITIAL_STATE, action) {
         token: action.payload.token,
         isLoggedIn: true,
       };
+
     case Auth.INIT_FOLLOWING:
       return {
         ...state,
         followingList: action.payload.followingList,
       };
+
     case Auth.SET_BALANCE:
       return {
         ...state,
@@ -38,11 +40,19 @@ export default function (state = INITIAL_STATE, action) {
         followingList: newList,
       };
     }
+
+    case User.UPDATE_USER:
+      return {
+        ...state,
+        profile: action.payload.profile,
+      };
+
     case Auth.LOGOUT_USER:
       return {
         ...state,
         isLoggedIn: false,
       };
+
     default:
       return state;
   }

@@ -7,4 +7,5 @@ export const Auth = {
 
 export const User = {
   TOGGLE_FOLLOW: 'TOGGLE_FOLLOW',
+  UPDATE_USER: 'UPDATE_USER',
 };

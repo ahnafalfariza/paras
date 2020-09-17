@@ -8,6 +8,13 @@ export const initUser = (data) => ({
   },
 });
 
+export const updateUser = (data) => ({
+  type: Auth.INIT_USER,
+  payload: {
+    profile: data.profile,
+  },
+});
+
 export const initFollowing = (data) => ({
   type: Auth.INIT_FOLLOWING,
   payload: {

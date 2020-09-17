@@ -32,9 +32,12 @@ const HomeNavigator = () => {
 };
 
 const TabHome = createBottomTabNavigator();
+const tabBarOptions = {
+  style: { borderTopWidth: 0 },
+};
 const TabHomeNavigator = () => {
   return (
-    <TabHome.Navigator screenOptions={{ headerShown: false, tabBarVisible: false }}>
+    <TabHome.Navigator tabBarOptions={tabBarOptions} screenOptions={{ tabBarVisible: false }}>
       <TabHome.Screen
         name={RoutesName.HomeTop}
         component={HomeTopScreen}

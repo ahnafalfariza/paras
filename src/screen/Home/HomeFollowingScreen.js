@@ -15,8 +15,6 @@ class HomeFollowing extends Component {
   };
 
   componentDidMount() {
-    console.log('home following did mount');
-    console.log(this.state.data);
     this.getFeeds(this.state.page);
   }
 

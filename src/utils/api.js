@@ -1,4 +1,4 @@
-import { postLimit, notifLimit } from './constant';
+import { postLimit, notifLimit, txLimit } from './constant';
 
 const BASE_URL = 'https://api.dev.paras.id';
 
@@ -40,7 +40,10 @@ export const HOME_NOTIFICATION = (page) =>
 
 //wallet
 export const WALLET_BALANCE = (userId) => `${BASE_URL}/balances/${userId}`;
-export const WALLET_HISTORY = (userId) => `${BASE_URL}/transactions?id=${userId}`;
+export const WALLET_HISTORY = (userId, page) =>
+  `${BASE_URL}/transactions?id=${userId}&__skip${
+    (page - 1) * txLimit
+  }&__limit=${txLimit}&__sort=-createdAt`;
 export const WALLET_SEND = `${BASE_URL}/wallet/transfer`;
 export const WALLET_PIECE = `${BASE_URL}/wallet/piece`;
 export const SEARCH_USER_SEND = (query) => `${BASE_URL}/users?id__re=${query}`;

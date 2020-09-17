@@ -19,11 +19,11 @@ const Following = ({ data }) => {
   const pressRelation = () => {
     setIsLoading(true);
     Axios.post(isFollowing ? UNFOLLOW : FOLLOW, {
-      targetId: data.id,
+      targetId: data.targetId,
       targetType: data.targetType,
     })
       .then(() => {
-        dispatch(toggleFollow(data.id));
+        dispatch(toggleFollow(data.targetId));
         setIsLoading(false);
         setIsFollowing(!isFollowing);
       })
@@ -54,9 +54,10 @@ const Following = ({ data }) => {
         secondary={isFollowing}
         loading={isLoading}
         loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
+        loadingSize={16}
         textStyle={{
           fontFamily: 'Inconsolata-Bold',
-          fontSize: ResponsiveFont(10),
+          fontSize: ResponsiveFont(12),
         }}
         containerStyle={{ width: 80, height: 24, marginVertical: 0 }}
         onPress={pressRelation}

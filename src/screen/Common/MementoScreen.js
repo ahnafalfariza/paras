@@ -102,6 +102,7 @@ class MementoScreen extends Component {
             isVisible={mementoOptionModal}
             isUserOwner={memento.owner === id}
             onClose={this.toggleModal}
+            refreshMementoData={this.getMementoData}
             mementoData={memento}
           />
         </Screen>

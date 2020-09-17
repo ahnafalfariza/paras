@@ -1,11 +1,20 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import Clipboard from '@react-native-community/clipboard';
+import Axios from 'axios';
 
 import ListMoreOption from '../../Common/ListMoreOption';
 import { useNavigation } from '@react-navigation/native';
+import { ARCHIEVE_MEMENTO, UNARCHIEVE_MEMENTO } from '../../../utils/api';
+import { CustomToast } from '../../../utils/CustomToast';
 
-const MementoOptionModal = ({ isVisible, onClose, mementoData, isUserOwner }) => {
+const MementoOptionModal = ({
+  isVisible,
+  onClose,
+  mementoData,
+  isUserOwner,
+  refreshMementoData,
+}) => {
   const navigation = useNavigation();
   let listOptionsModal = [
     {
@@ -13,6 +22,7 @@ const MementoOptionModal = ({ isVisible, onClose, mementoData, isUserOwner }) =>
       onPress: () => {
         onClose();
         copyToClipboard(mementoData.id);
+        CustomToast('Link copied!', 0, 'default', 1000);
       },
     },
   ];
@@ -28,8 +38,25 @@ const MementoOptionModal = ({ isVisible, onClose, mementoData, isUserOwner }) =>
         },
       },
       {
-        title: 'Archive',
-        onPress: () => console.log('archive'),
+        title: mementoData.isArchive ? 'Unarchive' : 'Archive',
+        onPress: () => {
+          const url = mementoData.isArchive
+            ? UNARCHIEVE_MEMENTO(mementoData.id)
+            : ARCHIEVE_MEMENTO(mementoData.id);
+
+          Axios.put(url)
+            .then(() => {
+              refreshMementoData();
+              CustomToast(
+                `Memento ${mementoData.isArchive ? 'unarchived' : 'archived'}`,
+                0,
+                'default',
+                1000,
+              );
+            })
+            .catch((err) => console.log(err));
+          onClose();
+        },
       },
     ];
   }
@@ -49,5 +76,5 @@ const MementoOptionModal = ({ isVisible, onClose, mementoData, isUserOwner }) =>
 export default MementoOptionModal;
 
 const copyToClipboard = (mementoId) => {
-  Clipboard.setString(`https://alpha.paras.id/m/${mementoId}`);
+  Clipboard.setString(`https://beta.paras.id/m/${mementoId}`);
 };

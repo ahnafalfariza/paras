@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 const ExploreNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={RoutesName.Explore}>
       <Stack.Screen name={RoutesName.Explore} component={ExploreScreen} />
       <Stack.Screen name={RoutesName.ExploreSerach} component={ExploreSearchScreen} />
       <Stack.Screen name={RoutesName.Memento} component={MementoScreen} />

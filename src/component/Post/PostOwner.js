@@ -62,6 +62,7 @@ const _styles = StyleSheet.create({
     height: 32,
     width: 32,
     margin: 8,
+    borderRadius: 16,
   },
   userView: {
     flexDirection: 'row',

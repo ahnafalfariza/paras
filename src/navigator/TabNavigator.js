@@ -67,7 +67,7 @@ const tabBarIcon = (color, route, profileData) => {
       <View style={{ borderWidth: 3, borderRadius: 20, borderColor: color }}>
         <FastImage
           source={{ uri: getImageUrl(profileData.imgAvatar) }}
-          style={{ width: 30, height: 30 }}
+          style={{ width: 30, height: 30, borderRadius: 15 }}
         />
       </View>
     );

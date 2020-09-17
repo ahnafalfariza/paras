@@ -42,7 +42,7 @@ const CommentTextInput = ({ postId, onComplete }) => {
     <View style={_styles.container}>
       <FastImage
         source={{ uri: getImageUrl(profileData.imgAvatar) }}
-        style={{ width: 32, height: 32 }}
+        style={{ width: 32, height: 32, borderRadius: 16 }}
       />
       <MainTextInput
         value={value}

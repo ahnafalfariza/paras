@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, Keyboard, StyleSheet } from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  Keyboard,
+  StyleSheet,
+  FlatList as RNFlatlist,
+  TouchableWithoutFeedback as RNTouchable,
+} from 'react-native';
+import {
+  FlatList as RNGHFlatList,
+  TouchableWithoutFeedback as RNGHTouchable,
+} from 'react-native-gesture-handler';
 
 import MainTextInput from './MainTextInput';
-import { SCREEN_WIDTH } from '../../utils/constant';
+import { isIOS, SCREEN_WIDTH } from '../../utils/constant';
 import Colors from '../../utils/color';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+
+const FlatList = (props) => {
+  return isIOS ? <RNFlatlist {...props} /> : <RNGHFlatList {...props} />;
+};
+
+const TouchableWithoutFeedback = (props) => {
+  return isIOS ? <RNTouchable {...props} /> : <RNGHTouchable {...props} />;
+};
 
 const DropDownInput = ({ options, onChange, placeholder, searchable = true, children }) => {
   const [text, setText] = useState('');

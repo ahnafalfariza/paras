@@ -22,8 +22,14 @@ class MementoScreen extends Component {
     mementoOptionModal: false,
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.route.params.memento !== prevProps.route.params.memento) {
+      this.getMementoData();
+    }
+  }
+
   componentDidMount() {
-    this.getPostData(this.state.page);
+    this.getPostData(this.state.page, true);
     this.getMementoData();
   }
 
@@ -50,6 +56,7 @@ class MementoScreen extends Component {
 
   onRefresh = () => {
     this.getPostData(1, true);
+    this.getMementoData();
     this.setState({ page: 1 });
   };
 
@@ -60,7 +67,6 @@ class MementoScreen extends Component {
   };
 
   toggleModal = () => {
-    console.log('tglmdl');
     this.setState((prevState) => ({ mementoOptionModal: !prevState.mementoOptionModal }));
   };
 
@@ -96,7 +102,8 @@ class MementoScreen extends Component {
             isVisible={mementoOptionModal}
             isUserOwner={memento.owner === id}
             onClose={this.toggleModal}
-            mementoId={memento.id}
+            refreshMementoData={this.getMementoData}
+            mementoData={memento}
           />
         </Screen>
       </>

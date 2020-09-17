@@ -86,7 +86,7 @@ class NewPostScreen extends Component {
           params: {
             screen: RoutesName.Profile,
             params: {
-              uploadNewPost: true,
+              needToRefresh: true,
             },
           },
         });

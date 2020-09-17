@@ -18,6 +18,7 @@ import { VERIFY_TOKEN } from '../utils/api';
 import CommentScreen from '../screen/Interaction/CommentScreen';
 import EditProfileScreen from '../screen/Profile/EditProfileScreen';
 import RoutesName from '../utils/RoutesName';
+import EditMementoScreen from '../screen/Profile/EditMementoScreen';
 
 const Stack = createStackNavigator();
 
@@ -131,43 +132,25 @@ const AppNavigator = ({ isLoggedIn }) => {
         ) : (
           <>
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
-            <Stack.Screen
-              name="WebNavigator"
-              component={WebNavigator}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                gestureEnabled: 'vertical',
-              }}
-            />
+            <Stack.Screen name="WebNavigator" component={WebNavigator} options={screenOption} />
             <Stack.Screen
               name="New Post"
               component={NewPostNavigator}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                gestureEnabled: false,
-              }}
+              options={{ ...screenOption, ...{ gestureEnabled: false } }}
             />
-            <Stack.Screen
-              name="Comment"
-              component={CommentScreen}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                gestureDirection: 'vertical',
-              }}
-            />
-            <Stack.Screen
-              name="EditProfile"
-              component={EditProfileScreen}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-                gestureDirection: 'vertical',
-              }}
-            />
+            <Stack.Screen name="Comment" component={CommentScreen} options={screenOption} />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} options={screenOption} />
+            <Stack.Screen name="EditMemento" component={EditMementoScreen} options={screenOption} />
           </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
+};
+
+const screenOption = {
+  cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+  gestureDirection: 'vertical',
 };
 
 const mapStateToProps = (state) => ({

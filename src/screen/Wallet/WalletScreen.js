@@ -41,7 +41,7 @@ class WalletScreen extends Component {
         this.props.dispatchsetWalletBalance({ walletBalance: res.data.data });
       }
     });
-    Axios.get(WALLET_HISTORY(id)).then((res) => {
+    Axios.get(WALLET_HISTORY(id, 1)).then((res) => {
       this.setState({ transactionHistory: res.data.data });
     });
   };
@@ -83,7 +83,7 @@ class WalletScreen extends Component {
               </TouchableWithoutFeedback>
             }
             onRefresh={this.getWalletData}
-            transactionList={transactionHistory.slice(0, 3)}
+            list={transactionHistory.slice(0, 3)}
           />
         </Screen>
       </>

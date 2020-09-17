@@ -69,6 +69,7 @@ class NewMementoScreen extends Component {
   };
 
   onChangeTypeMemento = (text) => {
+    text = text === null ? '' : text;
     let type = MEMENTO_TYPE.find((memento) => memento.toLowerCase() === text.toLowerCase());
     this.setState({ type });
   };

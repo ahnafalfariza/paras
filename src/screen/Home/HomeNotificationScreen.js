@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
-import Axios from 'axios';
 import { HOME_NOTIFICATION } from '../../utils/api';
 import { postLimit } from '../../utils/constant';
 import NotificationList from '../../component/Notification/NotificationList';
@@ -15,10 +15,10 @@ class HomeNotification extends Component {
   };
 
   componentDidMount() {
-    this.getFeeds(this.state.page);
+    this.getNotifications(this.state.page);
   }
 
-  getFeeds = (page, onRefresh = false) => {
+  getNotifications = (page, onRefresh = false) => {
     Axios.get(HOME_NOTIFICATION(page))
       .then((res) => {
         this.setState((prevState) => ({
@@ -29,14 +29,14 @@ class HomeNotification extends Component {
       .catch((err) => console.log(err));
   };
 
-  onRefreshFeeds = () => {
-    this.getFeeds(1, true);
+  onRefreshNotifications = () => {
+    this.getNotifications(1, true);
     this.setState({ page: 1 });
   };
 
-  loadMoreFeeds = () => {
+  loadMoreNotifications = () => {
     const page = this.state.page + 1;
-    this.getFeeds(page);
+    this.getNotifications(page);
     this.setState({ page });
   };
 
@@ -47,8 +47,8 @@ class HomeNotification extends Component {
         <Screen>
           <NotificationList
             list={this.state.data}
-            onLoadMore={this.loadMoreFeeds}
-            onRefresh={this.onRefreshFeeds}
+            onLoadMore={this.loadMoreNotifications}
+            onRefresh={this.onRefreshNotifications}
             hasMore={this.state.hasMore}
           />
         </Screen>

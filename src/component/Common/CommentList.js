@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import {
   View,
   TouchableNativeFeedback,
@@ -74,8 +74,16 @@ const Comment = ({ data, onRefresh }) => {
   );
 };
 
-const CommentList = ({ data, onRefresh, emptyComponent, hasMore, onLoadMore }) => {
+const CommentList = ({ data, onRefresh, emptyComponent, hasMore, onLoadMore }, ref) => {
   const [refreshing, setRefresh] = useState(false);
+  const flatListRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    toggleRefresh() {
+      flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+      refreshComment();
+    },
+  }));
 
   const wait = (timeout) => {
     return new Promise((resolve) => {
@@ -91,6 +99,7 @@ const CommentList = ({ data, onRefresh, emptyComponent, hasMore, onLoadMore }) =
 
   return (
     <FlatList
+      ref={flatListRef}
       data={data}
       inverted={true}
       renderItem={({ item }) => <Comment data={item} onRefresh={onRefresh} />}
@@ -116,7 +125,7 @@ const CommentList = ({ data, onRefresh, emptyComponent, hasMore, onLoadMore }) =
   );
 };
 
-export default CommentList;
+export default forwardRef(CommentList);
 
 const _styles = StyleSheet.create({
   containerView: {

@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import Axios from 'axios';
-import { SvgXml } from 'react-native-svg';
 
 import MainHeader from '../../component/Header/MainHeader';
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
-import assetSvg from '../../assets/svg/svg';
 import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
-import NewCommentModal from '../../component/Modal/Comment/NewCommentModal';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import { commentLimit } from '../../utils/constant';
+import CommentTextInput from '../../component/Common/CommentTextInput';
 
 class CommentScreen extends Component {
+  commentListRef = React.createRef();
   state = {
     commentList: [],
     page: 1,
     hasMore: true,
-    isModalVisible: false,
   };
 
   componentDidMount() {
@@ -54,20 +52,17 @@ class CommentScreen extends Component {
 
   render() {
     const { id } = this.props.route.params;
-    const { commentList, isModalVisible, hasMore } = this.state;
+    const { commentList, hasMore } = this.state;
     return (
       <>
-        <MainHeader
-          leftComponent={'back'}
-          title={'Comment'}
-          rightComponent={
-            <TouchableWithoutFeedback onPress={this.toggleModal}>
-              <SvgXml xml={assetSvg.bottomTab.NewPostTab} width="24" height="24" />
-            </TouchableWithoutFeedback>
-          }
-        />
-        <Screen>
+        <MainHeader leftComponent={'back'} title={'Comment'} />
+        <Screen
+          transparent
+          containerStyle={{ backgroundColor: Colors['dark-4'] }}
+          style={{ backgroundColor: Colors['dark-0'] }}
+        >
           <CommentList
+            ref={this.commentListRef}
             data={commentList}
             onRefresh={this.onRefreshComment}
             onLoadMore={this.loadMoreComment}
@@ -87,12 +82,10 @@ class CommentScreen extends Component {
               </View>
             }
           />
-          <NewCommentModal
-            isVisible={isModalVisible}
-            onDismiss={this.toggleModal}
+          <CommentTextInput
             postId={id}
             onComplete={() => {
-              this.toggleModal();
+              this.commentListRef.current.toggleRefresh();
               setTimeout(() => {
                 this.onRefreshComment();
               }, 3000);
@@ -112,6 +105,7 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: ResponsiveFont(20),
     textAlign: 'center',
+    marginTop: 8,
     marginBottom: 16,
   },
   textEmptyCommentDesc: {

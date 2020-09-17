@@ -111,13 +111,7 @@ const PostList = ({ list, onLoadMore = () => {}, header, onRefresh = () => {}, h
       refreshControl={
         <RefreshControl refreshing={refreshing} tintColor={'#ffffff'} onRefresh={refreshFlatlist} />
       }
-      keyExtractor={(item, idx) => {
-        // if (!item.id) {
-        //   console.log(item);
-        //   return idx.toString();
-        // }
-        return idx.toString();
-      }}
+      keyExtractor={(item) => item.id}
       renderItem={renderItem}
       contentContainerStyle={{ marginVertical: 8, marginHorizontal: 16, paddingBottom: 16 }}
       ListHeaderComponent={header}

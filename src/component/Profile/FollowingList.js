@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
@@ -10,8 +12,9 @@ import MainButton from '../Common/MainButton';
 import Axios from 'axios';
 import { FOLLOW, UNFOLLOW } from '../../utils/api';
 import { toggleFollow } from '../../actions/user';
+import RoutesName from '../../utils/RoutesName';
 
-const Following = ({ data }) => {
+const Following = ({ data, navigation }) => {
   const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,20 +38,30 @@ const Following = ({ data }) => {
 
   const img = data.targetType === 'user' ? data.user.imgAvatar : data.memento.img;
 
+  const navigateTo = () => {
+    if (data.targetType === 'memento') {
+      navigation.push(RoutesName.Memento, { memento: { id: data.targetId } });
+    } else {
+      navigation.push(RoutesName.UserProfile, { user: { id: data.targetId } });
+    }
+  };
+
   return (
     <View style={_styles.containerView}>
-      <View style={_styles.followingData}>
-        <FastImage source={{ uri: getImageUrl(img) }} style={_styles.followingImage} />
-        <Text
-          style={{
-            fontFamily: 'Inconsolata-Bold',
-            fontSize: ResponsiveFont(14),
-            color: Colors['white-1'],
-          }}
-        >
-          {data.targetId}
-        </Text>
-      </View>
+      <TouchableWithoutFeedback onPress={navigateTo}>
+        <View style={_styles.followingData}>
+          <FastImage source={{ uri: getImageUrl(img) }} style={_styles.followingImage} />
+          <Text
+            style={{
+              fontFamily: 'Inconsolata-Bold',
+              fontSize: ResponsiveFont(14),
+              color: Colors['white-1'],
+            }}
+          >
+            {data.targetId}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
       <MainButton
         title={isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
         secondary={isFollowing}
@@ -67,6 +80,7 @@ const Following = ({ data }) => {
 };
 
 const FollowingList = ({ list, hasMore = false, onLoadMore = () => {}, onRefresh = () => {} }) => {
+  const navigation = useNavigation();
   const [refreshing, setRefresh] = useState(false);
 
   const wait = (timeout) => {
@@ -81,7 +95,7 @@ const FollowingList = ({ list, hasMore = false, onLoadMore = () => {}, onRefresh
     setRefresh(false);
   };
 
-  const renderItem = ({ item }) => <Following data={item} />;
+  const renderItem = ({ item }) => <Following data={item} navigation={navigation} />;
 
   return (
     <FlatList

@@ -17,7 +17,7 @@ const WebScreen = ({ title, url }) => {
           <TouchableWithoutFeedback
             onPress={() => {
               Clipboard.setString(url);
-              CustomToast('Copied link!', 0, 'default', 1000);
+              CustomToast('Link copied!', 0, 'default', 1000);
             }}
           >
             <View>

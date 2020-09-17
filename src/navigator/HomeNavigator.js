@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 
-import HomePicks from '../screen/Home/HomePicksScreen';
-import HomeFollowing from '../screen/Home/HomeFollowingScreen';
+import HomeTopScreen from '../screen/Home/HomeTopScreen';
+import HomeFollowingScreen from '../screen/Home/HomeFollowingScreen';
 import RoutesName from '../utils/RoutesName';
 import UserScreen from '../screen/Common/UserScreen';
 import MementoScreen from '../screen/Common/MementoScreen';
@@ -18,13 +18,13 @@ const HomeNavigator = () => {
       initialRouteName={RoutesName.HomeFollowing}
     >
       <Stack.Screen
-        name={RoutesName.HomePicks}
-        component={HomePicks}
+        name={RoutesName.HomeTop}
+        component={HomeTopScreen}
         options={{ cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }}
       />
       <Stack.Screen
         name={RoutesName.HomeFollowing}
-        component={HomeFollowing}
+        component={HomeFollowingScreen}
         options={{ cardStyleInterpolator: CardStyleInterpolators.forNoAnimation }}
       />
       <Stack.Screen name={RoutesName.HomeNotification} component={HomeNotification} />

@@ -22,15 +22,15 @@ class MementoScreen extends Component {
     mementoOptionModal: false,
   };
 
-  componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener('focus', () => {
-      this.getPostData(this.state.page, true);
+  componentDidUpdate(prevProps) {
+    if (this.props.route.params.memento !== prevProps.route.params.memento) {
       this.getMementoData();
-    });
+    }
   }
 
-  componentWillUnmount() {
-    this.unsubscribe();
+  componentDidMount() {
+    this.getPostData(this.state.page, true);
+    this.getMementoData();
   }
 
   getPostData = (page, onRefresh = false) => {
@@ -67,7 +67,6 @@ class MementoScreen extends Component {
   };
 
   toggleModal = () => {
-    console.log('tglmdl');
     this.setState((prevState) => ({ mementoOptionModal: !prevState.mementoOptionModal }));
   };
 

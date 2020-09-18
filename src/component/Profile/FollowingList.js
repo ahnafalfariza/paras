@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,10 @@ const Following = ({ data, navigation }) => {
   const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsFollowing(true);
+  }, [data.targetId]);
 
   const pressRelation = () => {
     setIsLoading(true);

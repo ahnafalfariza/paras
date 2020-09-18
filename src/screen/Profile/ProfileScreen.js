@@ -61,7 +61,6 @@ class ProfileScreen extends Component {
     Axios.get(ACTIVITY_POINT(id))
       .then((res) => {
         this.setState({ activityPoint: res.data.data });
-        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
   };

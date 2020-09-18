@@ -15,10 +15,9 @@ const ProfileFollowingScreen = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getFollowing();
+      getFollowing(1, true);
     });
-
-    getFollowing(1);
+    getFollowing(1, true);
 
     return unsubscribe;
   }, [navigation, getFollowing]);

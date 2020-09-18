@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, StyleSheet, View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -15,6 +15,7 @@ import RoutesName from '../../utils/RoutesName';
 import { VERIFY_USER } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const CELL_COUNT = 6;
 
@@ -28,6 +29,7 @@ const VerificationScreen = ({ navigation, route }) => {
   const { email, username } = route.params;
 
   const onPressVerify = () => {
+    Keyboard.dismiss();
     setLoading(true);
     Axios.post(VERIFY_USER, { pin: value, email })
       .then((res) => {
@@ -40,12 +42,8 @@ const VerificationScreen = ({ navigation, route }) => {
         setLoading(false);
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => setLoading(false) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        setLoading(false);
       });
   };
 

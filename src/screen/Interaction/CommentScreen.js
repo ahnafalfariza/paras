@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import Axios from 'axios';
 
 import MainHeader from '../../component/Header/MainHeader';
@@ -8,7 +8,7 @@ import Colors from '../../utils/color';
 import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
-import { commentLimit } from '../../utils/constant';
+import { commentLimit, isAndroid, isIOS } from '../../utils/constant';
 import CommentTextInput from '../../component/Common/CommentTextInput';
 
 class CommentScreen extends Component {
@@ -61,36 +61,42 @@ class CommentScreen extends Component {
           containerStyle={{ backgroundColor: Colors['dark-4'] }}
           style={{ backgroundColor: Colors['dark-0'] }}
         >
-          <CommentList
-            ref={this.commentListRef}
-            data={commentList}
-            onRefresh={this.onRefreshComment}
-            onLoadMore={this.loadMoreComment}
-            hasMore={hasMore}
-            emptyComponent={
-              <View
-                style={{
-                  transform: [{ scaleY: -1 }],
-                  alignItems: 'center',
-                  flex: 1,
-                }}
-              >
-                <Text style={_styles.textEmptyCommentTitle}>Write a Comment</Text>
-                <Text style={_styles.textEmptyCommentDesc}>
-                  Click on button at top right to add a comment
-                </Text>
-              </View>
-            }
-          />
-          <CommentTextInput
-            postId={id}
-            onComplete={() => {
-              this.commentListRef.current.toggleRefresh();
-              setTimeout(() => {
-                this.onRefreshComment();
-              }, 3000);
-            }}
-          />
+          <KeyboardAvoidingView
+            behavior={isIOS ? 'padding' : null}
+            style={{ flex: 1, justifyContent: 'center' }}
+            keyboardVerticalOffset={isIOS ? 90 : 0}
+          >
+            <CommentList
+              ref={this.commentListRef}
+              data={commentList}
+              onRefresh={this.onRefreshComment}
+              onLoadMore={this.loadMoreComment}
+              hasMore={hasMore}
+              emptyComponent={
+                <View
+                  style={{
+                    transform: [{ scaleY: -1 }],
+                    alignItems: 'center',
+                    flex: 1,
+                  }}
+                >
+                  <Text style={_styles.textEmptyCommentTitle}>Write a Comment</Text>
+                  <Text style={_styles.textEmptyCommentDesc}>
+                    Click on button at top right to add a comment
+                  </Text>
+                </View>
+              }
+            />
+            <CommentTextInput
+              postId={id}
+              onComplete={() => {
+                this.commentListRef.current.toggleRefresh();
+                setTimeout(() => {
+                  this.onRefreshComment();
+                }, 3000);
+              }}
+            />
+          </KeyboardAvoidingView>
         </Screen>
       </>
     );

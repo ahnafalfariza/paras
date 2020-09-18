@@ -44,7 +44,7 @@ const SearchResult = ({ item }) => {
         >
           <FastImage
             source={{ uri: getImageUrl(item.img) }}
-            style={{ height: 28, width: 28, margin: 4 }}
+            style={{ height: 28, width: 28, margin: 4, borderRadius: isTypeUser ? 14 : 0 }}
           />
           <Text
             style={{

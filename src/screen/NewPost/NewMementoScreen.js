@@ -5,7 +5,6 @@ import {
   View,
   TouchableWithoutFeedback,
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -22,6 +21,7 @@ import MainTextInput from '../../component/Common/MainTextInput';
 import { CREATE_MEMENTO } from '../../utils/api';
 import assetSvg from '../../assets/svg/svg';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class NewMementoScreen extends Component {
   state = {
@@ -45,12 +45,8 @@ class NewMementoScreen extends Component {
         this.props.navigation.goBack();
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 

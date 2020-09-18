@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,10 @@ const Following = ({ data, navigation }) => {
   const dispatch = useDispatch();
   const [isFollowing, setIsFollowing] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsFollowing(true);
+  }, [data.targetId]);
 
   const pressRelation = () => {
     setIsLoading(true);
@@ -50,7 +54,10 @@ const Following = ({ data, navigation }) => {
     <View style={_styles.containerView}>
       <TouchableWithoutFeedback onPress={navigateTo}>
         <View style={_styles.followingData}>
-          <FastImage source={{ uri: getImageUrl(img) }} style={_styles.followingImage} />
+          <FastImage
+            source={{ uri: getImageUrl(img) }}
+            style={[_styles.followingImage, { borderRadius: data.targetType === 'user' ? 14 : 0 }]}
+          />
           <Text
             style={{
               fontFamily: 'Inconsolata-Bold',
@@ -71,6 +78,9 @@ const Following = ({ data, navigation }) => {
         textStyle={{
           fontFamily: 'Inconsolata-Bold',
           fontSize: ResponsiveFont(12),
+        }}
+        buttonStyle={{
+          padding: 0,
         }}
         containerStyle={{ width: 80, height: 24, marginVertical: 0 }}
         onPress={pressRelation}

@@ -67,8 +67,8 @@ class LocalNotificationService {
     return {
       id: id,
       autoCancel: true,
-      largeIcon: options.largeIcon || 'ic_launcher',
-      smallIcon: options.smallIcon || 'ic_notification',
+      largeIcon: 'ic_launcher',
+      smallIcon: 'ic_notification',
       bigText: message || '',
       subText: title || '',
       vibrate: options.vibrate || true,

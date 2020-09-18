@@ -24,6 +24,7 @@ export const CREATE_USER = `${BASE_URL}/register`;
 export const LOGIN = `${BASE_URL}/login`;
 export const VERIFY_USER = `${BASE_URL}/register/confirm`;
 export const VERIFY_TOKEN = `${BASE_URL}/verify`;
+export const ALL_FOLLOWING_LIST = `${BASE_URL}/follow`;
 export const FOLLOWING_LIST = (page) =>
   `${BASE_URL}/follow?__skip=${
     (page - 1) * defaultLimit

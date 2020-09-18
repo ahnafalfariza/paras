@@ -4,9 +4,9 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TextInput,
-  Alert,
   View,
   KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Axios from 'axios';
@@ -18,10 +18,11 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import RoutesName from '../../utils/RoutesName';
-import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
+import { LOGIN, WALLET_BALANCE, ALL_FOLLOWING_LIST } from '../../utils/api';
 import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import { isIOS } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class LoginScreen extends Component {
   state = {
@@ -29,6 +30,7 @@ class LoginScreen extends Component {
   };
 
   onPressLogin = ({ username, seedpassword }) => {
+    Keyboard.dismiss();
     const userId = `${username}.paras.testnet`;
     this.setState({ isLoading: true });
 
@@ -41,17 +43,13 @@ class LoginScreen extends Component {
         this.setState({ isLoading: false });
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 
   getUserFollowing = () => {
-    Axios.get(FOLLOWING_LIST).then((res) => {
+    Axios.get(ALL_FOLLOWING_LIST).then((res) => {
       this.props.dispatchInitFollowing({
         followingList: res.data.data.map((following) => following.targetId),
       });

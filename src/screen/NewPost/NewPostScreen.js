@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import Axios from 'axios';
@@ -27,6 +26,7 @@ import ChooseMemento from '../../component/NewPost/ChooseMemento';
 import { CREATE_POST, EDIT_POST } from '../../utils/api';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import RoutesName from '../../utils/RoutesName';
+import { CustomToast } from '../../utils/CustomToast';
 
 const ContentDimension = SCREEN_WIDTH - 32;
 
@@ -92,12 +92,9 @@ class NewPostScreen extends Component {
         });
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        const { status, data } = err.response;
+        CustomToast(status === 400 ? data.message : 'An error had been occured', 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 

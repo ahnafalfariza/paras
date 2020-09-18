@@ -7,7 +7,6 @@ import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
-import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
 import { logoutUser } from '../../actions/user';
 import { ACTIVITY_POINT, PROFILE_POST_URL } from '../../utils/api';
@@ -62,7 +61,6 @@ class ProfileScreen extends Component {
     Axios.get(ACTIVITY_POINT(id))
       .then((res) => {
         this.setState({ activityPoint: res.data.data });
-        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
   };

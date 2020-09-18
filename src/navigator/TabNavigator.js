@@ -22,6 +22,7 @@ const TabNavigator = ({ profileData, isLoggedIn }) => {
     <Tab.Navigator
       initialRouteName={'ExploreTab'}
       tabBarOptions={tabBarOption}
+      lazy={false}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) =>
           isLoggedIn && profileData ? tabBarIcon(color, route, profileData) : null,

@@ -77,8 +77,8 @@ class WalletTransactionScreen extends Component {
     if (walletBalance < valueSend) {
       CustomToast('You dont have enough coins', 0, 'error');
     } else {
+      this.setState({ isLoading: true });
       setTimeout(() => {
-        this.setState({ isLoading: true });
         Axios.post(WALLET_SEND, {
           targetUserId: sendPacUser,
           value: valueSend,

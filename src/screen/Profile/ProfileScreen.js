@@ -7,7 +7,6 @@ import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
-import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
 import { logoutUser } from '../../actions/user';
 import { ACTIVITY_POINT, PROFILE_POST_URL } from '../../utils/api';

@@ -18,7 +18,7 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import RoutesName from '../../utils/RoutesName';
-import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
+import { LOGIN, WALLET_BALANCE, ALL_FOLLOWING_LIST } from '../../utils/api';
 import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import { isIOS } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
@@ -49,7 +49,7 @@ class LoginScreen extends Component {
   };
 
   getUserFollowing = () => {
-    Axios.get(FOLLOWING_LIST).then((res) => {
+    Axios.get(ALL_FOLLOWING_LIST).then((res) => {
       this.props.dispatchInitFollowing({
         followingList: res.data.data.map((following) => following.targetId),
       });

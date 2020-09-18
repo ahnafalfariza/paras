@@ -99,13 +99,14 @@ const AppNavigator = ({ isLoggedIn }) => {
       }
       //alert("Open Notification: " + notify.body)
     }
-
-    return () => {
-      console.log('[App] unRegister');
-      //alert("[App] unRegister")
-      fcmService.unRegister();
-      localNotificationService.unRegister();
-    };
+    if (isLoggedIn) {
+      return () => {
+        console.log('[App] unRegister');
+        //alert("[App] unRegister")
+        fcmService.unRegister();
+        localNotificationService.unRegister();
+      };
+    }
   }, [isLoggedIn]);
 
   useEffect(() => {

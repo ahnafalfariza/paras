@@ -11,7 +11,7 @@ import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
-import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
+import { LOGIN, WALLET_BALANCE, ALL_FOLLOWING_LIST } from '../../utils/api';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import { CustomToast } from '../../utils/CustomToast';
 
@@ -53,7 +53,7 @@ const SeedConfirmationScreen = ({
   };
 
   const getUserFollowing = () => {
-    Axios.get(FOLLOWING_LIST).then((res) => {
+    Axios.get(ALL_FOLLOWING_LIST).then((res) => {
       dispatchInitFollowing({
         followingList: res.data.data.map((following) => following.targetId),
       });

@@ -50,7 +50,10 @@ const Following = ({ data, navigation }) => {
     <View style={_styles.containerView}>
       <TouchableWithoutFeedback onPress={navigateTo}>
         <View style={_styles.followingData}>
-          <FastImage source={{ uri: getImageUrl(img) }} style={_styles.followingImage} />
+          <FastImage
+            source={{ uri: getImageUrl(img) }}
+            style={[_styles.followingImage, { borderRadius: data.targetType === 'user' ? 14 : 0 }]}
+          />
           <Text
             style={{
               fontFamily: 'Inconsolata-Bold',

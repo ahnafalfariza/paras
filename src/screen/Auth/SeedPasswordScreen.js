@@ -7,11 +7,13 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const SeedPasswordScreen = ({ navigation, route }) => {
   const { data } = route.params;
   const copyToClipboard = () => {
     Clipboard.setString(data.seedPassword);
+    CustomToast('Seed password copied to clipboard', 0, 'default', 1000);
   };
 
   return (

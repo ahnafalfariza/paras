@@ -9,6 +9,7 @@ import Clipboard from '@react-native-community/clipboard';
 import Confirmation from '../../Common/Confimation';
 import { DELETE_POST, REDACT_POST } from '../../../utils/api';
 import RoutesName from '../../../utils/RoutesName';
+import { CustomToast } from '../../../utils/CustomToast';
 
 const PostOptionModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
   const navigation = useNavigation();
@@ -26,8 +27,9 @@ const PostOptionModal = ({ isVisible, onClose, refreshTimeline, postData }) => {
     {
       title: 'Copy Link',
       onPress: () => {
-        copyToClipboard(postId);
         onClose();
+        copyToClipboard(postId);
+        CustomToast('Link copied!', 0, 'default', 1000);
       },
     },
   ];

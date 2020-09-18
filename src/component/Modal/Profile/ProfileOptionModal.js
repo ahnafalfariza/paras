@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import ListMoreOption from '../../Common/ListMoreOption';
 import RoutesName from '../../../utils/RoutesName';
+import { CustomToast } from '../../../utils/CustomToast';
 
 const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
   const navigation = useNavigation();
@@ -12,8 +13,9 @@ const ProfileOptionModal = ({ isVisible, onClose, logoutUser, profileId }) => {
     {
       title: 'Copy Link',
       onPress: () => {
-        copyToClipboard(profileId);
         onClose();
+        copyToClipboard(profileId);
+        CustomToast('Link copied!', 0, 'default', 1000);
       },
     },
     {

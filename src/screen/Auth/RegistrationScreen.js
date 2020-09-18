@@ -4,8 +4,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
-  Alert,
   KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -19,6 +19,7 @@ import { CREATE_USER } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
 import { isIOS } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class RegistrationScreen extends Component {
   state = {
@@ -26,6 +27,7 @@ class RegistrationScreen extends Component {
   };
 
   registerUser = ({ username, email }) => {
+    Keyboard.dismiss();
     this.setState({ isLoading: true });
     Axios.post(CREATE_USER, { username, email })
       .then(() => {
@@ -35,12 +37,8 @@ class RegistrationScreen extends Component {
         }, 1000);
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 

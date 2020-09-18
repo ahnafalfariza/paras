@@ -4,9 +4,9 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TextInput,
-  Alert,
   View,
   KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Axios from 'axios';
@@ -22,6 +22,7 @@ import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
 import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import { isIOS } from '../../utils/constant';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class LoginScreen extends Component {
   state = {
@@ -29,6 +30,7 @@ class LoginScreen extends Component {
   };
 
   onPressLogin = ({ username, seedpassword }) => {
+    Keyboard.dismiss();
     const userId = `${username}.paras.testnet`;
     this.setState({ isLoading: true });
 
@@ -41,12 +43,8 @@ class LoginScreen extends Component {
         this.setState({ isLoading: false });
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 

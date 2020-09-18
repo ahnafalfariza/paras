@@ -5,6 +5,7 @@ import Clipboard from '@react-native-community/clipboard';
 // import RNFetchBlob from 'rn-fetch-blob';
 
 import ListMoreOption from '../../Common/ListMoreOption';
+import { CustomToast } from '../../../utils/CustomToast';
 
 const PostShareModal = ({ isVisible, onClose, postData }) => {
   const { id, user } = postData;
@@ -35,8 +36,9 @@ const PostShareModal = ({ isVisible, onClose, postData }) => {
     {
       title: 'Copy Link',
       onPress: () => {
-        copyToClipboard(postId);
         onClose();
+        copyToClipboard(postId);
+        CustomToast('Link copied!', 0, 'default', 1000);
       },
     },
     {

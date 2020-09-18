@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert, View, TouchableWithoutFeedback } from 'react-native';
+import { Text, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
+import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
@@ -10,9 +11,9 @@ import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
-import Axios from 'axios';
 import { LOGIN, FOLLOWING_LIST, WALLET_BALANCE } from '../../utils/api';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
@@ -32,6 +33,7 @@ const SeedConfirmationScreen = ({
   const onChangeText = (text) => setConfirmText(text);
 
   const onPress = () => {
+    Keyboard.dismiss();
     const isCorrect = seedPassword[numb - 1] === confirmText;
     if (isCorrect) {
       setIsLoading(true);
@@ -45,12 +47,8 @@ const SeedConfirmationScreen = ({
         })
         .catch((err) => console.log(err.response.data));
     } else {
-      Alert.alert(
-        'Error',
-        'Please enter the correct word',
-        [{ text: 'OK', onPress: () => setIsLoading(false) }],
-        { cancelable: false },
-      );
+      CustomToast('Please enter the correct word', 0, 'error', 1000);
+      setIsLoading(false);
     }
   };
 

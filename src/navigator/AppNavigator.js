@@ -78,6 +78,23 @@ const AppNavigator = ({ isLoggedIn }) => {
               screen: RoutesName.WalletHistory,
             },
           });
+        } else if (notify.data.screen === 'comment') {
+          setOnOpenScreen({
+            routeName: 'Comment',
+            params: {
+              id: notify.data.id,
+            },
+          });
+        } else if (notify.data.screen === 'post') {
+          setOnOpenScreen({
+            routeName: RoutesName.HomeTab,
+            params: {
+              screen: RoutesName.SinglePost,
+              params: {
+                postId: notify.data.id,
+              },
+            },
+          });
         }
       }
       //alert("Open Notification: " + notify.body)

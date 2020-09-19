@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { Formik } from 'formik';
@@ -64,12 +65,22 @@ class LoginScreen extends Component {
     });
   };
 
-  loginForm = ({ errors, touched, isValid, handleChange, handleSubmit, setFieldTouched }) => {
+  loginForm = ({
+    values,
+    errors,
+    touched,
+    isValid,
+    handleChange,
+    handleSubmit,
+    setFieldTouched,
+    setFieldValue,
+  }) => {
     const { isLoading } = this.state;
     return (
       <>
         <View style={_styles.formContainer}>
           <TextInput
+            value={values['username']}
             style={_styles.textInput}
             autoCorrect={false}
             autoCapitalize={'none'}
@@ -86,6 +97,7 @@ class LoginScreen extends Component {
         </Text>
         <View style={_styles.formContainer}>
           <TextInput
+            value={values['seedpassword']}
             style={[_styles.textInput, { paddingRight: 12 }]}
             autoCorrect={false}
             autoCapitalize={'none'}
@@ -97,7 +109,14 @@ class LoginScreen extends Component {
             keyboardType={'default'}
             secureTextEntry
           />
-          <Text style={_styles.textHelper}>paste</Text>
+          <TouchableWithoutFeedback
+            onPress={async () => {
+              const seedPassword = await Clipboard.getString();
+              setFieldValue('seedpassword', seedPassword);
+            }}
+          >
+            <Text style={_styles.textHelper}>paste</Text>
+          </TouchableWithoutFeedback>
         </View>
         <Text style={_styles.errorText}>
           {touched.seedpassword && errors.seedpassword ? errors.seedpassword : ' '}
@@ -134,19 +153,14 @@ class LoginScreen extends Component {
             >
               {this.loginForm}
             </Formik>
-            <TouchableWithoutFeedback
-              onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Inconsolata-Regular',
-                  color: Colors['white-1'],
-                  marginTop: 32,
-                }}
+            <Text style={_styles.registText}>
+              {'Dont have an account? '}
+              <TouchableWithoutFeedback
+                onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
               >
-                Dont have an account? Sign up
-              </Text>
-            </TouchableWithoutFeedback>
+                <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Sign up</Text>
+              </TouchableWithoutFeedback>
+            </Text>
           </DismissKeyboard>
         </KeyboardAvoidingView>
       </Screen>
@@ -196,5 +210,11 @@ const _styles = StyleSheet.create({
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,
+  },
+  registText: {
+    fontFamily: 'Inconsolata-Regular',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(13),
+    marginTop: 32,
   },
 });

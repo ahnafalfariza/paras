@@ -97,6 +97,10 @@ class RegistrationScreen extends Component {
                 username: yup
                   .string()
                   .min(6, 'Minimum 6 characters')
+                  // .matches(
+                  //   !/^(([a-z\d]+[\-])[a-z\d]+\.)([a-z\d]+[\-])*[a-z\d]+$/,
+                  //   'Lowercase alphanumeric symbols separated by either _ or -',
+                  // )
                   .required('Username is required'),
                 email: yup.string().email('Not a valid e-mail').required('E-mail is required'),
               })}
@@ -104,19 +108,14 @@ class RegistrationScreen extends Component {
             >
               {this.registForm}
             </Formik>
-            <TouchableWithoutFeedback
-              onPress={() => this.props.navigation.navigate(RoutesName.Login)}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Inconsolata-Regular',
-                  color: Colors['white-1'],
-                  marginTop: 32,
-                }}
+            <Text style={_styles.loginText}>
+              {'Already have an account? '}
+              <TouchableWithoutFeedback
+                onPress={() => this.props.navigation.navigate(RoutesName.Login)}
               >
-                Already have an account? Login
-              </Text>
-            </TouchableWithoutFeedback>
+                <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Login</Text>
+              </TouchableWithoutFeedback>
+            </Text>
           </DismissKeyboard>
         </KeyboardAvoidingView>
       </Screen>
@@ -147,5 +146,11 @@ const _styles = StyleSheet.create({
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,
+  },
+  loginText: {
+    fontFamily: 'Inconsolata-Regular',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(13),
+    marginTop: 32,
   },
 });

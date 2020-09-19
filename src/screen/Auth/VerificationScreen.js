@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableNativeFeedback,
+} from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -12,7 +20,7 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
-import { VERIFY_USER } from '../../utils/api';
+import { CREATE_USER, VERIFY_USER } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
 import { CustomToast } from '../../utils/CustomToast';
@@ -28,16 +36,28 @@ const VerificationScreen = ({ navigation, route }) => {
 
   const { email, username } = route.params;
 
+  const resendVerification = () => {
+    Axios.post(CREATE_USER, { username, email })
+      .then(() => {
+        CustomToast('Verification code sent, check your email', 0, 'default', 1000);
+      })
+      .catch((err) => {
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+      });
+  };
+
   const onPressVerify = () => {
     Keyboard.dismiss();
     setLoading(true);
     Axios.post(VERIFY_USER, { pin: value, email })
       .then((res) => {
-        navigation.navigate(RoutesName.SeedPassword, {
-          data: {
-            seedPassword: res.data.data.seedPassword,
-            username: username,
-          },
+        const params = { data: { seedPassword: res.data.data.seedPassword, username: username } };
+        navigation.reset({
+          index: 0,
+          routes: [
+            { name: RoutesName.Registration },
+            { name: RoutesName.SeedPassword, params: params },
+          ],
         });
         setLoading(false);
       })
@@ -84,7 +104,10 @@ const VerificationScreen = ({ navigation, route }) => {
             onPress={onPressVerify}
           />
           <Text style={[_styles.subTitle, { marginTop: 32 }]}>
-            {"Didn't receive email? resend"}
+            {"Didn't receive email? "}
+            <TouchableNativeFeedback onPress={resendVerification}>
+              <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Resend</Text>
+            </TouchableNativeFeedback>
           </Text>
         </DismissKeyboard>
       </KeyboardAvoidingView>

@@ -25,10 +25,6 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
   const img = type === 'user' ? data.imgAvatar : data.img;
   const desc = type === 'user' ? data.bio : data.desc;
 
-  const editProfile = () => {
-    navigation.navigate('EditProfile');
-  };
-
   const pressRelation = () => {
     setIsLoading(true);
     Axios.post(isFollowing ? UNFOLLOW : FOLLOW, {
@@ -54,6 +50,13 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
           style={[_styles.image, { borderRadius: type === 'user' ? 90 : 0 }]}
         />
       </View>
+      <View style={{ marginVertical: 8 }}>
+        {type === 'memento' && data.isArchive && (
+          <View style={_styles.archiveView}>
+            <Text style={_styles.archiveText}>ARCHIVED</Text>
+          </View>
+        )}
+      </View>
       <Text style={_styles.idText}>{data.id}</Text>
       {type === 'memento' && (
         <TouchableWithoutFeedback
@@ -67,12 +70,12 @@ const Profile = ({ data, type = 'user', currentUser = false }) => {
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
       {!currentUser && (
         <MainButton
-          title={!currentUser ? (isFollowing ? 'UNFOLLOW' : 'FOLLOW') : 'EDIT PROFILE'}
-          secondary={!currentUser && isFollowing}
+          title={isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+          secondary={isFollowing}
           loading={isLoading}
           loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
           containerStyle={{ alignSelf: 'center', width: 150 }}
-          onPress={currentUser ? editProfile : pressRelation}
+          onPress={pressRelation}
         />
       )}
     </View>
@@ -96,7 +99,7 @@ const _styles = StyleSheet.create({
     color: Colors['white-1'],
     fontSize: ResponsiveFont(18),
     margin: 16,
-    marginBottom: 0,
+    marginVertical: 0,
     textAlign: 'center',
   },
   ownerText: {
@@ -112,5 +115,19 @@ const _styles = StyleSheet.create({
     fontSize: ResponsiveFont(15),
     margin: 8,
     textAlign: 'center',
+  },
+  archiveView: {
+    backgroundColor: Colors['dark-16'],
+    alignSelf: 'center',
+    padding: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    marginVertical: 8,
+  },
+  archiveText: {
+    margin: 0,
+    fontFamily: 'Inconsolata-Bold',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(11),
   },
 });

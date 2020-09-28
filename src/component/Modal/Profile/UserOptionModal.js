@@ -22,7 +22,7 @@ const UserOptionModal = ({ isVisible, onClose, profileId }) => {
       title: 'View Memento',
       onPress: () => {
         onClose();
-        navigation.navigate(RoutesName.ProfileMemento);
+        navigation.navigate(RoutesName.ListMemento, { userId: profileId });
       },
     },
   ];

@@ -8,7 +8,7 @@ import Colors from '../../utils/color';
 import { COMMENT } from '../../utils/api';
 import CommentList from '../../component/Common/CommentList';
 import { ResponsiveFont } from '../../utils/ResponsiveFont';
-import { commentLimit, isAndroid, isIOS } from '../../utils/constant';
+import { commentLimit, isIOS } from '../../utils/constant';
 import CommentTextInput from '../../component/Common/CommentTextInput';
 
 class CommentScreen extends Component {
@@ -56,15 +56,11 @@ class CommentScreen extends Component {
     return (
       <>
         <MainHeader leftComponent={'back'} title={'Comment'} />
-        <Screen
-          transparent
-          containerStyle={{ backgroundColor: Colors['dark-4'] }}
-          style={{ backgroundColor: Colors['dark-0'] }}
-        >
-          <KeyboardAvoidingView
-            behavior={isIOS ? 'padding' : null}
-            style={{ flex: 1, justifyContent: 'center' }}
-            keyboardVerticalOffset={isIOS ? 90 : 0}
+        <KeyboardAvoidingView behavior={isIOS ? 'padding' : 'height'} style={{ flex: 1 }}>
+          <Screen
+            transparent
+            containerStyle={{ backgroundColor: Colors['dark-4'] }}
+            style={{ backgroundColor: Colors['dark-0'] }}
           >
             <CommentList
               ref={this.commentListRef}
@@ -73,13 +69,7 @@ class CommentScreen extends Component {
               onLoadMore={this.loadMoreComment}
               hasMore={hasMore}
               emptyComponent={
-                <View
-                  style={{
-                    transform: [{ scaleY: -1 }],
-                    alignItems: 'center',
-                    flex: 1,
-                  }}
-                >
+                <View style={{ transform: [{ scaleY: -1 }], alignItems: 'center', flex: 1 }}>
                   <Text style={_styles.textEmptyCommentTitle}>Write a Comment</Text>
                   <Text style={_styles.textEmptyCommentDesc}>
                     Click on button at top right to add a comment
@@ -96,8 +86,8 @@ class CommentScreen extends Component {
                 }, 3000);
               }}
             />
-          </KeyboardAvoidingView>
-        </Screen>
+          </Screen>
+        </KeyboardAvoidingView>
       </>
     );
   }

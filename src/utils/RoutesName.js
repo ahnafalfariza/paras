@@ -14,6 +14,7 @@ export default {
 
   Memento: 'Memento',
   UserProfile: 'UserProfile',
+  ListMemento: 'ListMemento',
 
   Wallet: 'Wallet',
   WalletHistory: 'WalletHistory',

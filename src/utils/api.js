@@ -58,6 +58,7 @@ export const EDIT_MEMENTO = (mementoId) => `${BASE_URL}/mementos/${mementoId}`;
 export const CREATE_MEMENTO = `${BASE_URL}/mementos`;
 export const ARCHIEVE_MEMENTO = (mementoId) => `${BASE_URL}/mementos/${mementoId}/archieve`;
 export const UNARCHIEVE_MEMENTO = (mementoId) => `${BASE_URL}/mementos/${mementoId}/unarchieve`;
+export const LIST_MEMENTO = (userId) => `${BASE_URL}/mementos?owner=${userId}&__sort=-createdAt`;
 
 //newPost
 export const CREATE_POST = `${BASE_URL}/posts`;

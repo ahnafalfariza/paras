@@ -1,31 +1,47 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import Colors from '../../../utils/color';
-import FastImage from 'react-native-fast-image';
 import { getImageUrl } from '../../../utils/image';
+import { ResponsiveFont } from '../../../utils/ResponsiveFont';
 
-const LinkContent = ({ body }) => {
+const LinkContent = ({ body, disabled = false }) => {
+  const navigation = useNavigation();
+
   const link = JSON.parse(body);
+
   return (
-    <View style={_styles.container}>
-      <View style={_styles.imageView}>
-        <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />
-        <View style={_styles.imageTextContainer}>
-          <Text style={_styles.imageText}>{link.title}</Text>
+    <TouchableNativeFeedback
+      onPress={() => {
+        console.log('go to', link.url);
+        navigation.navigate('WebNavigator', {
+          title: link.title,
+          url: link.url,
+        });
+      }}
+      disabled={disabled}
+    >
+      <View style={_styles.container}>
+        <View style={_styles.imageView}>
+          <FastImage style={_styles.image} source={{ uri: getImageUrl(link.img) }} />
+          <View style={_styles.imageTextContainer}>
+            <Text style={_styles.imageText}>{link.title}</Text>
+          </View>
+        </View>
+        <View style={_styles.descView}>
+          <Text style={_styles.descText} numberOfLines={4}>
+            {link.desc}
+          </Text>
+        </View>
+        <View style={_styles.linkView}>
+          <Text numberOfLines={1} style={_styles.linkText}>
+            {link.url}
+          </Text>
         </View>
       </View>
-      <View style={_styles.descView}>
-        <Text style={_styles.descText} numberOfLines={4}>
-          {link.desc}
-        </Text>
-      </View>
-      <View style={_styles.linkView}>
-        <Text numberOfLines={1} style={_styles.linkText}>
-          {link.url}
-        </Text>
-      </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 
@@ -58,7 +74,7 @@ const _styles = StyleSheet.create({
   },
   imageText: {
     fontFamily: 'Inconsolata-ExtraBold',
-    fontSize: 28,
+    fontSize: ResponsiveFont(24),
     color: Colors['white-1'],
     textAlign: 'center',
     width: '70%',
@@ -70,7 +86,7 @@ const _styles = StyleSheet.create({
   },
   descText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     color: Colors['white-1'],
   },
   linkView: {
@@ -81,7 +97,7 @@ const _styles = StyleSheet.create({
   },
   linkText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     color: Colors['white-1'],
   },
 });

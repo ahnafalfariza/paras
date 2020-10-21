@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableNativeFeedback,
+} from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -12,8 +20,10 @@ import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
-import { VERIFY_USER } from '../../utils/api';
+import { CREATE_USER, VERIFY_USER } from '../../utils/api';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const CELL_COUNT = 6;
 
@@ -26,25 +36,34 @@ const VerificationScreen = ({ navigation, route }) => {
 
   const { email, username } = route.params;
 
+  const resendVerification = () => {
+    Axios.post(CREATE_USER, { username, email })
+      .then(() => {
+        CustomToast('Verification code sent, check your email', 0, 'default', 1000);
+      })
+      .catch((err) => {
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+      });
+  };
+
   const onPressVerify = () => {
+    Keyboard.dismiss();
     setLoading(true);
     Axios.post(VERIFY_USER, { pin: value, email })
       .then((res) => {
-        navigation.navigate(RoutesName.SeedPassword, {
-          data: {
-            seedPassword: res.data.data.seedPassword,
-            username: username,
-          },
+        const params = { data: { seedPassword: res.data.data.seedPassword, username: username } };
+        navigation.reset({
+          index: 0,
+          routes: [
+            { name: RoutesName.Registration },
+            { name: RoutesName.SeedPassword, params: params },
+          ],
         });
         setLoading(false);
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => setLoading(false) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        setLoading(false);
       });
   };
 
@@ -85,7 +104,10 @@ const VerificationScreen = ({ navigation, route }) => {
             onPress={onPressVerify}
           />
           <Text style={[_styles.subTitle, { marginTop: 32 }]}>
-            {"Didn't receive email? resend"}
+            {"Didn't receive email? "}
+            <TouchableNativeFeedback onPress={resendVerification}>
+              <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Resend</Text>
+            </TouchableNativeFeedback>
           </Text>
         </DismissKeyboard>
       </KeyboardAvoidingView>
@@ -97,13 +119,13 @@ export default VerificationScreen;
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 32,
+    fontSize: ResponsiveFont(28),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 12,
   },
   subTitle: {
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Regular',
   },
@@ -120,7 +142,7 @@ const _styles = StyleSheet.create({
   },
   cellText: {
     lineHeight: 48,
-    fontSize: 24,
+    fontSize: ResponsiveFont(20),
     textAlign: 'center',
     color: Colors['white-1'],
   },

@@ -3,17 +3,87 @@ import { View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import MainHeader from '../../component/Header/MainHeader';
-import Profile from '../../component/Profile/Profile';
 import assetSvg from '../../assets/svg/svg';
-import Colors from '../../utils/color';
-import MainButton from '../../component/Common/MainButton';
 import { logoutUser } from '../../actions/user';
+import { ACTIVITY_POINT, PROFILE_POST_URL } from '../../utils/api';
+import { postLimit } from '../../utils/constant';
+import PostList from '../../component/Post/Post';
+import ProfileOptionModal from '../../component/Modal/Profile/ProfileOptionModal';
+import ProfilePoint from '../../component/Profile/ProfilePoint';
 
 class ProfileScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.postList = React.createRef();
+    this.state = {
+      page: 1,
+      postList: [],
+      hasMore: true,
+      optionModal: false,
+      activityPoint: null,
+    };
+  }
+
+  componentDidMount() {
+    this.getPostData(this.state.page, true);
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      const { needToRefresh } = this.props.route.params;
+      if (needToRefresh) {
+        this.postList.current.toggleRefresh();
+        this.props.navigation.setParams({ needToRefresh: false });
+      }
+      this.getActivityPoint();
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getPostData = (page, onRefresh = false) => {
+    const { id } = this.props.profileData;
+    Axios.get(PROFILE_POST_URL(id, page))
+      .then((res) => {
+        this.setState((prevState) => ({
+          postList: onRefresh ? res.data.data : [...prevState.postList, ...res.data.data],
+          hasMore: res.data.data.length < postLimit ? false : true,
+        }));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  getActivityPoint = () => {
+    const { id } = this.props.profileData;
+    Axios.get(ACTIVITY_POINT(id))
+      .then((res) => {
+        this.setState({ activityPoint: res.data.data });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  onRefresh = () => {
+    this.getPostData(1, true);
+    this.setState({ page: 1 });
+  };
+
+  loadMorePost = () => {
+    const page = this.state.page + 1;
+    this.getPostData(page);
+    this.setState({ page });
+  };
+
+  toggleModal = () => {
+    this.setState((prevState) => ({ optionModal: !prevState.optionModal }));
+  };
+
   render() {
+    const { postList, hasMore, optionModal, activityPoint } = this.state;
+    const { profileData, dispatchLogoutUser } = this.props;
+
     if (this.props.profileData === null && !this.props.isLoggedIn) {
       return null;
     }
@@ -23,22 +93,33 @@ class ProfileScreen extends Component {
         <MainHeader
           title={'Profile'}
           rightComponent={() => (
-            <TouchableWithoutFeedback onPress={() => console.log('more profile')}>
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
               <View style={{ paddingRight: 4 }}>
                 <SvgXml
                   xml={assetSvg.common.more}
                   width="28"
                   height="28"
                   style={{ justifyContent: 'flex-end' }}
-                  fill={Colors['white-1']}
                 />
               </View>
             </TouchableWithoutFeedback>
           )}
         />
         <Screen>
-          <Profile data={this.props.profileData} />
-          <MainButton title={'Logout'} onPress={this.props.logoutUser} />
+          <PostList
+            ref={this.postList}
+            list={postList}
+            header={<ProfilePoint data={profileData} point={activityPoint} />}
+            onLoadMore={this.loadMorePost}
+            onRefresh={this.onRefresh}
+            hasMore={hasMore}
+          />
+          <ProfileOptionModal
+            profileId={profileData.id}
+            isVisible={optionModal}
+            onClose={this.toggleModal}
+            logoutUser={dispatchLogoutUser}
+          />
         </Screen>
       </>
     );
@@ -51,7 +132,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  logoutUser,
+  dispatchLogoutUser: logoutUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

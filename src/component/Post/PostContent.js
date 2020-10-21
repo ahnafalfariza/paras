@@ -15,12 +15,8 @@ const PostContent = ({ contentList }) => {
     <View style={{ height: SCREEN_WIDTH - 32 }}>
       <Swiper
         showsButtons={true}
-        nextButton={
-          <SvgXml xml={assetSvg.postContent.next} width="28" height="28" fill={Colors['white-1']} />
-        }
-        prevButton={
-          <SvgXml xml={assetSvg.postContent.prev} width="28" height="28" fill={Colors['white-1']} />
-        }
+        nextButton={<SvgXml xml={assetSvg.postContent.next} width="28" height="28" />}
+        prevButton={<SvgXml xml={assetSvg.postContent.prev} width="28" height="28" />}
         autoplay={false}
         loop={false}
         showsPagination={true}

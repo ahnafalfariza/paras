@@ -1,24 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import Axios from 'axios';
 
 import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import MainButton from '../Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { FOLLOW, UNFOLLOW } from '../../utils/api';
+import { toggleFollow } from '../../actions/user';
 
-const Profile = ({ data, type = 'user' }) => {
+const Profile = ({ data, type = 'user', currentUser = false }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const followingList = useSelector((state) => state.user.followingList);
+  const [isFollowing, setIsFollowing] = useState(followingList.includes(data.id));
+  const [isLoading, setIsLoading] = useState(false);
+
   const img = type === 'user' ? data.imgAvatar : data.img;
   const desc = type === 'user' ? data.bio : data.desc;
 
-  const navigation = useNavigation();
+  const pressRelation = () => {
+    setIsLoading(true);
+    Axios.post(isFollowing ? UNFOLLOW : FOLLOW, {
+      targetId: data.id,
+      targetType: type,
+    })
+      .then(() => {
+        dispatch(toggleFollow(data.id));
+        setIsLoading(false);
+        setIsFollowing(!isFollowing);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  };
 
   return (
     <View style={{ marginVertical: 8 }}>
       <View style={_styles.imageContainer}>
-        <FastImage source={{ uri: getImageUrl(img) }} style={_styles.image} />
+        <FastImage
+          source={{ uri: getImageUrl(img) }}
+          style={[_styles.image, { borderRadius: type === 'user' ? 90 : 0 }]}
+        />
+      </View>
+      <View style={{ marginVertical: 8 }}>
+        {type === 'memento' && data.isArchive && (
+          <View style={_styles.archiveView}>
+            <Text style={_styles.archiveText}>ARCHIVED</Text>
+          </View>
+        )}
       </View>
       <Text style={_styles.idText}>{data.id}</Text>
       {type === 'memento' && (
@@ -31,7 +68,16 @@ const Profile = ({ data, type = 'user' }) => {
         </TouchableWithoutFeedback>
       )}
       {desc !== '' && <Text style={_styles.descText}>{desc}</Text>}
-      <MainButton title={'FOLLOW'} containerStyle={{ alignSelf: 'center', width: 150 }} />
+      {!currentUser && (
+        <MainButton
+          title={isFollowing ? 'UNFOLLOW' : 'FOLLOW'}
+          secondary={isFollowing}
+          loading={isLoading}
+          loadingColor={isFollowing ? Colors['primary-5'] : Colors['white-1']}
+          containerStyle={{ alignSelf: 'center', width: 150 }}
+          onPress={pressRelation}
+        />
+      )}
     </View>
   );
 };
@@ -51,23 +97,37 @@ const _styles = StyleSheet.create({
   idText: {
     fontFamily: 'Inconsolata-Bold',
     color: Colors['white-1'],
-    fontSize: 24,
+    fontSize: ResponsiveFont(18),
     margin: 16,
-    marginBottom: 0,
+    marginVertical: 0,
     textAlign: 'center',
   },
   ownerText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     textAlign: 'center',
   },
   descText: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     paddingHorizontal: 12,
-    fontSize: 18,
+    fontSize: ResponsiveFont(15),
     margin: 8,
     textAlign: 'center',
+  },
+  archiveView: {
+    backgroundColor: Colors['dark-16'],
+    alignSelf: 'center',
+    padding: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    marginVertical: 8,
+  },
+  archiveText: {
+    margin: 0,
+    fontFamily: 'Inconsolata-Bold',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(11),
   },
 });

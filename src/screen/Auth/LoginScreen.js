@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableWithoutFeedback, TextInput, Alert, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  TextInput,
+  View,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { Formik } from 'formik';
@@ -10,8 +19,11 @@ import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import RoutesName from '../../utils/RoutesName';
-import { LOGIN, PROFILE_URL } from '../../utils/api';
-import { initUser } from '../../actions/user';
+import { LOGIN, WALLET_BALANCE, ALL_FOLLOWING_LIST } from '../../utils/api';
+import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
+import { isIOS } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class LoginScreen extends Component {
   state = {
@@ -19,40 +31,56 @@ class LoginScreen extends Component {
   };
 
   onPressLogin = ({ username, seedpassword }) => {
+    Keyboard.dismiss();
     const userId = `${username}.paras.testnet`;
     this.setState({ isLoading: true });
 
     Axios.post(LOGIN, { userId: userId, seed: seedpassword })
       .then((res) => {
         Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        this.getUserFollowing();
+        this.getWalletBalance(res.data.data.profile.id);
         this.props.dispatchInitUser(res.data.data);
         this.setState({ isLoading: false });
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 
-  getUserData = (userId, token) => {
-    Axios.get(PROFILE_URL(userId)).then((profileres) => {
-      this.props.dispatchInitUser({
-        profile: profileres.data.data[0],
-        token: token,
+  getUserFollowing = () => {
+    Axios.get(ALL_FOLLOWING_LIST).then((res) => {
+      this.props.dispatchInitFollowing({
+        followingList: res.data.data.map((following) => following.targetId),
       });
     });
   };
 
-  loginForm = ({ errors, touched, isValid, handleChange, handleSubmit, setFieldTouched }) => {
+  getWalletBalance = (userId) => {
+    Axios.get(WALLET_BALANCE(userId)).then((res) => {
+      this.props.dispatchsetWalletBalance({
+        walletBalance: res.data.data,
+      });
+    });
+  };
+
+  loginForm = ({
+    values,
+    errors,
+    touched,
+    isValid,
+    handleChange,
+    handleSubmit,
+    setFieldTouched,
+    setFieldValue,
+  }) => {
     const { isLoading } = this.state;
     return (
       <>
         <View style={_styles.formContainer}>
           <TextInput
+            value={values['username']}
             style={_styles.textInput}
             autoCorrect={false}
             autoCapitalize={'none'}
@@ -69,6 +97,7 @@ class LoginScreen extends Component {
         </Text>
         <View style={_styles.formContainer}>
           <TextInput
+            value={values['seedpassword']}
             style={[_styles.textInput, { paddingRight: 12 }]}
             autoCorrect={false}
             autoCapitalize={'none'}
@@ -80,7 +109,14 @@ class LoginScreen extends Component {
             keyboardType={'default'}
             secureTextEntry
           />
-          <Text style={_styles.textHelper}>paste</Text>
+          <TouchableWithoutFeedback
+            onPress={async () => {
+              const seedPassword = await Clipboard.getString();
+              setFieldValue('seedpassword', seedPassword);
+            }}
+          >
+            <Text style={_styles.textHelper}>paste</Text>
+          </TouchableWithoutFeedback>
         </View>
         <Text style={_styles.errorText}>
           {touched.seedpassword && errors.seedpassword ? errors.seedpassword : ' '}
@@ -99,34 +135,34 @@ class LoginScreen extends Component {
   render() {
     return (
       <Screen style={{ flex: 1, padding: 32 }}>
-        <DismissKeyboard style={{ justifyContent: 'center' }}>
-          <Text style={_styles.title}>{'Welcome\nBack'}</Text>
-          <Formik
-            initialValues={{ username: '', seedpassword: '' }}
-            validationSchema={yup.object().shape({
-              username: yup.string().required('Username is required'),
-              seedpassword: yup
-                .string()
-                .required('Seed password is required. It contains 12 words as signature'),
-            })}
-            onSubmit={this.onPressLogin}
-          >
-            {this.loginForm}
-          </Formik>
-          <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
-          >
-            <Text
-              style={{
-                fontFamily: 'Inconsolata-Regular',
-                color: Colors['white-1'],
-                marginTop: 32,
-              }}
+        <KeyboardAvoidingView
+          behavior={isIOS ? 'padding' : 'height'}
+          style={{ flex: 1, justifyContent: 'center' }}
+        >
+          <DismissKeyboard style={{ justifyContent: 'center' }}>
+            <Text style={_styles.title}>{'Welcome\nBack'}</Text>
+            <Formik
+              initialValues={{ username: '', seedpassword: '' }}
+              validationSchema={yup.object().shape({
+                username: yup.string().required('Username is required'),
+                seedpassword: yup
+                  .string()
+                  .required('Seed password is required. It contains 12 words as signature'),
+              })}
+              onSubmit={this.onPressLogin}
             >
-              Dont have an account? Sign up
+              {this.loginForm}
+            </Formik>
+            <Text style={_styles.registText}>
+              {'Dont have an account? '}
+              <TouchableWithoutFeedback
+                onPress={() => this.props.navigation.navigate(RoutesName.Registration)}
+              >
+                <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Sign up</Text>
+              </TouchableWithoutFeedback>
             </Text>
-          </TouchableWithoutFeedback>
-        </DismissKeyboard>
+          </DismissKeyboard>
+        </KeyboardAvoidingView>
       </Screen>
     );
   }
@@ -134,13 +170,15 @@ class LoginScreen extends Component {
 
 const mapDispatchToProps = {
   dispatchInitUser: initUser,
+  dispatchInitFollowing: initFollowing,
+  dispatchsetWalletBalance: setWalletBalance,
 };
 
 export default connect(null, mapDispatchToProps)(LoginScreen);
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 48,
+    fontSize: ResponsiveFont(36),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 16,
@@ -155,22 +193,28 @@ const _styles = StyleSheet.create({
   textInput: {
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     paddingRight: 4,
     flex: 1,
   },
   textHelper: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     marginRight: 16,
   },
   errorText: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 10,
+    fontSize: ResponsiveFont(12),
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,
+  },
+  registText: {
+    fontFamily: 'Inconsolata-Regular',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(13),
+    marginTop: 32,
   },
 });

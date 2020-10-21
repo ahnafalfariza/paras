@@ -1,46 +1,54 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { SvgXml } from 'react-native-svg';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const PostAction = () => {
+const PostAction = ({ id, onPressShare, showModalPiece }) => {
+  const navigation = useNavigation();
+
+  const onPressPiece = () => {
+    showModalPiece(id);
+  };
+
+  const onPressComment = () => {
+    navigation.navigate('Comment', { id: id });
+  };
+
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 16 }}>
-      <TouchableWithoutFeedback onPress={() => console.log('pieces')}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingVertical: 12 }}>
+      <TouchableWithoutFeedback onPress={onPressPiece}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.piece}
-            width="22"
-            height="22"
+            width="21"
+            height="21"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Piece</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => console.log('comment')}>
+      <TouchableWithoutFeedback onPress={onPressComment}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.comment}
-            width="22"
-            height="22"
+            width="21"
+            height="21"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Comment</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => console.log('share')}>
+      <TouchableWithoutFeedback onPress={onPressShare}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <SvgXml
             xml={assetSvg.postContent.share}
-            width="22"
-            height="22"
+            width="21"
+            height="21"
             style={{ marginRight: 6 }}
-            fill={Colors['white-1']}
           />
           <Text style={_styles.memento}>Share</Text>
         </View>
@@ -54,7 +62,7 @@ export default PostAction;
 const _styles = StyleSheet.create({
   memento: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 16,
+    fontSize: ResponsiveFont(12),
     color: Colors['white-1'],
   },
 });

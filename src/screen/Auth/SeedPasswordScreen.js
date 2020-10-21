@@ -1,17 +1,38 @@
-import React from 'react';
-import { Text, StyleSheet, View, TouchableNativeFeedback } from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, StyleSheet, View, TouchableNativeFeedback, Alert } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import MainButton from '../../component/Common/MainButton';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const SeedPasswordScreen = ({ navigation, route }) => {
   const { data } = route.params;
   const copyToClipboard = () => {
     Clipboard.setString(data.seedPassword);
+    CustomToast('Seed password copied to clipboard', 0, 'default', 1000);
   };
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+      Alert.alert(
+        'Registration uncomplete',
+        'You have not finish your registration yet. Are you sure to discard and leave the screen?',
+        [
+          { text: 'Cancel', style: 'cancel', onPress: () => {} },
+          {
+            text: 'Discard',
+            style: 'destructive',
+            onPress: () => navigation.dispatch(e.data.action),
+          },
+        ],
+      );
+    });
+  }, [navigation]);
 
   return (
     <Screen style={{ margin: 32, flex: 1, justifyContent: 'center' }}>
@@ -64,7 +85,7 @@ export default SeedPasswordScreen;
 const _styles = StyleSheet.create({
   textDesc: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 16,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
     lineHeight: 18,
   },
@@ -75,7 +96,7 @@ const _styles = StyleSheet.create({
   },
   seedPasswordText: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 16,
     color: Colors['white-1'],
     textAlign: 'center',

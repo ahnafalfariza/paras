@@ -7,6 +7,7 @@ import { getImageUrl } from '../../utils/image';
 import Colors from '../../utils/color';
 import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const SearchResultList = ({ result }) => {
   const renderItem = ({ item }) => <SearchResult item={item} />;
@@ -43,12 +44,12 @@ const SearchResult = ({ item }) => {
         >
           <FastImage
             source={{ uri: getImageUrl(item.img) }}
-            style={{ height: 28, width: 28, margin: 4 }}
+            style={{ height: 28, width: 28, margin: 4, borderRadius: isTypeUser ? 14 : 0 }}
           />
           <Text
             style={{
               fontFamily: 'Inconsolata-Bold',
-              fontSize: 18,
+              fontSize: ResponsiveFont(15),
               color: Colors['white-1'],
               marginLeft: 8,
             }}
@@ -56,18 +57,9 @@ const SearchResult = ({ item }) => {
             {item.id}
           </Text>
         </View>
-        <View></View>
+        <View />
       </View>
     </TouchableWithoutFeedback>
-  );
-};
-
-const smallPost = () => {
-  return (
-    <FastImage
-      source={{ uri: getImageUrl(data.postList[0]) }}
-      style={{ height: 28, width: 28, margin: 4 }}
-    />
   );
 };
 

@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 
 import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const MemoryGrant = ({ img = null, mementoId = '' }) => {
   return (
@@ -28,14 +29,16 @@ const MemoryGrant = ({ img = null, mementoId = '' }) => {
         <Text
           style={{
             fontFamily: 'Inconsolata-Regular',
-            fontSize: 16,
+            fontSize: ResponsiveFont(14),
             color: Colors['white-1'],
             lineHeight: 24,
             flex: 5,
           }}
         >
           <Text>Contribute to </Text>
-          <Text style={{ fontFamily: 'Inconsolata-Bold' }}>{mementoId}</Text>
+          <Text style={{ fontFamily: 'Inconsolata-Bold', fontSize: ResponsiveFont(14) }}>
+            {mementoId}
+          </Text>
           <Text>And get a chance to win $10 for 5 users</Text>
         </Text>
       </View>
@@ -46,7 +49,7 @@ const MemoryGrant = ({ img = null, mementoId = '' }) => {
           padding: 8,
           paddingTop: 0,
           paddingBottom: 16,
-          fontSize: 15,
+          fontSize: ResponsiveFont(11),
           textAlign: 'right',
         }}
       >

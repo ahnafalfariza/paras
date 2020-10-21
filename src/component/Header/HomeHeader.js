@@ -6,8 +6,11 @@ import MainHeader from './MainHeader';
 import Colors from '../../utils/color';
 import { useNavigation } from '@react-navigation/native';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { SvgXml } from 'react-native-svg';
+import assetSvg from '../../assets/svg/svg';
 
-const HomeHeader = ({ active = 'picks' }) => {
+const HomeHeader = ({ active = 'top' }) => {
   return <MainHeader centerComponent={<CenterHeaderComponent active={active} />} />;
 };
 
@@ -15,37 +18,67 @@ const CenterHeaderComponent = ({ active }) => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <TouchableWithoutFeedback
-        onPress={() => (active === 'picks' ? null : navigation.navigate(RoutesName.HomePicks))}
+    <View
+      style={{
+        position: 'relative',
+        width: '100%',
+      }}
+    >
+      <View
+        style={{
+          alignItems: 'center',
+        }}
       >
-        <Text
-          style={{
-            fontFamily: active === 'picks' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
-            color: Colors['white-1'],
-            fontSize: 18,
-            padding: 8,
-          }}
-        >
-          Picks
-        </Text>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() =>
-          active === 'following' ? null : navigation.navigate(RoutesName.HomeFollowing)
-        }
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableWithoutFeedback
+            onPress={() => (active === 'top' ? null : navigation.navigate(RoutesName.HomeTop))}
+          >
+            <Text
+              style={{
+                fontFamily: active === 'top' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
+                color: Colors['white-1'],
+                fontSize: ResponsiveFont(15),
+                padding: 8,
+              }}
+            >
+              Top
+            </Text>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              active === 'following' ? null : navigation.navigate(RoutesName.HomeFollowing)
+            }
+          >
+            <Text
+              style={{
+                fontFamily:
+                  active === 'following' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
+                color: Colors['white-1'],
+                fontSize: ResponsiveFont(15),
+                padding: 8,
+              }}
+            >
+              Following
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+      <View
+        style={{
+          justifyContent: 'center',
+          position: 'absolute',
+          right: 0,
+          height: '100%',
+        }}
       >
-        <Text
-          style={{
-            fontFamily: active === 'following' ? 'Inconsolata-ExtraBold' : 'Inconsolata-Regular',
-            color: Colors['white-1'],
-            fontSize: 18,
-            padding: 8,
-          }}
+        <TouchableWithoutFeedback
+          onPress={() =>
+            active === 'notification' ? null : navigation.navigate(RoutesName.HomeNotification)
+          }
         >
-          Following
-        </Text>
-      </TouchableWithoutFeedback>
+          <SvgXml xml={assetSvg.common.notification} width="24" height="24" />
+        </TouchableWithoutFeedback>
+      </View>
     </View>
   );
 };

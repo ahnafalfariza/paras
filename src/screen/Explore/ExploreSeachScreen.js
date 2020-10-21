@@ -7,6 +7,7 @@ import { View, TextInput } from 'react-native';
 import Colors from '../../utils/color';
 import { SEARCH_URL } from '../../utils/api';
 import SearchResultList from '../../component/Search/SearchResult';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 const ExploreSearchScreen = () => {
   const [data, setData] = useState([]);
@@ -25,7 +26,10 @@ const ExploreSearchScreen = () => {
 
   return (
     <>
-      <MainHeader centerComponent={() => <Search onChange={getSearchData} />} withBack />
+      <MainHeader
+        centerComponent={() => <Search onChange={getSearchData} />}
+        leftComponent={'back'}
+      />
       <Screen>
         <SearchResultList result={data} />
       </Screen>
@@ -42,7 +46,7 @@ const Search = ({ onChange }) => {
         style={{
           fontFamily: 'Inconsolata-Regular',
           color: Colors['white-1'],
-          fontSize: 18,
+          fontSize: ResponsiveFont(15),
           padding: 0,
         }}
         autoCorrect={false}

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { SvgXml } from 'react-native-svg';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
@@ -7,6 +10,8 @@ import Profile from '../../component/Profile/Profile';
 import { MEMENTO_POST_URL, MEMENTO_URL } from '../../utils/api';
 import PostList from '../../component/Post/Post';
 import { postLimit } from '../../utils/constant';
+import assetSvg from '../../assets/svg/svg';
+import MementoOptionModal from '../../component/Modal/Profile/MementoOptionModal';
 
 class MementoScreen extends Component {
   state = {
@@ -14,10 +19,17 @@ class MementoScreen extends Component {
     postList: [],
     memento: this.props.route.params.memento,
     hasMore: true,
+    mementoOptionModal: false,
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.route.params.memento !== prevProps.route.params.memento) {
+      this.getMementoData();
+    }
+  }
+
   componentDidMount() {
-    this.getPostData(this.state.page);
+    this.getPostData(this.state.page, true);
     this.getMementoData();
   }
 
@@ -44,6 +56,7 @@ class MementoScreen extends Component {
 
   onRefresh = () => {
     this.getPostData(1, true);
+    this.getMementoData();
     this.setState({ page: 1 });
   };
 
@@ -53,12 +66,30 @@ class MementoScreen extends Component {
     this.setState({ page });
   };
 
+  toggleModal = () => {
+    this.setState((prevState) => ({ mementoOptionModal: !prevState.mementoOptionModal }));
+  };
+
   render() {
-    const { postList, hasMore, memento } = this.state;
+    const { postList, hasMore, memento, mementoOptionModal } = this.state;
+    const { id } = this.props.profileData;
 
     return (
       <>
-        <MainHeader title={memento.id} withBack />
+        <MainHeader
+          title={memento.id}
+          leftComponent={'back'}
+          rightComponent={() => (
+            <TouchableWithoutFeedback onPress={this.toggleModal}>
+              <SvgXml
+                xml={assetSvg.common.more}
+                width="28"
+                height="28"
+                style={{ justifyContent: 'flex-end' }}
+              />
+            </TouchableWithoutFeedback>
+          )}
+        />
         <Screen>
           <PostList
             list={postList}
@@ -67,10 +98,21 @@ class MementoScreen extends Component {
             onRefresh={this.onRefresh}
             hasMore={hasMore}
           />
+          <MementoOptionModal
+            isVisible={mementoOptionModal}
+            isUserOwner={memento.owner === id}
+            onClose={this.toggleModal}
+            refreshMementoData={this.getMementoData}
+            mementoData={memento}
+          />
         </Screen>
       </>
     );
   }
 }
 
-export default MementoScreen;
+const mapStateToProps = (state) => ({
+  profileData: state.user.profile,
+});
+
+export default connect(mapStateToProps)(MementoScreen);

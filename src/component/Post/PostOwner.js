@@ -9,8 +9,9 @@ import Colors from '../../utils/color';
 import { getImageUrl } from '../../utils/image';
 import assetSvg from '../../assets/svg/svg';
 import RoutesName from '../../utils/RoutesName';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const PostOwner = ({ user }) => {
+const PostOwner = ({ user, id, onPressOption }) => {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -20,14 +21,7 @@ const PostOwner = ({ user }) => {
   }
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'space-between',
-      }}
-    >
+    <View style={_styles.container}>
       <TouchableWithoutFeedback
         onPress={() => (isSameRoute ? null : navigation.push(RoutesName.UserProfile, { user }))}
       >
@@ -36,14 +30,13 @@ const PostOwner = ({ user }) => {
           <Text style={_styles.userText}>{user.id}</Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback onPress={() => console.log('more')}>
-        <View style={{ padding: 16 }}>
+      <TouchableWithoutFeedback onPress={onPressOption}>
+        <View style={{ padding: 8 }}>
           <SvgXml
             xml={assetSvg.common.more}
             width="24"
             height="24"
             style={{ justifyContent: 'flex-end' }}
-            fill={Colors['white-1']}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -54,15 +47,22 @@ const PostOwner = ({ user }) => {
 export default PostOwner;
 
 const _styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   userText: {
     fontFamily: 'Inconsolata-Bold',
-    fontSize: 18,
+    fontSize: ResponsiveFont(14),
     color: Colors['white-1'],
   },
   userImage: {
-    height: 36,
-    width: 36,
-    margin: 10,
+    height: 32,
+    width: 32,
+    margin: 8,
+    borderRadius: 16,
   },
   userView: {
     flexDirection: 'row',

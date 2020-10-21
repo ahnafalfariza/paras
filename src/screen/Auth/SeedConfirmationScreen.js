@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, Alert, View, TouchableWithoutFeedback } from 'react-native';
+import { Text, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgXml } from 'react-native-svg';
+import Axios from 'axios';
 
 import Screen from '../../component/Common/Screen';
 import Colors from '../../utils/color';
 import { TextInput } from 'react-native-gesture-handler';
 import MainButton from '../../component/Common/MainButton';
 import DismissKeyboard from '../../component/Common/DismissKeyboard';
-import { initUser } from '../../actions/user';
+import { initUser, initFollowing, setWalletBalance } from '../../actions/user';
 import assetSvg from '../../assets/svg/svg';
-import Axios from 'axios';
-import { LOGIN } from '../../utils/api';
+import { LOGIN, WALLET_BALANCE, ALL_FOLLOWING_LIST } from '../../utils/api';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 const numb = Math.floor(Math.random() * 12 + 1);
 
-const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
+const SeedConfirmationScreen = ({
+  navigation,
+  route,
+  dispatchInitUser,
+  dispatchInitFollowing,
+  dispatchsetWalletBalance,
+}) => {
   const { data } = route.params;
   const seedPassword = data.seedPassword.split(' ');
 
@@ -25,24 +33,39 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
   const onChangeText = (text) => setConfirmText(text);
 
   const onPress = () => {
+    Keyboard.dismiss();
     const isCorrect = seedPassword[numb - 1] === confirmText;
     if (isCorrect) {
       setIsLoading(true);
       Axios.post(LOGIN, { userId: data.username + '.paras.testnet', seed: data.seedPassword })
         .then((res) => {
           Axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+          getUserFollowing();
+          getWalletBalance(res.data.data.profile.id);
           dispatchInitUser(res.data.data);
           setIsLoading(false);
         })
         .catch((err) => console.log(err.response.data));
     } else {
-      Alert.alert(
-        'Error',
-        'Please enter the correct word',
-        [{ text: 'OK', onPress: () => setIsLoading(false) }],
-        { cancelable: false },
-      );
+      CustomToast('Please enter the correct word', 0, 'error', 1000);
+      setIsLoading(false);
     }
+  };
+
+  const getUserFollowing = () => {
+    Axios.get(ALL_FOLLOWING_LIST).then((res) => {
+      dispatchInitFollowing({
+        followingList: res.data.data.map((following) => following.targetId),
+      });
+    });
+  };
+
+  const getWalletBalance = (userId) => {
+    Axios.get(WALLET_BALANCE(userId)).then((res) => {
+      dispatchsetWalletBalance({
+        walletBalance: res.data.data,
+      });
+    });
   };
 
   return (
@@ -50,7 +73,7 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
       <DismissKeyboard style={{ justifyContent: 'center' }}>
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <View style={{ position: 'absolute', top: 0 }}>
-            <SvgXml xml={assetSvg.header.back} width="24" height="24" fill={Colors['white-1']} />
+            <SvgXml xml={assetSvg.header.back} width="24" height="24" />
           </View>
         </TouchableWithoutFeedback>
         <Text style={_styles.textDesc}>{`Whats the ${numb} word?`}</Text>
@@ -69,6 +92,8 @@ const SeedConfirmationScreen = ({ navigation, route, dispatchInitUser }) => {
 
 const mapDispatchToProps = {
   dispatchInitUser: initUser,
+  dispatchInitFollowing: initFollowing,
+  dispatchsetWalletBalance: setWalletBalance,
 };
 
 export default connect(null, mapDispatchToProps)(SeedConfirmationScreen);
@@ -76,7 +101,7 @@ export default connect(null, mapDispatchToProps)(SeedConfirmationScreen);
 const _styles = StyleSheet.create({
   textDesc: {
     fontFamily: 'Inconsolata-SemiBold',
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     color: Colors['white-1'],
   },
   textInput: {
@@ -84,7 +109,7 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },

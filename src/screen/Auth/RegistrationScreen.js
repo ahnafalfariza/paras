@@ -4,9 +4,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
-  Alert,
   KeyboardAvoidingView,
-  Platform,
+  Keyboard,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -18,6 +17,9 @@ import DismissKeyboard from '../../component/Common/DismissKeyboard';
 import Axios from 'axios';
 import { CREATE_USER } from '../../utils/api';
 import RoutesName from '../../utils/RoutesName';
+import { isIOS } from '../../utils/constant';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
+import { CustomToast } from '../../utils/CustomToast';
 
 class RegistrationScreen extends Component {
   state = {
@@ -25,6 +27,7 @@ class RegistrationScreen extends Component {
   };
 
   registerUser = ({ username, email }) => {
+    Keyboard.dismiss();
     this.setState({ isLoading: true });
     Axios.post(CREATE_USER, { username, email })
       .then(() => {
@@ -34,12 +37,8 @@ class RegistrationScreen extends Component {
         }, 1000);
       })
       .catch((err) => {
-        Alert.alert(
-          'Error',
-          err.response.data.message,
-          [{ text: 'OK', onPress: () => this.setState({ isLoading: false }) }],
-          { cancelable: false },
-        );
+        CustomToast(err.response.data.message, 0, 'error', 1000);
+        this.setState({ isLoading: false });
       });
   };
 
@@ -87,7 +86,7 @@ class RegistrationScreen extends Component {
     return (
       <Screen style={{ padding: 32, flex: 1 }}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={isIOS ? 'padding' : 'height'}
           style={{ flex: 1, justifyContent: 'center' }}
         >
           <DismissKeyboard style={{ justifyContent: 'center' }}>
@@ -98,6 +97,10 @@ class RegistrationScreen extends Component {
                 username: yup
                   .string()
                   .min(6, 'Minimum 6 characters')
+                  // .matches(
+                  //   !/^(([a-z\d]+[\-])[a-z\d]+\.)([a-z\d]+[\-])*[a-z\d]+$/,
+                  //   'Lowercase alphanumeric symbols separated by either _ or -',
+                  // )
                   .required('Username is required'),
                 email: yup.string().email('Not a valid e-mail').required('E-mail is required'),
               })}
@@ -105,19 +108,14 @@ class RegistrationScreen extends Component {
             >
               {this.registForm}
             </Formik>
-            <TouchableWithoutFeedback
-              onPress={() => this.props.navigation.navigate(RoutesName.Login)}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Inconsolata-Regular',
-                  color: Colors['white-1'],
-                  marginTop: 32,
-                }}
+            <Text style={_styles.loginText}>
+              {'Already have an account? '}
+              <TouchableWithoutFeedback
+                onPress={() => this.props.navigation.navigate(RoutesName.Login)}
               >
-                Already have an account? Login
-              </Text>
-            </TouchableWithoutFeedback>
+                <Text style={{ fontFamily: 'Inconsolata-Bold' }}>Login</Text>
+              </TouchableWithoutFeedback>
+            </Text>
           </DismissKeyboard>
         </KeyboardAvoidingView>
       </Screen>
@@ -129,7 +127,7 @@ export default RegistrationScreen;
 
 const _styles = StyleSheet.create({
   title: {
-    fontSize: 48,
+    fontSize: ResponsiveFont(36),
     color: Colors['white-1'],
     fontFamily: 'Inconsolata-Bold',
     marginBottom: 16,
@@ -138,15 +136,21 @@ const _styles = StyleSheet.create({
     fontFamily: 'Inconsolata-Regular',
     color: Colors['white-1'],
     borderRadius: 4,
-    fontSize: 20,
+    fontSize: ResponsiveFont(16),
     padding: 12,
     backgroundColor: Colors['dark-8'],
   },
   errorText: {
     fontFamily: 'Inconsolata-Regular',
-    fontSize: 10,
+    fontSize: ResponsiveFont(12),
     color: 'red',
     marginBottom: 2,
     marginLeft: 4,
+  },
+  loginText: {
+    fontFamily: 'Inconsolata-Regular',
+    color: Colors['white-1'],
+    fontSize: ResponsiveFont(13),
+    marginTop: 32,
   },
 });

@@ -4,6 +4,7 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
@@ -16,10 +17,10 @@ const PostDate = ({ date }) => {
           fontFamily: 'Inconsolata-Regular',
           color: Colors['white-2'],
           margin: 8,
-          fontSize: 13,
+          fontSize: ResponsiveFont(11),
         }}
       >
-        {timeAgo.format(new Date(date / 10 ** 6))}
+        {timeAgo.format(new Date(date))}
       </Text>
       <View style={{ backgroundColor: Colors['white-1'], height: 1, marginHorizontal: 8 }} />
     </View>

@@ -7,18 +7,34 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import assetSvg from '../../assets/svg/svg';
 import Colors from '../../utils/color';
+import { ResponsiveFont } from '../../utils/ResponsiveFont';
 
-const MainHeader = ({ withBack, title, rightComponent, centerComponent }) => {
+const MainHeader = ({
+  title,
+  centerComponent,
+  leftComponent,
+  rightComponent,
+  onPressLeft,
+  onPressRight,
+}) => {
   const navigation = useNavigation();
 
-  const leftComponent = () => {
+  const leftComponentIcon = () => {
     return (
       <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
-        <View style={{ paddingLeft: 8 }}>
-          <SvgXml xml={assetSvg.header.back} width="24" height="24" fill={Colors['white-1']} />
+        <View>
+          <SvgXml xml={leftIcon()} width="24" height="24" />
         </View>
       </TouchableWithoutFeedback>
     );
+  };
+
+  const leftIcon = () => {
+    if (leftComponent === 'back') {
+      return assetSvg.header.back;
+    } else if (leftComponent === 'close') {
+      return assetSvg.header.close;
+    }
   };
 
   const titleComponent = {
@@ -26,7 +42,7 @@ const MainHeader = ({ withBack, title, rightComponent, centerComponent }) => {
     style: {
       color: Colors['white-1'],
       fontFamily: 'Inconsolata-Bold',
-      fontSize: 22,
+      fontSize: ResponsiveFont(18),
       padding: 0,
     },
   };
@@ -36,14 +52,13 @@ const MainHeader = ({ withBack, title, rightComponent, centerComponent }) => {
   return (
     <Header
       placement={centerComponent ? 'center' : 'left'}
-      leftComponent={withBack ? leftComponent : null}
-      leftContainerStyle={{ flex: 0 }}
+      leftComponent={leftComponent ? leftComponentIcon : null}
+      leftContainerStyle={{ flex: 0, marginHorizontal: leftComponent ? 8 : 4 }}
       rightComponent={rightComponent}
-      rightContainerStyle={{ flex: 0 }}
+      rightContainerStyle={{ flex: 0, marginHorizontal: rightComponent ? 8 : 4 }}
       centerComponent={isCenterCustom ? centerComponent : titleComponent}
       centerContainerStyle={{
-        marginLeft: withBack ? 4 : 0,
-        paddingHorizontal: 8,
+        paddingHorizontal: 0,
       }}
       containerStyle={{
         backgroundColor: Colors['dark-12'],

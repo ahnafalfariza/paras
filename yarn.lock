@@ -5960,10 +5960,10 @@ react-native-confirmation-code-field@^6.5.0:
   resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-6.5.0.tgz#f5579ee66b3f902724f5596a7ea3c87308c4d6d9"
   integrity sha512-thOctQtpkx5bcXIj6+S+gIKw7Z/jMBFf9FtqkiRQaZI1+IoMoA+n5CK4aYoosPQW4oAPTivL1mxOyA8T1kqmtA==
 
-react-native-elements@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.3.1.tgz#7dda54105deb13927bb294fe78059aaf85429992"
-  integrity sha512-eoEXVbBIvxqh+xuOEyu6EOZTOgBpNEgrZkB39TjApOFiH4fCTyYV9uFZ3nwBsuIpL5H0C3JiVh7MW4jfBkND/g==
+react-native-elements@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.3.2.tgz#f6b974127a3484bb46ebd98fbc012fb2208decd7"
+  integrity sha512-HygYYmq8JYjk/YYiUwr/64qT64H2xlPBz0JnkGTQwvnnyXZrfkHFopw8rLWCupv3iLLPDzVohvPs0Z5HLdonSQ==
   dependencies:
     "@types/react-native-vector-icons" "^6.4.5"
     color "^3.1.0"

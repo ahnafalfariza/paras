@@ -20,7 +20,7 @@
     "@react-navigation/bottom-tabs": "^5.9.1",
     "@react-navigation/native": "^5.7.5",
     "@react-navigation/stack": "^5.9.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "formik": "^2.1.5",
     "javascript-time-ago": "^2.0.13",
     "prop-types": "^15.7.2",
